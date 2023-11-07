@@ -16,5 +16,10 @@
     "noEmit": true,
     "jsx": "preserve"
   },
-  "include": ["src/**/*.tsx", "src/**/*.ts", "src/**/*.d.ts"]
+  "include": [
+    "src/**/*.tsx",
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/mainStyle.js"
+  ]
 }
