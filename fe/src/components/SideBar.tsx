@@ -1,4 +1,4 @@
-import React, { ReactHTMLElement } from 'react';
+import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
 import styled from 'styled-components';
@@ -53,7 +53,7 @@ const DemoMenu = styled.li<{ $isActive: boolean }>`
   }
 `;
 
-const DataMenu = styled.div`
+const DataNav = styled.div`
   margin-top: 50px;
 `;
 
@@ -63,7 +63,7 @@ const CreateNewData = styled.li``;
 
 const Data = styled.li``;
 
-const AuthMenu = styled.div`
+const AuthNav = styled.div`
   margin-top: 50px;
 `;
 
@@ -113,7 +113,7 @@ function SideBar() {
             </DemoMenu>
           </MeueList>
         </MeueNav>
-        <DataMenu>
+        <DataNav>
           <DataRecordList>
             <CreateNewData>
               <p>new</p>
@@ -122,8 +122,8 @@ function SideBar() {
               <p>ect</p>
             </Data>
           </DataRecordList>
-        </DataMenu>
-        <AuthMenu>
+        </DataNav>
+        <AuthNav>
           <p>Authentication</p>
           <AuthList>
             <SignIn>
@@ -133,7 +133,7 @@ function SideBar() {
               <p>SignUp</p>
             </SignUp>
           </AuthList>
-        </AuthMenu>
+        </AuthNav>
       </Header>
     </>
   );
