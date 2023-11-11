@@ -12,6 +12,8 @@ import {
   grammerSettings,
 } from '../../atoms/atom';
 import { useForm } from 'react-hook-form';
+import GoalExporation from '../analytics/GoalExporation';
+import Visualization from '../analytics/Visualization';
 
 const Section = styled.section`
   width: 70%;
@@ -37,6 +39,7 @@ const FileUploadInput = styled.input``;
 
 function FileUpLoad() {
   const [showGenerateSettings, setShowGenerateSettings] = useState(false);
+  const [isFileSubmit, setIsFileSubmit] = useState(false);
 
   const [defaultSettings, setDefaultSettings] =
     useRecoilState(fileUpLoadSettings);
@@ -56,6 +59,9 @@ function FileUpLoad() {
     setDefaultSettings(data);
     console.log(defaultSettings);
     //post 요청
+
+    //요청 성공시 componenets handling
+    setIsFileSubmit(true);
   };
 
   const onSettingsClick = () => {
@@ -64,49 +70,56 @@ function FileUpLoad() {
 
   return (
     <>
-      <Section>
-        <DataForm onSubmit={handleSubmit(SubmitOnValid)}>
-          <SettingsWrapper>
-            <GrammerList {...register('grammer')}>
-              {grammerList.map((grammer) => (
-                <option value={grammer} key={grammer}>
-                  {grammer}
-                </option>
-              ))}
-            </GrammerList>
-            <GrammerSettingsBtn onClick={onSettingsClick}>
-              세팅
-            </GrammerSettingsBtn>
-          </SettingsWrapper>
-          <FileUploadInput
-            {...register('dataFile', {
-              required: 'File is Required',
-              validate: (value) => {
-                const acceptedFormats = ['csv', 'json'];
-                const fileExtension = value[0]?.name
-                  .split('.')
-                  .pop()
-                  .toLowerCase();
-                if (!acceptedFormats.includes(fileExtension)) {
-                  return 'Invalid file format. Only csv or files are allowed.';
-                }
-              },
-            })}
-            type="file"
-          />
-          <SampleData />
-          {showGenerateSettings ? (
-            <GenerateSettings
-              toggle={setShowGenerateSettings}
-              register={register}
+      {isFileSubmit ? (
+        <Section>
+          <Visualization />
+          <GoalExporation />
+        </Section>
+      ) : (
+        <Section>
+          <DataForm onSubmit={handleSubmit(SubmitOnValid)}>
+            <SettingsWrapper>
+              <GrammerList {...register('grammer')}>
+                {grammerList.map((grammer) => (
+                  <option value={grammer} key={grammer}>
+                    {grammer}
+                  </option>
+                ))}
+              </GrammerList>
+              <GrammerSettingsBtn onClick={onSettingsClick}>
+                세팅
+              </GrammerSettingsBtn>
+            </SettingsWrapper>
+            <FileUploadInput
+              {...register('dataFile', {
+                required: 'File is Required',
+                validate: (value) => {
+                  const acceptedFormats = ['csv', 'json'];
+                  const fileExtension = value[0]?.name
+                    .split('.')
+                    .pop()
+                    .toLowerCase();
+                  if (!acceptedFormats.includes(fileExtension)) {
+                    return 'Invalid file format. Only csv or files are allowed.';
+                  }
+                },
+              })}
+              type="file"
             />
-          ) : null}
-          <PromptTemplete />
-          <Evaluate />
-          <Chat></Chat>
-          <h1 style={{ color: 'red' }}>{errors?.dataFile?.message as any}</h1>
-        </DataForm>
-      </Section>
+            <SampleData />
+            {showGenerateSettings ? (
+              <GenerateSettings
+                toggle={setShowGenerateSettings}
+                register={register}
+              />
+            ) : null}
+            <PromptTemplete />
+            <Evaluate />
+            <Chat></Chat>
+            <h1 style={{ color: 'red' }}>{errors?.dataFile?.message as any}</h1>
+          </DataForm>
+        </Section>
+      )}
     </>
   );
 }
