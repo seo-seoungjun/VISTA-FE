@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { generateSettingsMinMaxValue } from '../atom';
+import { generateSettingsMinMaxValue } from '../../atoms/atom';
 
 const GenerateSettingsWrapper = styled.div`
   position: fixed;

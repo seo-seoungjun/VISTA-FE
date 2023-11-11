@@ -1,8 +1,6 @@
 import React from 'react';
-import FileUpLoad from '../components/FileUpLoad';
-import PromptTemplete from '../components/PromptTemplete';
-import SideBar from '../components/SideBar';
-import styled from 'styled-components';
+import FileUpLoad from '../components/form/FileUpLoad';
+import SideBar from '../components/navbar/SideBar';
 
 function Demo() {
   return (

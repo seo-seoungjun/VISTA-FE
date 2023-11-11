@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import SampleData from './SampleData';
-import Chat from './Chat';
-import Evaluate from './evaluate';
+import Chat from '../footer/Chat';
+import Evaluate from '../footer/evaluate';
 import PromptTemplete from './PromptTemplete';
 import GenerateSettings from './GenerateSettings';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { ISettings, fileUpLoadSettings, grammerSettings } from '../atom';
+import {
+  ISettings,
+  fileUpLoadSettings,
+  grammerSettings,
+} from '../../atoms/atom';
 import { useForm } from 'react-hook-form';
 
 const Section = styled.section`
