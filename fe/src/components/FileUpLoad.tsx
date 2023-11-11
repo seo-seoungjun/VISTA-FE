@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import SampleData from './SampleData';
 import Chat from './Chat';
 import Evaluate from './evaluate';
 import PromptTemplete from './PromptTemplete';
+import GenerateSettings from './GenerateSettings';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { ISettings, fileUpLoadSettings, grammerSettings } from '../atom';
+import { useForm } from 'react-hook-form';
 
 const Section = styled.section`
   width: 70%;
@@ -15,67 +19,88 @@ const DataForm = styled.form`
   flex-direction: column;
 `;
 const SettingsWrapper = styled.div`
-  width: 70%;
   display: flex;
   justify-content: space-between;
 `;
 const GrammerList = styled.select``;
-const GrammerSettingsBtn = styled.button``;
-const GenerationSettingsWrapper = styled.div``;
-const GrammerSettings = styled.input``;
+const GrammerSettingsBtn = styled.div`
+  border-radius: 4px;
+  border: 1px solid black;
+  padding: 2px;
+  cursor: pointer;
+`;
 const FileUploadInput = styled.input``;
 
-interface Isettings {
-  grammer: string;
-}
-
 function FileUpLoad() {
-  const grammerList = ['Seaborn', 'Altair', 'MatPlotlib', 'GGPlot'];
+  const [showGenerateSettings, setShowGenerateSettings] = useState(false);
 
-  const [settings, setSettings] = useState<Isettings>({
-    grammer: 'Seaborn',
+  const [defaultSettings, setDefaultSettings] =
+    useRecoilState(fileUpLoadSettings);
+
+  const grammerList = useRecoilValue(grammerSettings);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm({
+    defaultValues: defaultSettings,
   });
 
-  const onChangeGrammer = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { value } = e.target;
-    setSettings({
-      grammer: value,
-    });
+  const SubmitOnValid = (data: ISettings) => {
+    setDefaultSettings(data);
+    console.log(defaultSettings);
+    //post 요청
   };
 
-  const onDataSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log('submit');
+  const onSettingsClick = () => {
+    setShowGenerateSettings(true);
   };
-
-  useEffect(() => {
-    console.log(settings);
-  }, [settings]);
 
   return (
     <>
       <Section>
-        <DataForm onSubmit={onDataSubmit}>
+        <DataForm onSubmit={handleSubmit(SubmitOnValid)}>
           <SettingsWrapper>
-            <GrammerList
-              id="grammer"
-              onChange={onChangeGrammer}
-              value={settings.grammer}
-            >
+            <GrammerList {...register('grammer')}>
               {grammerList.map((grammer) => (
                 <option value={grammer} key={grammer}>
                   {grammer}
                 </option>
               ))}
             </GrammerList>
-            <GrammerSettingsBtn>세팅</GrammerSettingsBtn>
+            <GrammerSettingsBtn onClick={onSettingsClick}>
+              세팅
+            </GrammerSettingsBtn>
           </SettingsWrapper>
-          <GenerationSettingsWrapper></GenerationSettingsWrapper>
-          <FileUploadInput type="file" />
+          <FileUploadInput
+            {...register('dataFile', {
+              required: 'File is Required',
+              validate: (value) => {
+                const acceptedFormats = ['csv', 'json'];
+                const fileExtension = value[0]?.name
+                  .split('.')
+                  .pop()
+                  .toLowerCase();
+                if (!acceptedFormats.includes(fileExtension)) {
+                  return 'Invalid file format. Only csv or files are allowed.';
+                }
+              },
+            })}
+            type="file"
+          />
           <SampleData />
-          <Evaluate />
+          {showGenerateSettings ? (
+            <GenerateSettings
+              toggle={setShowGenerateSettings}
+              register={register}
+            />
+          ) : null}
           <PromptTemplete />
+          <Evaluate />
           <Chat></Chat>
+          <h1 style={{ color: 'red' }}>{errors?.dataFile?.message as any}</h1>
         </DataForm>
       </Section>
     </>
