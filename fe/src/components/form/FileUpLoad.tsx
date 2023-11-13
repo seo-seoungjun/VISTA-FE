@@ -41,7 +41,7 @@ const FileUploadInput = styled.input``;
 
 function FileUpLoad() {
   const [showGenerateSettings, setShowGenerateSettings] = useState(false);
-  const [isSubmitSuccess, setIsSubmitsuccess] = useState(false);
+  const [isSubmitSuccess, setIsSubmitsuccess] = useState(true);
 
   const [defaultSettings, setDefaultSettings] =
     useRecoilState(fileUpLoadSettings);

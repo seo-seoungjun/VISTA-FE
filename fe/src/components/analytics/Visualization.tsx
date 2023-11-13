@@ -16,7 +16,7 @@ const SummaryWrapper = styled.div``;
 const GraphWrapper = styled.div``;
 
 function Visualization() {
-  const { isLoading, data } = useQuery('summary', getVisialization);
+  const { isLoading, data } = useQuery('visualization', getVisialization);
   console.log(data);
   return (
     <Section>
