@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import DataSummary from './DataSummary';
+import { useQuery } from 'react-query';
+import { getVisialization } from '../../APIs/api';
 
 const Section = styled.section`
   display: flex;
@@ -14,8 +16,8 @@ const SummaryWrapper = styled.div``;
 const GraphWrapper = styled.div``;
 
 function Visualization() {
-  //비동기 처리
-
+  const { isLoading, data } = useQuery('summary', getVisialization);
+  console.log(data);
   return (
     <Section>
       <h1>visualization</h1>
