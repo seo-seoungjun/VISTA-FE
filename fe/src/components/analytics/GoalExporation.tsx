@@ -8,7 +8,7 @@ const Section = styled.section``;
 const GoalWrapper = styled.div``;
 
 function GoalExporation() {
-  const { isLoading, data } = useQuery('summary', getGoalExplorer);
+  const { isLoading, data } = useQuery('Goal', getGoalExplorer);
   console.log(data);
   return (
     <Section>
