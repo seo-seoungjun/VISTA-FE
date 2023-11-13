@@ -7,11 +7,11 @@ const ChatWrapper = styled.div`
 const ChatInput = styled.input``;
 const SubmitBtn = styled.button``;
 
-function Chat() {
+function Chat({ register }: any) {
   return (
     <>
       <ChatWrapper>
-        <ChatInput />
+        <ChatInput {...register('userMessage')} />
         <SubmitBtn type="submit">제출</SubmitBtn>
       </ChatWrapper>
     </>

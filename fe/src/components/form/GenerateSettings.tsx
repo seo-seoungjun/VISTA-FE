@@ -70,7 +70,7 @@ export function GenerateSettings({ register, toggle }: any) {
         </LeftSide>
         <RightSide>
           <MaxTokensInput
-            {...register('MaxToken')}
+            {...register('maxTokens')}
             min={minMaxValue.maxToken.min}
             max={minMaxValue.maxToken.max}
             type="range"
@@ -78,25 +78,25 @@ export function GenerateSettings({ register, toggle }: any) {
           <TemperatureInput
             min={minMaxValue.temperature.min}
             max={minMaxValue.temperature.max}
-            {...register('Temperature')}
+            {...register('temperature')}
             type="range"
           />
           <NumberMessagesInput
             min={minMaxValue.numberMessages.min}
             max={minMaxValue.numberMessages.max}
-            {...register('NumberMessages')}
+            {...register('numberMessages')}
             type="range"
           />
           <PresencePenaltyInput
             min={minMaxValue.presencePenalty.min}
             max={minMaxValue.presencePenalty.max}
-            {...register('PresencePenalty')}
+            {...register('presencePenalty')}
             type="range"
           />
           <FrequencyPenaltyInput
             min={minMaxValue.frequencyPenalty.min}
             max={minMaxValue.frequencyPenalty.max}
-            {...register('FrequencyPenalty')}
+            {...register('frequencyPenalty')}
             type="range"
           />
         </RightSide>
