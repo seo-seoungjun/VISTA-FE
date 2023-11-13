@@ -9,12 +9,13 @@ enum Grammer {
 
 export interface ISettings {
   grammer: Grammer;
-  maxToken: number;
+  maxTokens: number;
   temperature: number;
   numberMessages: number;
   presencePenalty: number;
   frequencyPenalty: number;
-  dataFile: any;
+  userMessage?: string;
+  file: any;
 }
 
 interface IgenerateSettingsMinMaxValue {
@@ -54,12 +55,13 @@ export const fileUpLoadSettings = atom<ISettings>({
   key: 'fileUpLoadSettings',
   default: {
     grammer: Grammer.Seaborn,
-    maxToken: 6336,
+    maxTokens: 6336,
     temperature: 0,
     numberMessages: 1,
     presencePenalty: -2,
     frequencyPenalty: -2,
-    dataFile: null,
+    userMessage: '',
+    file: null,
   },
   dangerouslyAllowMutability: true,
 });

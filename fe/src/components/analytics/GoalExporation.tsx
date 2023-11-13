@@ -1,13 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import Goal from './Goal';
+import { useQuery } from 'react-query';
+import { getGoalExplorer } from '../../APIs/api';
 
 const Section = styled.section``;
 const GoalWrapper = styled.div``;
 
 function GoalExporation() {
-  //비동기처리
-
+  const { isLoading, data } = useQuery('summary', getGoalExplorer);
+  console.log(data);
   return (
     <Section>
       <h1>Goal exporation</h1>

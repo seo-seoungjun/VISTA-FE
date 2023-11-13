@@ -14,6 +14,8 @@ import {
 import { useForm } from 'react-hook-form';
 import GoalExporation from '../analytics/GoalExporation';
 import Visualization from '../analytics/Visualization';
+import { useMutation } from 'react-query';
+import { submitFormApi } from '../../APIs/api';
 
 const Section = styled.section`
   width: 70%;
@@ -39,7 +41,7 @@ const FileUploadInput = styled.input``;
 
 function FileUpLoad() {
   const [showGenerateSettings, setShowGenerateSettings] = useState(false);
-  const [isFileSubmit, setIsFileSubmit] = useState(false);
+  const [isSubmitSuccess, setIsSubmitsuccess] = useState(false);
 
   const [defaultSettings, setDefaultSettings] =
     useRecoilState(fileUpLoadSettings);
@@ -55,14 +57,23 @@ function FileUpLoad() {
     defaultValues: defaultSettings,
   });
 
+  const { mutate } = useMutation(submitFormApi, {
+    onSuccess: (res) => {
+      console.log(res);
+      setIsSubmitsuccess(true);
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
   const SubmitOnValid = (data: ISettings) => {
     setDefaultSettings(data);
-    console.log(defaultSettings);
+    mutate(data);
     //post 요청
-
-    //요청 성공시 componenets handling
-    setIsFileSubmit(true);
   };
+
+  console.log(defaultSettings);
 
   const onSettingsClick = () => {
     setShowGenerateSettings(true);
@@ -70,7 +81,7 @@ function FileUpLoad() {
 
   return (
     <>
-      {isFileSubmit ? (
+      {isSubmitSuccess ? (
         <Section>
           <Visualization />
           <GoalExporation />
@@ -91,7 +102,7 @@ function FileUpLoad() {
               </GrammerSettingsBtn>
             </SettingsWrapper>
             <FileUploadInput
-              {...register('dataFile', {
+              {...register('file', {
                 required: 'File is Required',
                 validate: (value) => {
                   const acceptedFormats = ['csv', 'json'];
@@ -115,8 +126,8 @@ function FileUpLoad() {
             ) : null}
             <PromptTemplete />
             <Evaluate />
-            <Chat></Chat>
-            <h1 style={{ color: 'red' }}>{errors?.dataFile?.message as any}</h1>
+            <Chat register={register}></Chat>
+            <h1 style={{ color: 'red' }}>{errors?.file?.message as any}</h1>
           </DataForm>
         </Section>
       )}
