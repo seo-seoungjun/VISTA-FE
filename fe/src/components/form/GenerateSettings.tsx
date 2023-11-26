@@ -70,7 +70,7 @@ export function GenerateSettings({ register, toggle }: any) {
         </LeftSide>
         <RightSide>
           <MaxTokensInput
-            {...register('maxTokens')}
+            {...register('max_tokens')}
             min={minMaxValue.maxToken.min}
             max={minMaxValue.maxToken.max}
             type="range"
@@ -84,19 +84,19 @@ export function GenerateSettings({ register, toggle }: any) {
           <NumberMessagesInput
             min={minMaxValue.numberMessages.min}
             max={minMaxValue.numberMessages.max}
-            {...register('numberMessages')}
+            {...register('number_messages')}
             type="range"
           />
           <PresencePenaltyInput
             min={minMaxValue.presencePenalty.min}
             max={minMaxValue.presencePenalty.max}
-            {...register('presencePenalty')}
+            {...register('presence_penalty')}
             type="range"
           />
           <FrequencyPenaltyInput
             min={minMaxValue.frequencyPenalty.min}
             max={minMaxValue.frequencyPenalty.max}
-            {...register('frequencyPenalty')}
+            {...register('frequency_penalty')}
             type="range"
           />
         </RightSide>

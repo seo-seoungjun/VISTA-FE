@@ -1,20 +1,24 @@
 import { atom } from 'recoil';
 
-enum Grammer {
-  'Seaborn' = 'Seaborn',
-  'Altair' = 'Altair',
-  'MatPlotlib' = 'MatPlotlib',
-  'GGPlot' = 'GGPlot',
+export enum Grammar {
+  'Seaborn' = 'SEABORN',
+  'Altair' = 'ALTAIR',
+  'MatPlotlib' = 'MATPLOTLIB',
+  'GGPlot' = 'GGPLOT',
+}
+
+export interface PostFileFormDataBody {
+  [key: string]: any;
 }
 
 export interface ISettings {
-  grammer: Grammer;
-  maxTokens: number;
-  temperature: number;
-  numberMessages: number;
-  presencePenalty: number;
-  frequencyPenalty: number;
-  userMessage?: string;
+  grammar: Grammar;
+  max_tokens: string;
+  temperature: string;
+  number_messages: string;
+  presence_penalty: string;
+  frequency_penalty: string;
+  user_message?: string;
   file: any;
 }
 
@@ -41,26 +45,26 @@ interface IgenerateSettingsMinMaxValue {
   };
 }
 
-export const grammerSettings = atom({
+export const grammarSettings = atom({
   key: 'grammerList',
   default: [
-    Grammer.Seaborn,
-    Grammer.Altair,
-    Grammer.MatPlotlib,
-    Grammer.GGPlot,
+    Grammar.Seaborn,
+    Grammar.Altair,
+    Grammar.MatPlotlib,
+    Grammar.GGPlot,
   ],
 });
 
 export const fileUpLoadSettings = atom<ISettings>({
   key: 'fileUpLoadSettings',
   default: {
-    grammer: Grammer.Seaborn,
-    maxTokens: 6336,
-    temperature: 0,
-    numberMessages: 1,
-    presencePenalty: -2,
-    frequencyPenalty: -2,
-    userMessage: '',
+    grammar: Grammar.Seaborn,
+    max_tokens: '6336',
+    temperature: '0',
+    number_messages: '1',
+    presence_penalty: '-2',
+    frequency_penalty: '-2',
+    user_message: '',
     file: null,
   },
   dangerouslyAllowMutability: true,
@@ -90,4 +94,9 @@ export const generateSettingsMinMaxValue = atom<IgenerateSettingsMinMaxValue>({
       max: 2,
     },
   },
+});
+
+export const resultDatas = atom({
+  key: 'resultData',
+  default: [],
 });
