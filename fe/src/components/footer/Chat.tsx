@@ -11,7 +11,7 @@ function Chat({ register }: any) {
   return (
     <>
       <ChatWrapper>
-        <ChatInput {...register('userMessage')} />
+        <ChatInput {...register('user_message')} />
         <SubmitBtn type="submit">제출</SubmitBtn>
       </ChatWrapper>
     </>
