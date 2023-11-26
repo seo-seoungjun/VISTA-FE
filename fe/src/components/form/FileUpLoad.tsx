@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import SampleData from './SampleData';
 import Chat from '../footer/Chat';
 import Evaluate from '../footer/evaluate';
 import PromptTemplete from './PromptTemplete';
@@ -9,13 +8,12 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   ISettings,
   fileUpLoadSettings,
-  grammerSettings,
+  grammarSettings,
 } from '../../atoms/atom';
 import { useForm } from 'react-hook-form';
-import GoalExporation from '../analytics/GoalExporation';
-import Visualization from '../analytics/Visualization';
 import { useMutation } from 'react-query';
 import { submitFormApi } from '../../APIs/api';
+import { Redirect } from 'react-router-dom';
 
 const Section = styled.section`
   width: 70%;
@@ -39,14 +37,21 @@ const GrammerSettingsBtn = styled.div`
 `;
 const FileUploadInput = styled.input``;
 
+const SampleData = styled.div`
+  cursor: pointer;
+  border: 1px solid black;
+  padding: 5px 0;
+  margin: 10px 0px;
+`;
+
 function FileUpLoad() {
   const [showGenerateSettings, setShowGenerateSettings] = useState(false);
-  const [isSubmitSuccess, setIsSubmitsuccess] = useState(true);
+  const [isSubmitSuccess, setIsSubmitsuccess] = useState(false);
 
   const [defaultSettings, setDefaultSettings] =
     useRecoilState(fileUpLoadSettings);
 
-  const grammerList = useRecoilValue(grammerSettings);
+  const grammarList = useRecoilValue(grammarSettings);
 
   const {
     register,
@@ -57,7 +62,7 @@ function FileUpLoad() {
     defaultValues: defaultSettings,
   });
 
-  const { mutate } = useMutation(submitFormApi, {
+  const { mutate, isLoading, data } = useMutation(submitFormApi, {
     onSuccess: (res) => {
       console.log(res);
       setIsSubmitsuccess(true);
@@ -68,32 +73,47 @@ function FileUpLoad() {
   });
 
   const SubmitOnValid = (data: ISettings) => {
-    setDefaultSettings(data);
-    mutate(data);
-    //post 요청
-  };
+    const formData = new FormData();
 
-  console.log(defaultSettings);
+    data.file = data.file[0];
+
+    for (const [key, value] of Object.entries(data)) {
+      formData.append(key, value);
+      console.log(key, value);
+    }
+
+    setDefaultSettings(data);
+    mutate(formData);
+  };
 
   const onSettingsClick = () => {
     setShowGenerateSettings(true);
   };
 
+  const onSampleDataClick = () => {};
+
   return (
     <>
       {isSubmitSuccess ? (
-        <Section>
-          <Visualization />
-          <GoalExporation />
-        </Section>
+        <Redirect
+          to={{
+            pathname: '/analytics',
+            state: data,
+          }}
+        />
+      ) : isLoading ? (
+        'Loading'
       ) : (
         <Section>
-          <DataForm onSubmit={handleSubmit(SubmitOnValid)}>
+          <DataForm
+            encType="multipart/form-data"
+            onSubmit={handleSubmit(SubmitOnValid)}
+          >
             <SettingsWrapper>
-              <GrammerList {...register('grammer')}>
-                {grammerList.map((grammer) => (
-                  <option value={grammer} key={grammer}>
-                    {grammer}
+              <GrammerList {...register('grammar')}>
+                {grammarList.map((grammar) => (
+                  <option value={grammar} key={grammar}>
+                    {grammar}
                   </option>
                 ))}
               </GrammerList>
@@ -117,7 +137,7 @@ function FileUpLoad() {
               })}
               type="file"
             />
-            <SampleData />
+            <SampleData onClick={onSampleDataClick}>sample data</SampleData>
             {showGenerateSettings ? (
               <GenerateSettings
                 toggle={setShowGenerateSettings}

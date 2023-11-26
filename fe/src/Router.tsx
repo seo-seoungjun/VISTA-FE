@@ -2,11 +2,13 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Main from './routes/Main';
 import Demo from './routes/Demo';
+import Analytics from './routes/Analytics';
 
 function LidaRouter() {
   return (
     <BrowserRouter>
       <Switch>
+        <Route path="/analytics" render={(props) => <Analytics {...props} />} />
         <Route path="/demo">
           <Demo />
         </Route>
