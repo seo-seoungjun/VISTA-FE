@@ -8,7 +8,9 @@ function LidaRouter() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/analytics" render={(props) => <Analytics {...props} />} />
+        <Route path="/analytics">
+          <Analytics />
+        </Route>
         <Route path="/demo">
           <Demo />
         </Route>
