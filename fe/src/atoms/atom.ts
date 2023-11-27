@@ -100,3 +100,8 @@ export const resultDatas = atom({
   key: 'resultData',
   default: [],
 });
+
+export const isDataExist = atom({
+  key: 'isExist',
+  default: false,
+});
