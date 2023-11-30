@@ -111,7 +111,7 @@ function FileUpLoad() {
           >
             <SettingsWrapper>
               <GrammerList {...register('grammar')}>
-                {grammarList.map((grammar) => (
+                {grammarList?.map((grammar) => (
                   <option value={grammar} key={grammar}>
                     {grammar}
                   </option>
