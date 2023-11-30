@@ -17,6 +17,14 @@ export const submitFormApi = async (data: PostFileFormDataBody) => {
   return res.data;
 };
 
+export const getChartImage = async (fileId: string) => {
+  const res = await axios.get(
+    `${BASE_URL}:${SPRING_PORT}/static/images/${fileId}.png`
+  );
+
+  return res.data;
+};
+
 export const getSummary = async () => {
   const res = await axios.get(`${BASE_URL}:${SPRING_PORT}/summarizer`);
   return res;

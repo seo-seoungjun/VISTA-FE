@@ -45,6 +45,34 @@ interface IgenerateSettingsMinMaxValue {
   };
 }
 
+interface ImageContent {
+  image_file: {
+    file_id: string;
+  };
+  type: string;
+}
+
+interface TextContent {
+  text: {
+    annotations: any;
+    value: string;
+  };
+  type: string;
+}
+
+export interface IVisualizationData {
+  id: string;
+  assistant_id: string;
+  content: any;
+  created_at: number;
+  file_ids: any;
+  metadata: any;
+  object: string;
+  role: string;
+  run_id: string;
+  thread_id: string;
+}
+
 export const grammarSettings = atom({
   key: 'grammerList',
   default: [
@@ -104,4 +132,9 @@ export const resultDatas = atom({
 export const isDataExist = atom({
   key: 'isExist',
   default: false,
+});
+
+export const visualizationDatas = atom<IVisualizationData[]>({
+  key: 'visualizationDatas',
+  default: [],
 });
