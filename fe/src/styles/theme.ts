@@ -4,5 +4,6 @@ export const theme: DefaultTheme = {
   bgColor: '#ffffff',
   blurBgColor: '#ACACAC',
   textColor: 'black',
-  highLightColor: '#1B59F86A',
+  highLightColor: 'rgba(27, 89, 248, 0.1)',
+  highLightTextColor: 'rgba(27, 89, 248)',
 };

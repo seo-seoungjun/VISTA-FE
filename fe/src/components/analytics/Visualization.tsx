@@ -9,12 +9,7 @@ const SummaryWrapper = styled.div``;
 const TapBtn = styled.button``;
 
 function Visualization() {
-  // const { isLoading, data } = useQuery('visualization', getVisialization);
-  // console.log(data);
-
   const visualData = useRecoilValue(visualizationDatas);
-
-  console.log(visualData);
 
   const [activeTab, setActiveTab] = useState(0);
 

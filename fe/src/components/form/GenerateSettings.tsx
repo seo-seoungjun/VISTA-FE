@@ -69,30 +69,35 @@ export function GenerateSettings({ register, toggle }: any) {
           <p>Model: Code llama-fine-tuning Model</p>
         </LeftSide>
         <RightSide>
+          <p>max tokens</p>
           <MaxTokensInput
             {...register('max_tokens')}
             min={minMaxValue.maxToken.min}
             max={minMaxValue.maxToken.max}
             type="range"
           />
+          <p>temperature</p>
           <TemperatureInput
             min={minMaxValue.temperature.min}
             max={minMaxValue.temperature.max}
             {...register('temperature')}
             type="range"
           />
+          <p>number messages</p>
           <NumberMessagesInput
             min={minMaxValue.numberMessages.min}
             max={minMaxValue.numberMessages.max}
             {...register('number_messages')}
             type="range"
           />
+          <p>presence penalty</p>
           <PresencePenaltyInput
             min={minMaxValue.presencePenalty.min}
             max={minMaxValue.presencePenalty.max}
             {...register('presence_penalty')}
             type="range"
           />
+          <p>frequency penalty</p>
           <FrequencyPenaltyInput
             min={minMaxValue.frequencyPenalty.min}
             max={minMaxValue.frequencyPenalty.max}

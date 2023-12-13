@@ -6,5 +6,6 @@ declare module 'styled-components' {
     blurBgColor: string;
     textColor: string;
     highLightColor: string;
+    highLightTextColor: string;
   }
 }

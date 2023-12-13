@@ -20,27 +20,46 @@ const Section = styled.section`
 `;
 
 const DataForm = styled.form`
+  height: 100vh;
   display: flex;
   align-items: center;
   flex-direction: column;
+  /* justify-content: space-between; */
+  p {
+    font-weight: 400;
+  }
 `;
 const SettingsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  width: 90%;
 `;
 const GrammerList = styled.select``;
+
 const GrammerSettingsBtn = styled.div`
-  border-radius: 4px;
-  border: 1px solid black;
-  padding: 2px;
+  display: flex;
+  align-items: center;
   cursor: pointer;
 `;
+
+const SettingBtnImg = styled.img`
+  border-radius: 4px;
+  border: 1px solid black;
+`;
+
 const FileUploadInput = styled.input``;
+
+const SampleDataWrapper = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+`;
 
 const SampleData = styled.div`
   cursor: pointer;
   border: 1px solid black;
-  padding: 5px 0;
+  border-radius: 10px;
+  padding: 5px 10px;
   margin: 10px 0px;
 `;
 
@@ -118,7 +137,7 @@ function FileUpLoad() {
                 ))}
               </GrammerList>
               <GrammerSettingsBtn onClick={onSettingsClick}>
-                세팅
+                <SettingBtnImg src="http://localhost:3000/Images/settings.svg" />
               </GrammerSettingsBtn>
             </SettingsWrapper>
             <FileUploadInput
@@ -137,7 +156,23 @@ function FileUpLoad() {
               })}
               type="file"
             />
-            <SampleData onClick={onSampleDataClick}>sample data</SampleData>
+            <SampleDataWrapper>
+              <SampleData onClick={onSampleDataClick}>
+                <p>sample data</p>
+              </SampleData>
+              <SampleData onClick={onSampleDataClick}>
+                <p>sample data</p>
+              </SampleData>
+              <SampleData onClick={onSampleDataClick}>
+                <p>sample data</p>
+              </SampleData>
+              <SampleData onClick={onSampleDataClick}>
+                <p>sample data</p>
+              </SampleData>
+              <SampleData onClick={onSampleDataClick}>
+                <p>sample data</p>
+              </SampleData>
+            </SampleDataWrapper>
             {showGenerateSettings ? (
               <GenerateSettings
                 toggle={setShowGenerateSettings}
