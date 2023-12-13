@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import styled from 'styled-components';
+import { fileId } from '../../atoms/atom';
+
+const DATA_KEY_List = 'data_list';
 
 const Header = styled.header`
   background-color: ${(props) => props.theme.bgColor};
@@ -98,9 +102,17 @@ const DataNav = styled.div``;
 
 const DataRecordList = styled.ul``;
 
-const CreateNewData = styled.li``;
+const DataList = styled.li`
+  p {
+    font-weight: bold;
+  }
+`;
 
-const Data = styled.li``;
+const Data = styled.li`
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+`;
 
 const AuthNav = styled.div``;
 
@@ -141,6 +153,20 @@ const onMouseDemoLeave = (e: React.MouseEvent<HTMLDivElement>) => {
 function SideBar() {
   const homeMenuMatch = useRouteMatch({ path: '/', exact: true });
   const demoMenuMatch = useRouteMatch({ path: '/demo', exact: true });
+  const [dataList, setDataList] = useRecoilState(fileId);
+
+  useEffect(() => {
+    if (localStorage.getItem(DATA_KEY_List) !== null) {
+      const getDataList: string[] = [
+        ...JSON.parse(localStorage.getItem(DATA_KEY_List) || ''),
+      ];
+      setDataList([...new Set(getDataList)]);
+      localStorage.setItem(
+        DATA_KEY_List,
+        JSON.stringify([...new Set(getDataList)])
+      );
+    }
+  }, []);
 
   return (
     <>
@@ -173,17 +199,20 @@ function SideBar() {
           </MeueList>
           <DataNav>
             <DataRecordList>
-              <CreateNewData>
-                <p>new</p>
-              </CreateNewData>
-              <Data>
-                <p>ect</p>
-                <p>ect</p>
-                <p>ect</p>
-                <p>ect</p>
-                <p>ect</p>
-                <p>ect</p>
-              </Data>
+              <DataList>
+                <p>DataList</p>
+              </DataList>
+              {dataList?.map((fileId) => (
+                <Data key={fileId}>
+                  <Link
+                    to={{
+                      pathname: `/analytics/${fileId}`,
+                    }}
+                  >
+                    Data
+                  </Link>
+                </Data>
+              ))}
             </DataRecordList>
           </DataNav>
         </MeueNav>

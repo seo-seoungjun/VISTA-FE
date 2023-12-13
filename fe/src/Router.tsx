@@ -8,7 +8,7 @@ function LidaRouter() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/analytics">
+        <Route path="/analytics/:fileId">
           <Analytics />
         </Route>
         <Route path="/demo">

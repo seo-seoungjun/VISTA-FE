@@ -13,7 +13,7 @@ export const submitFormApi = async (data: PostFileFormDataBody) => {
       'Content-Type': 'multipart/form-data',
     },
   });
-
+  console.log(res);
   return res.data;
 };
 
