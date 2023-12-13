@@ -35,9 +35,9 @@ function Visualization() {
       </SummaryWrapper>
       {
         <Chart
-          image_file={visualData[activeTab].content[0].image_file.file_id}
-          key={visualData[activeTab].id}
-          value={visualData[activeTab].content[1].text.value}
+          image_file={visualData[activeTab]?.content[0].image_file.file_id}
+          key={visualData[activeTab]?.id}
+          value={visualData[activeTab]?.content[1].text.value}
         />
       }
     </>

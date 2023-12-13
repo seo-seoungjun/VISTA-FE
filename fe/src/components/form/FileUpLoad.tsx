@@ -116,7 +116,7 @@ function FileUpLoad() {
       {isSubmitSuccess ? (
         <Redirect
           to={{
-            pathname: '/analytics',
+            pathname: `/analytics/${data?.data[0].id}`,
             state: data,
           }}
         />

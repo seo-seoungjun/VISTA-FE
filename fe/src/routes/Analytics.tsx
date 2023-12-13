@@ -2,14 +2,19 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Visualization from '../components/analytics/Visualization';
 import GoalExporation from '../components/analytics/GoalExporation';
-import { useRecoilState } from 'recoil';
-import { isDataExist, resultDatas, visualizationDatas } from '../atoms/atom';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import {
+  fileId,
+  isDataExist,
+  resultDatas,
+  visualizationDatas,
+} from '../atoms/atom';
 import SideBar from '../components/navbar/SideBar';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Chat from '../components/footer/Chat';
 
-const DATA_KEY = 'data';
+const DATA_KEY_LIST = 'data_list';
 
 const Section = styled.section`
   width: 70%;
@@ -20,6 +25,8 @@ function Analytics() {
   const [isData, setIsData] = useRecoilState(isDataExist);
   const [visualizationData, setVisualizationData] =
     useRecoilState(visualizationDatas);
+  const setDataList = useSetRecoilState(fileId);
+  const params = useParams<{ fileId: string }>();
 
   const {
     register,
@@ -30,26 +37,44 @@ function Analytics() {
 
   const { state } = useLocation<any>();
 
+  const DATA_KEY = params.fileId;
+
+  const fillterAndSetData = (data: any) => {
+    const imgData = data.filter(
+      (data: any) => data.content[0].type === 'image_file'
+    );
+    setVisualizationData(imgData);
+    setIsData(true);
+  };
+
   useEffect(() => {
+    const localDataList = localStorage.getItem(DATA_KEY_LIST);
+
+    if (localDataList === null) {
+      localStorage.setItem(DATA_KEY_LIST, JSON.stringify([DATA_KEY]));
+    } else {
+      const getDataList: string[] = [
+        ...JSON.parse(localDataList || ''),
+        DATA_KEY,
+      ];
+      const deleteDistinctData = [...new Set(getDataList)];
+
+      setDataList(deleteDistinctData);
+      localStorage.setItem(DATA_KEY_LIST, JSON.stringify(deleteDistinctData));
+    }
+
     if (state?.data !== undefined) {
       setResultData(state.data);
       localStorage.setItem(DATA_KEY, JSON.stringify(state.data));
-      const imgData = state.data.filter(
-        (data: any) => data.content[0].type === 'image_file'
-      );
-      setVisualizationData(imgData);
-      setIsData(true);
+      fillterAndSetData(state.data);
     } else {
       if (localStorage.getItem(DATA_KEY) !== null) {
-        setResultData(JSON.parse(localStorage.getItem(DATA_KEY) || ''));
-        const imgData = JSON.parse(localStorage.getItem(DATA_KEY) || '').filter(
-          (data: any) => data.content[0].type === 'image_file'
-        );
-        setVisualizationData(imgData);
-        setIsData(true);
+        const localData = JSON.parse(localStorage.getItem(DATA_KEY) || '');
+        setResultData(localData);
+        fillterAndSetData(localData);
       }
     }
-  }, []);
+  }, [DATA_KEY]);
 
   console.log(resultData);
   console.log(visualizationData);
