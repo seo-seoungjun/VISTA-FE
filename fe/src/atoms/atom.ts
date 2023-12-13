@@ -138,3 +138,8 @@ export const visualizationDatas = atom<IVisualizationData[]>({
   key: 'visualizationDatas',
   default: [],
 });
+
+export const fileId = atom<string[]>({
+  key: 'firstId',
+  default: [],
+});
