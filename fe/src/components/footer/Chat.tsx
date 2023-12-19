@@ -3,8 +3,15 @@ import styled from 'styled-components';
 
 const ChatWrapper = styled.div`
   display: flex;
+  justify-content: center;
+  position: fixed;
+  width: 70%;
+  bottom: 2%;
 `;
-const ChatInput = styled.input``;
+const ChatInput = styled.input`
+  width: 80%;
+  margin-right: 15px;
+`;
 const SubmitBtn = styled.button``;
 
 function Chat({ register }: any) {
