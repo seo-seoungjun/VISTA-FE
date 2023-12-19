@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { visualizationDatas } from '../../atoms/atom';
+import { IVisualizationData, visualizationDatas } from '../../atoms/atom';
 import Chart from './chart/Chart';
 
 const SummaryWrapper = styled.div``;
@@ -21,7 +21,7 @@ function Visualization() {
     <>
       <h1>visualization</h1>
       <SummaryWrapper>
-        {visualData?.map((data: any, index: number) => (
+        {visualData?.map((data: IVisualizationData, index: number) => (
           <TapBtn
             key={index}
             onClick={() => handleTabClick(index)}

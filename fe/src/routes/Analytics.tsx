@@ -4,6 +4,8 @@ import Visualization from '../components/analytics/Visualization';
 import GoalExporation from '../components/analytics/GoalExporation';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
+  ILocation,
+  IVisualizationData,
   fileId,
   isDataExist,
   resultDatas,
@@ -28,20 +30,15 @@ function Analytics() {
   const setDataList = useSetRecoilState(fileId);
   const params = useParams<{ fileId: string }>();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setError,
-  } = useForm();
+  const { register } = useForm();
 
-  const { state } = useLocation<any>();
+  const { state } = useLocation<ILocation>();
 
   const DATA_KEY = params.fileId;
 
-  const fillterAndSetData = (data: any) => {
+  const fillterAndSetData = (data: IVisualizationData[]) => {
     const imgData = data.filter(
-      (data: any) => data.content[0].type === 'image_file'
+      (data: IVisualizationData) => data.content[0].type === 'image_file'
     );
     setVisualizationData(imgData);
     setIsData(true);

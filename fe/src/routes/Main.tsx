@@ -1,6 +1,5 @@
 import React from 'react';
 import SideBar from '../components/navbar/SideBar';
-import styled from 'styled-components';
 
 function Main() {
   return (

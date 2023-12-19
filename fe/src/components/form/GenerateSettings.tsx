@@ -61,6 +61,7 @@ export function GenerateSettings({ register, toggle }: any) {
   const onToggleBtnClick = () => {
     toggle((cur: boolean) => !cur);
   };
+
   return (
     <GenerateSettingsWrapper>
       <GenerateSetting>

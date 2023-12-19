@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import styled from 'styled-components';
 import { fileId } from '../../atoms/atom';

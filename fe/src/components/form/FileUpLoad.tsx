@@ -76,12 +76,11 @@ function FileUpLoad() {
     register,
     handleSubmit,
     formState: { errors },
-    setError,
   } = useForm({
     defaultValues: defaultSettings,
   });
 
-  const { mutate, isLoading, data } = useMutation(submitFormApi, {
+  const { data, mutate, isLoading } = useMutation(submitFormApi, {
     onSuccess: (res) => {
       console.log(res);
       setIsSubmitsuccess(true);

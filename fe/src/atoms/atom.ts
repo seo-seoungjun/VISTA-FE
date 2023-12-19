@@ -60,6 +60,10 @@ interface TextContent {
   type: string;
 }
 
+export interface IResponseData {
+  data: IVisualizationData[];
+}
+
 export interface IVisualizationData {
   id: string;
   assistant_id: string;
@@ -71,6 +75,10 @@ export interface IVisualizationData {
   role: string;
   run_id: string;
   thread_id: string;
+}
+
+export interface ILocation {
+  data: IVisualizationData[];
 }
 
 export const grammarSettings = atom({
@@ -124,7 +132,7 @@ export const generateSettingsMinMaxValue = atom<IgenerateSettingsMinMaxValue>({
   },
 });
 
-export const resultDatas = atom({
+export const resultDatas = atom<IVisualizationData[]>({
   key: 'resultData',
   default: [],
 });
