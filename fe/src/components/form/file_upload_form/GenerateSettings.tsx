@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { generateSettingsMinMaxValue } from '../../atoms/atom';
+import { generateSettingsMinMaxValue } from '../../../atoms/atom';
 
 const GenerateSettingsWrapper = styled.div`
   position: fixed;
@@ -15,7 +15,6 @@ const GenerateSettingsWrapper = styled.div`
   height: 100vh;
   z-index: 10;
   background-color: ${(prop) => prop.theme.blurBgColor};
-  opacity: 0.8;
 `;
 
 const GenerateSetting = styled.div`

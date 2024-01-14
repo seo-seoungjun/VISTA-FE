@@ -19,7 +19,11 @@ import Chat from '../components/footer/Chat';
 const DATA_KEY_LIST = 'data_list';
 
 const Section = styled.section`
-  width: 70%;
+  width: 84%;
+  margin-left: 16%;
+  background-color: ${(props) => props.theme.bgColor};
+  border-radius: 15px;
+  height: 100vh;
 `;
 
 function Analytics() {

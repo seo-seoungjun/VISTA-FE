@@ -4,6 +4,10 @@ import styled from 'styled-components';
 import { IVisualizationData, visualizationDatas } from '../../atoms/atom';
 import Chart from './chart/Chart';
 
+const VisualHeader = styled.h1`
+  font-weight: bold;
+`;
+
 const SummaryWrapper = styled.div``;
 
 const TapBtn = styled.button``;
@@ -19,7 +23,7 @@ function Visualization() {
 
   return (
     <>
-      <h1>visualization</h1>
+      <VisualHeader>visualization</VisualHeader>
       <SummaryWrapper>
         {visualData?.map((data: IVisualizationData, index: number) => (
           <TapBtn
