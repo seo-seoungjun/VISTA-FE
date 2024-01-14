@@ -8,11 +8,9 @@ import { fileId } from '../../atoms/atom';
 const DATA_KEY_List = 'data_list';
 
 const Header = styled.header`
-  background-color: ${(props) => props.theme.bgColor};
-  width: 30%;
-  height: 99.7vh;
-  border-radius: 15px;
-  border: 1px solid #555151;
+  position: fixed;
+  width: 16%;
+  height: 100vh;
   /* box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.25); */
   display: flex;
   flex-direction: column;
@@ -20,8 +18,9 @@ const Header = styled.header`
   p,
   a {
     text-align: center;
-    font-weight: 400;
+    color: ${(props) => props.theme.sideBarTextColor};
   }
+  background-color: ${(props) => props.theme.sideBarBgColor};
 `;
 
 const LidaIcon = styled.div`
@@ -43,12 +42,11 @@ const MeueList = styled.ul`
   }
   li div {
     display: flex;
-    align-items: center;
     justify-content: center;
-    border-radius: 15px;
+    border-radius: 3px;
     gap: 10px;
     padding: 3px 0;
-    width: 75%;
+    width: 85%;
   }
 `;
 
@@ -56,18 +54,18 @@ const HomeMenu = styled.li<{ $isActive: boolean }>`
   transition: all 1s;
   div {
     background-color: ${(props) =>
-      props.$isActive ? props.theme.highLightColor : props.theme.bgColor};
+      props.$isActive ? props.theme.highLightBgColor : props.theme.bodyColor};
     color: ${(props) =>
       props.$isActive ? props.theme.highLightTextColor : props.theme.textColor};
   }
   transition: all 1s;
 
   div:hover {
-    background-color: ${(props) => props.theme.highLightColor};
-    color: ${(props) => props.theme.highLightTextColor};
+    background-color: ${(props) => props.theme.highLightBgColor};
+    color: ${(props) => props.theme.textColor};
   }
   div.on-hover {
-    background-color: ${(props) => props.theme.bgColor};
+    background-color: ${(props) => props.theme.bodyColor};
     color: ${(props) => props.theme.textColor};
   }
 `;
@@ -80,18 +78,17 @@ const DemoMenu = styled.li<{ $isActive: boolean }>`
   transition: all 1s;
   div {
     background-color: ${(props) =>
-      props.$isActive ? props.theme.highLightColor : props.theme.bgColor};
-    color: ${(props) =>
-      props.$isActive ? props.theme.highLightTextColor : props.theme.textColor};
+      props.$isActive ? props.theme.highLightBgColor : props.theme.bodyColor};
+    color: ${(props) => props.theme.textColor};
   }
   transition: all 1s;
 
   div:hover {
-    background-color: ${(props) => props.theme.highLightColor};
-    color: ${(props) => props.theme.highLightTextColor};
+    background-color: ${(props) => props.theme.highLightBgColor};
+    color: ${(props) => props.theme.textColor};
   }
   div.on-hover {
-    background-color: ${(props) => props.theme.bgColor};
+    background-color: ${(props) => props.theme.bodyColor};
     color: ${(props) => props.theme.textColor};
   }
 `;
