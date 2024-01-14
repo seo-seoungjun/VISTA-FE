@@ -31,7 +31,7 @@ footer, header, hgroup, menu, nav, section {
 body {
 	font-weight: 300;
 	line-height: 1.2;
-  background-color:${(props) => props.theme.bgColor};
+  background-color:${(props) => props.theme.bodyColor};
   color:${(props) => props.theme.textColor}
 }
 ol, ul {
