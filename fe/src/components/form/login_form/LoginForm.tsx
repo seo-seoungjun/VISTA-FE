@@ -4,8 +4,8 @@ import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { tokenInfo, userInfo } from '../../../atoms/atom';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { useMutation, useQuery } from 'react-query';
+import { useSetRecoilState } from 'recoil';
+import { useMutation } from 'react-query';
 import { getToken, getUserInfo } from '../../../APIs/api';
 require('dotenv').config();
 
@@ -114,14 +114,16 @@ function LoginForm() {
 
   const { mutate: userInfoMutate } = useMutation(getUserInfo, {
     onSuccess: (userData) => {
-      setUserInfo(userData);
+      if (userData != 0) {
+        setUserInfo(userData);
 
-      console.log(userData);
+        console.log(userData);
 
-      history.push({
-        pathname: '/demo',
-        state: userData,
-      });
+        history.push({
+          pathname: '/demo',
+          state: userData,
+        });
+      }
     },
     onError: (error) => {
       console.log(error);
