@@ -40,7 +40,7 @@ function Analytics() {
 
   const DATA_KEY = params.fileId;
 
-  const fillterAndSetData = (data: IVisualizationData[]) => {
+  const fillterAndSetVisualizationData = (data: IVisualizationData[]) => {
     const imgData = data.filter(
       (data: IVisualizationData) => data.content[0].type === 'image_file'
     );
@@ -67,12 +67,12 @@ function Analytics() {
     if (state?.data !== undefined) {
       setResultData(state.data);
       localStorage.setItem(DATA_KEY, JSON.stringify(state.data));
-      fillterAndSetData(state.data);
+      fillterAndSetVisualizationData(state.data);
     } else {
       if (localStorage.getItem(DATA_KEY) !== null) {
         const localData = JSON.parse(localStorage.getItem(DATA_KEY) || '');
         setResultData(localData);
-        fillterAndSetData(localData);
+        fillterAndSetVisualizationData(localData);
       }
     }
   }, [DATA_KEY]);
