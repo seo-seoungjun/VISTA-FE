@@ -73,14 +73,19 @@ export const getToken = async (authorizationCode: string) => {
   return res.data;
 };
 
-export const getUserInfo = async (accessToken: string) => {
-  const userInfoUrl = process.env.REACT_APP_GOOGLE_OAUTH_USERINFO_URL as string;
+export const getUserInfo = async (accessToken: string | null) => {
+  if (accessToken == null) {
+    return 0;
+  } else {
+    const userInfoUrl = process.env
+      .REACT_APP_GOOGLE_OAUTH_USERINFO_URL as string;
 
-  const res = await axios.get<IUserInfo>(userInfoUrl, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+    const res = await axios.get<IUserInfo>(userInfoUrl, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
 
-  return res.data;
+    return res.data;
+  }
 };
