@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+import { googleLogout } from '@react-oauth/google';
 
 import styled from 'styled-components';
 import { fileId } from '../../atoms/atom';
@@ -113,11 +114,22 @@ const Data = styled.li`
 
 const AuthNav = styled.div``;
 
-const AuthList = styled.ul``;
+const AuthNavTitle = styled.p`
+  margin-bottom: 10px;
+  font-weight: bold;
+`;
+
+const AuthList = styled.ul`
+  li {
+    margin-bottom: 5px;
+  }
+`;
 
 const SignIn = styled.li``;
 
-const SignUp = styled.li``;
+const SignOut = styled.li`
+  cursor: pointer;
+`;
 
 const onMouseHomeOver = (e: React.MouseEvent<HTMLDivElement>) => {
   const target = e.target as HTMLAnchorElement;
@@ -214,14 +226,16 @@ function SideBar() {
           </DataNav>
         </MeueNav>
         <AuthNav>
-          <p>Authentication</p>
+          <AuthNavTitle>Authentication</AuthNavTitle>
           <AuthList>
             <SignIn>
-              <p>SignIn</p>
+              <p>
+                <Link to={'/login'}>SignIn</Link>
+              </p>
             </SignIn>
-            <SignUp>
-              <p>SignUp</p>
-            </SignUp>
+            <SignOut onClick={() => googleLogout()}>
+              <p>SignOut</p>
+            </SignOut>
           </AuthList>
         </AuthNav>
       </Header>

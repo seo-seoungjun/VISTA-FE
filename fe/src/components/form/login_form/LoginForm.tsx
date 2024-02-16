@@ -1,6 +1,13 @@
+import { useGoogleLogin } from '@react-oauth/google';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { tokenInfo, userInfo } from '../../../atoms/atom';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useMutation, useQuery } from 'react-query';
+import { getToken, getUserInfo } from '../../../APIs/api';
+require('dotenv').config();
 
 interface ILogin {
   id: string;
@@ -80,14 +87,6 @@ const onGithubIconLeave = () => {
   icon!.src = 'http://localhost:3000/Images/github.svg';
 };
 
-const handleGoogleLogin = () => {
-  // 구글 로그인 로직을 작성하세요.
-};
-
-const handleGithubLogin = () => {
-  // 깃허브 로그인 로직을 작성하세요.
-};
-
 function LoginForm() {
   const {
     register,
@@ -109,6 +108,59 @@ function LoginForm() {
     }
   };
 
+  const history = useHistory();
+  const setTokenData = useSetRecoilState(tokenInfo);
+  const setUserInfo = useSetRecoilState(userInfo);
+
+  const { mutate: userInfoMutate } = useMutation(getUserInfo, {
+    onSuccess: (userData) => {
+      setUserInfo(userData);
+
+      console.log(userData);
+
+      history.push({
+        pathname: '/demo',
+        state: userData,
+      });
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const { mutate: tokenMutate } = useMutation(getToken, {
+    onSuccess: (tokenData) => {
+      localStorage.setItem('access_token', tokenData?.access_token);
+      localStorage.setItem('refresh_token', tokenData?.refresh_token);
+      setTokenData(tokenData);
+
+      console.log(tokenData);
+
+      userInfoMutate(tokenData.access_token);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const handleGoogleLogin = useGoogleLogin({
+    onSuccess: async ({ code }) => {
+      // await axios
+      //   .get('http://techvista24.com:8000/callback', { params: { code } })
+      //   .then(({ data }) => {
+      //     console.log(data);
+      //   });
+      tokenMutate(code);
+    },
+
+    onError: (res) => console.log(res),
+    flow: 'auth-code',
+  });
+
+  const handleGithubLogin = () => {
+    // 깃허브 로그인 로직을 작성하세요.
+  };
+
   return (
     <Container>
       <Form
@@ -126,7 +178,7 @@ function LoginForm() {
         <LogInButton type="submit">login</LogInButton>
       </Form>
       <SocialLoginBtnWrapper>
-        <SocialLoginBtn onClick={handleGoogleLogin}>
+        <SocialLoginBtn onClick={() => handleGoogleLogin()}>
           <GoogleIcon src="http://localhost:3000/Images/google.svg" />
           <p>sign in with google</p>
         </SocialLoginBtn>

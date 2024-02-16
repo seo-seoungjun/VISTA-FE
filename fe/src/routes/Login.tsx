@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import LoginForm from '../components/form/login_form/LoginForm';
+import { Link } from 'react-router-dom';
 
 const LoginSection = styled.section`
   display: flex;
@@ -40,7 +41,7 @@ const MoreBtn = styled.button`
   border: none;
   border-radius: 5px;
   font-family: 'Apple SD gothic neo';
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 100;
   margin-top: 20px;
 `;
@@ -71,7 +72,9 @@ function Login() {
               gain more insight.
             </Discription>
             <MoreBtn>
-              <p>Learn More</p>
+              <p>
+                <Link to={'/'}>Learn More</Link>
+              </p>
             </MoreBtn>
           </DiscriptiopWrapper>
         </LeftSide>
