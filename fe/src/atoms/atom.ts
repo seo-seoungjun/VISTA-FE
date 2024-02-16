@@ -64,6 +64,15 @@ export interface IResponseData {
   data: IVisualizationData[];
 }
 
+export interface ITokenResponse {
+  access_token: string;
+  expires_in: number;
+  id_token: string;
+  refresh_token: string;
+  scope: string;
+  token_type: string;
+}
+
 export interface IVisualizationData {
   id: string;
   assistant_id: string;
@@ -79,6 +88,26 @@ export interface IVisualizationData {
 
 export interface ILocation {
   data: IVisualizationData[];
+}
+
+export interface IDemoLocation {
+  email: string;
+  given_name: string;
+  id: string;
+  locale: string;
+  name: string;
+  picture: string;
+  verified_email: boolean;
+}
+
+export interface IUserInfo {
+  email: string;
+  given_name: string;
+  id: string;
+  locale: string;
+  name: string;
+  picture: string;
+  verified_email: boolean;
 }
 
 export const grammarSettings = atom({
@@ -150,4 +179,12 @@ export const visualizationDatas = atom<IVisualizationData[]>({
 export const fileId = atom<string[]>({
   key: 'firstId',
   default: [],
+});
+
+export const tokenInfo = atom<ITokenResponse>({
+  key: 'tokenData',
+});
+
+export const userInfo = atom<IUserInfo>({
+  key: 'userData',
 });
