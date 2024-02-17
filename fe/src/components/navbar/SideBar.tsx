@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { googleLogout } from '@react-oauth/google';
 
 import styled from 'styled-components';
-import { fileId } from '../../atoms/atom';
+import { TokenKey, fileId } from '../../atoms/atom';
+import { useMutation } from 'react-query';
+import { revokeToken } from '../../APIs/api';
 
 const DATA_KEY_List = 'data_list';
 
@@ -177,6 +178,25 @@ function SideBar() {
     }
   }, []);
 
+  const accessToken = localStorage.getItem(TokenKey.accessToken) as string;
+  const history = useHistory();
+
+  const { mutate: revokeTokenMutate } = useMutation(revokeToken, {
+    onSuccess: (data) => {
+      console.log(data);
+      localStorage.removeItem(TokenKey.accessToken);
+      localStorage.removeItem(TokenKey.refreshToken);
+      history.push('/login');
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const googleLogOut = () => {
+    revokeTokenMutate(accessToken);
+  };
+
   return (
     <>
       <Header>
@@ -233,7 +253,7 @@ function SideBar() {
                 <Link to={'/login'}>SignIn</Link>
               </p>
             </SignIn>
-            <SignOut onClick={() => googleLogout()}>
+            <SignOut onClick={googleLogOut}>
               <p>SignOut</p>
             </SignOut>
           </AuthList>

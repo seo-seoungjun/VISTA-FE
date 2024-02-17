@@ -7,6 +7,11 @@ export enum Grammar {
   'GGPlot' = 'GGPLOT',
 }
 
+export enum TokenKey {
+  'accessToken' = 'access_token',
+  'refreshToken' = 'refresh_token',
+}
+
 export interface PostFileFormDataBody {
   [key: string]: any;
 }

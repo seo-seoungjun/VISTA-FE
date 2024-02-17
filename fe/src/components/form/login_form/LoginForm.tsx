@@ -3,10 +3,10 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { tokenInfo, userInfo } from '../../../atoms/atom';
+import { TokenKey, tokenInfo } from '../../../atoms/atom';
 import { useSetRecoilState } from 'recoil';
 import { useMutation } from 'react-query';
-import { getToken, getUserInfo } from '../../../APIs/api';
+import { getToken } from '../../../APIs/api';
 require('dotenv').config();
 
 interface ILogin {
@@ -110,7 +110,8 @@ function LoginForm() {
 
   const history = useHistory();
   const setTokenData = useSetRecoilState(tokenInfo);
-  const setUserInfo = useSetRecoilState(userInfo);
+
+  // const setUserInfo = useSetRecoilState(userInfo);
 
   // const { mutate: userInfoMutate } = useMutation(getUserInfo, {
   //   onSuccess: (userData) => {
@@ -132,8 +133,8 @@ function LoginForm() {
 
   const { mutate: tokenMutate } = useMutation(getToken, {
     onSuccess: (tokenData) => {
-      localStorage.setItem('access_token', tokenData?.access_token);
-      localStorage.setItem('refresh_token', tokenData?.refresh_token);
+      localStorage.setItem(TokenKey.accessToken, tokenData?.access_token);
+      localStorage.setItem(TokenKey.refreshToken, tokenData?.refresh_token);
       setTokenData(tokenData);
 
       console.log(tokenData);
