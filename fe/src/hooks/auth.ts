@@ -4,7 +4,7 @@ import { getUserInfo } from '../APIs/api';
 import { useQuery } from 'react-query';
 import { userInfo } from '../atoms/atom';
 
-export const useAccessTokenVaild = () => {
+export const useAccessTokenVaild = (redirectUrl?: string) => {
   const accessToken = localStorage.getItem('access_token');
   const setUserInfo = useSetRecoilState(userInfo);
   const history = useHistory();
@@ -15,10 +15,15 @@ export const useAccessTokenVaild = () => {
         history.push('/login');
       } else {
         setUserInfo(data);
+        console.log(data);
+        if (redirectUrl != undefined) {
+          history.push(redirectUrl);
+        }
       }
     },
     onError: (error) => {
       console.log(error);
+      history.push('/login');
     },
   });
 };
