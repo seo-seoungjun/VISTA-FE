@@ -75,7 +75,7 @@ export const getToken = async (authorizationCode: string) => {
 
 export const getUserInfo = async (accessToken: string | null) => {
   if (accessToken == null) {
-    return 0;
+    return null;
   } else {
     const userInfoUrl = process.env
       .REACT_APP_GOOGLE_OAUTH_USERINFO_URL as string;
@@ -88,4 +88,21 @@ export const getUserInfo = async (accessToken: string | null) => {
 
     return res.data;
   }
+};
+
+export const revokeToken = async (accessToken: string) => {
+  const revokeTokenUrl = process.env
+    .REACT_APP_GOOGLE_OAUTH_REVOKE_TOKEN as string;
+
+  const res = await axios.post(
+    revokeTokenUrl,
+    { token: accessToken },
+    {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    }
+  );
+
+  return res;
 };

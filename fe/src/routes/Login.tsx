@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import LoginForm from '../components/form/login_form/LoginForm';
 import { Link } from 'react-router-dom';
-import { useAccessTokenVaild } from '../hooks/auth';
+import { useAccessTokenVaild } from '../hooks/auth/auth';
 
 const LoginSection = styled.section`
   display: flex;
