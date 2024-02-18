@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
 import styled from 'styled-components';
-import { TokenKey, fileId } from '../../atoms/atom';
+import { TokenKey, fileId, userInfo } from '../../atoms/atom';
 import { useMutation } from 'react-query';
 import { revokeToken } from '../../APIs/api';
 
@@ -164,8 +164,13 @@ function SideBar() {
   const homeMenuMatch = useRouteMatch({ path: '/', exact: true });
   const demoMenuMatch = useRouteMatch({ path: '/demo', exact: true });
   const [dataList, setDataList] = useRecoilState(fileId);
+  const [userData, setUserData] = useRecoilState(userInfo);
+  const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
+    if (userData != null) {
+      setIsLogin(true);
+    }
     if (localStorage.getItem(DATA_KEY_List) !== null) {
       const getDataList: string[] = [
         ...JSON.parse(localStorage.getItem(DATA_KEY_List) || ''),
@@ -176,7 +181,7 @@ function SideBar() {
         JSON.stringify([...new Set(getDataList)])
       );
     }
-  }, []);
+  }, [userData]);
 
   const accessToken = localStorage.getItem(TokenKey.accessToken) as string;
   const history = useHistory();
@@ -186,6 +191,7 @@ function SideBar() {
       console.log(data);
       localStorage.removeItem(TokenKey.accessToken);
       localStorage.removeItem(TokenKey.refreshToken);
+      setUserData(null);
       history.push('/login');
     },
     onError: (error) => {
@@ -248,14 +254,17 @@ function SideBar() {
         <AuthNav>
           <AuthNavTitle>Authentication</AuthNavTitle>
           <AuthList>
-            <SignIn>
-              <p>
-                <Link to={'/login'}>SignIn</Link>
-              </p>
-            </SignIn>
-            <SignOut onClick={googleLogOut}>
-              <p>SignOut</p>
-            </SignOut>
+            {isLogin ? (
+              <SignOut onClick={googleLogOut}>
+                <p>SignOut</p>
+              </SignOut>
+            ) : (
+              <SignIn>
+                <p>
+                  <Link to={'/login'}>SignIn</Link>
+                </p>
+              </SignIn>
+            )}
           </AuthList>
         </AuthNav>
       </Header>

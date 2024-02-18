@@ -190,6 +190,7 @@ export const tokenInfo = atom<ITokenResponse>({
   key: 'tokenData',
 });
 
-export const userInfo = atom<IUserInfo>({
+export const userInfo = atom<IUserInfo | null>({
   key: 'userData',
+  default: null,
 });
