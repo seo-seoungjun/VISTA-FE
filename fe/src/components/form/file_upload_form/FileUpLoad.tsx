@@ -16,8 +16,7 @@ import { submitFormApi } from '../../../APIs/api';
 import { Redirect } from 'react-router-dom';
 
 const Section = styled.section`
-  width: 84%;
-  margin-left: 16%;
+  width: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;

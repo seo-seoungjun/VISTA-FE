@@ -1,4 +1,4 @@
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
 
 export enum Grammar {
   'Seaborn' = 'SEABORN',
@@ -176,9 +176,16 @@ export const isDataExist = atom({
   default: false,
 });
 
-export const visualizationDatas = atom<IVisualizationData[]>({
+export const visualizationDatas = selector<IVisualizationData[]>({
   key: 'visualizationDatas',
-  default: [],
+  get: ({ get }) => {
+    const resultData = get(resultDatas);
+    const visualData = resultData.filter(
+      (data: IVisualizationData) => data.content[0].type === 'image_file'
+    );
+
+    return visualData;
+  },
 });
 
 export const fileId = atom<string[]>({

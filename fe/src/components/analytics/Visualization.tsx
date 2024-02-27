@@ -14,6 +14,7 @@ const TapBtn = styled.button``;
 
 function Visualization() {
   const visualData = useRecoilValue(visualizationDatas);
+  console.log(visualData);
 
   const [activeTab, setActiveTab] = useState(0);
 
@@ -22,7 +23,7 @@ function Visualization() {
   };
 
   return (
-    <>
+    <div>
       <VisualHeader>visualization</VisualHeader>
       <SummaryWrapper>
         {visualData?.map((data: IVisualizationData, index: number) => (
@@ -44,7 +45,7 @@ function Visualization() {
           value={visualData[activeTab]?.content[1].text.value}
         />
       }
-    </>
+    </div>
   );
 }
 

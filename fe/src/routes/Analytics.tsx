@@ -9,7 +9,6 @@ import {
   fileId,
   isDataExist,
   resultDatas,
-  visualizationDatas,
 } from '../atoms/atom';
 import SideBar from '../components/navbar/SideBar';
 import { useLocation, useParams } from 'react-router-dom';
@@ -18,19 +17,22 @@ import Chat from '../components/footer/Chat';
 
 const DATA_KEY_LIST = 'data_list';
 
-const Section = styled.section`
-  width: 84%;
-  margin-left: 16%;
-  background-color: ${(props) => props.theme.bgColor};
+const Section = styled.div`
+  display: flex;
+`;
+
+const AnalyticsWrapper = styled.section`
+  width: 100%;
   border-radius: 15px;
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: ${(props) => props.theme.bgColor};
 `;
 
 function Analytics() {
   const [resultData, setResultData] = useRecoilState(resultDatas);
   const [isData, setIsData] = useRecoilState(isDataExist);
-  const [visualizationData, setVisualizationData] =
-    useRecoilState(visualizationDatas);
+
   const setDataList = useSetRecoilState(fileId);
   const params = useParams<{ fileId: string }>();
 
@@ -39,14 +41,6 @@ function Analytics() {
   const { state } = useLocation<ILocation>();
 
   const DATA_KEY = params.fileId;
-
-  const fillterAndSetVisualizationData = (data: IVisualizationData[]) => {
-    const imgData = data.filter(
-      (data: IVisualizationData) => data.content[0].type === 'image_file'
-    );
-    setVisualizationData(imgData);
-    setIsData(true);
-  };
 
   useEffect(() => {
     const localDataList = localStorage.getItem(DATA_KEY_LIST);
@@ -67,30 +61,31 @@ function Analytics() {
     if (state?.data !== undefined) {
       setResultData(state.data);
       localStorage.setItem(DATA_KEY, JSON.stringify(state.data));
-      fillterAndSetVisualizationData(state.data);
+      setIsData(true);
     } else {
       if (localStorage.getItem(DATA_KEY) !== null) {
         const localData = JSON.parse(localStorage.getItem(DATA_KEY) || '');
         setResultData(localData);
-        fillterAndSetVisualizationData(localData);
+        setIsData(true);
       }
     }
   }, [DATA_KEY]);
 
   console.log(resultData);
-  console.log(visualizationData);
 
   return (
     <>
       {isData ? (
         <>
-          <SideBar />
           <Section>
-            <Visualization />
-            <GoalExporation></GoalExporation>
-            <form>
-              <Chat register={register}></Chat>
-            </form>
+            <SideBar />
+            <AnalyticsWrapper>
+              <Visualization />
+              <GoalExporation></GoalExporation>
+              <form>
+                <Chat register={register}></Chat>
+              </form>
+            </AnalyticsWrapper>
           </Section>
         </>
       ) : (
