@@ -10,37 +10,50 @@ import { revokeToken } from '../../APIs/api';
 const DATA_KEY_List = 'data_list';
 
 const Header = styled.header`
-  position: fixed;
-  width: 16%;
+  position: sticky;
+  top: 0;
+  flex: 0 0 13%;
   height: 100vh;
-  /* box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.25); */
+  box-shadow: rgba(255, 255, 255, 0.18) 1px 0px 0px 0px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  p,
-  a {
-    text-align: center;
+  text-align: center;
+  p {
+    color: #d6d6d6;
+  }
+  a,
+  span {
     color: ${(props) => props.theme.sideBarTextColor};
+    font-weight: 400;
   }
   background-color: ${(props) => props.theme.sideBarBgColor};
 `;
 
 const LidaIcon = styled.div`
-  margin-top: 20px;
+  flex: 0 0 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const LidaText = styled.p`
+  color: #ffffff !important;
+  font-size: 25px;
   font-weight: bold !important;
   text-transform: uppercase;
 `;
 
-const MeueNav = styled.nav``;
+const MeueNav = styled.nav`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 0 0 70%;
+`;
 
 const MeueList = styled.ul`
   li {
     display: flex;
     justify-content: center;
-    margin-bottom: 30px;
   }
   li div {
     display: flex;
@@ -53,22 +66,19 @@ const MeueList = styled.ul`
 `;
 
 const HomeMenu = styled.li<{ $isActive: boolean }>`
-  transition: all 1s;
-  div {
-    background-color: ${(props) =>
-      props.$isActive ? props.theme.highLightBgColor : props.theme.bodyColor};
+  div a {
+    transition: all 0.5s;
     color: ${(props) =>
-      props.$isActive ? props.theme.highLightTextColor : props.theme.textColor};
+      props.$isActive
+        ? props.theme.highLightTextColor
+        : props.theme.sideBarTextColor};
   }
-  transition: all 1s;
 
-  div:hover {
-    background-color: ${(props) => props.theme.highLightBgColor};
-    color: ${(props) => props.theme.textColor};
+  div:hover a {
+    color: ${(props) => props.theme.highLightTextColor};
   }
-  div.on-hover {
-    background-color: ${(props) => props.theme.bodyColor};
-    color: ${(props) => props.theme.textColor};
+  div.on-hover a {
+    color: ${(props) => props.theme.sideBarTextColor};
   }
 `;
 
@@ -77,27 +87,23 @@ const MenuWrapper = styled.div``;
 const HomeMenuImg = styled.img``;
 
 const DemoMenu = styled.li<{ $isActive: boolean }>`
-  transition: all 1s;
-  div {
-    background-color: ${(props) =>
-      props.$isActive ? props.theme.highLightBgColor : props.theme.bodyColor};
-    color: ${(props) => props.theme.textColor};
+  div a {
+    transition: all 0.5s;
+    color: ${(props) =>
+      props.$isActive
+        ? props.theme.highLightTextColor
+        : props.theme.sideBarTextColor};
   }
-  transition: all 1s;
 
-  div:hover {
-    background-color: ${(props) => props.theme.highLightBgColor};
-    color: ${(props) => props.theme.textColor};
+  div:hover a {
+    color: ${(props) => props.theme.highLightTextColor};
   }
-  div.on-hover {
-    background-color: ${(props) => props.theme.bodyColor};
-    color: ${(props) => props.theme.textColor};
+  div.on-hover a {
+    color: ${(props) => props.theme.sideBarTextColor};
   }
 `;
 
 const DemoMenuImg = styled.img``;
-
-const DataNav = styled.div``;
 
 const DataRecordList = styled.ul``;
 
@@ -113,16 +119,13 @@ const Data = styled.li`
   margin-top: 10px;
 `;
 
-const AuthNav = styled.div``;
-
-const AuthNavTitle = styled.p`
-  margin-bottom: 10px;
-  font-weight: bold;
-`;
-
 const AuthList = styled.ul`
   li {
     margin-bottom: 5px;
+  }
+  p {
+    margin-bottom: 10px;
+    font-weight: bold;
   }
 `;
 
@@ -217,7 +220,7 @@ function SideBar() {
                 onMouseLeave={onMouseHomeLeave}
                 onMouseOver={onMouseHomeOver}
               >
-                <HomeMenuImg src="http://localhost:3000/Images/home.svg" />
+                {/* <HomeMenuImg src="http://localhost:3000/Images/home.svg" /> */}
                 <Link to={'/'}>Home</Link>
               </MenuWrapper>
             </HomeMenu>
@@ -227,46 +230,40 @@ function SideBar() {
                 onMouseLeave={onMouseDemoLeave}
                 onMouseOver={onMouseDemoOver}
               >
-                <DemoMenuImg src="http://localhost:3000/Images/demo.svg" />
+                {/* <DemoMenuImg src="http://localhost:3000/Images/demo.svg" /> */}
                 <Link to={'/demo'}>Demo</Link>
               </MenuWrapper>
             </DemoMenu>
           </MeueList>
-          <DataNav>
-            <DataRecordList>
-              <DataList>
-                <p>DataList</p>
-              </DataList>
-              {dataList?.map((fileId) => (
-                <Data key={fileId}>
-                  <Link
-                    to={{
-                      pathname: `/analytics/${fileId}`,
-                    }}
-                  >
-                    Data
-                  </Link>
-                </Data>
-              ))}
-            </DataRecordList>
-          </DataNav>
-        </MeueNav>
-        <AuthNav>
-          <AuthNavTitle>Authentication</AuthNavTitle>
+          <DataRecordList>
+            <DataList>
+              <p>DataList</p>
+            </DataList>
+            {dataList?.map((fileId) => (
+              <Data key={fileId}>
+                <Link
+                  to={{
+                    pathname: `/analytics/${fileId}`,
+                  }}
+                >
+                  Data
+                </Link>
+              </Data>
+            ))}
+          </DataRecordList>
           <AuthList>
+            <p>Authentication</p>
             {isLogin ? (
               <SignOut onClick={googleLogOut}>
-                <p>SignOut</p>
+                <span>SignOut</span>
               </SignOut>
             ) : (
               <SignIn>
-                <p>
-                  <Link to={'/login'}>SignIn</Link>
-                </p>
+                <Link to={'/login'}>SignIn</Link>
               </SignIn>
             )}
           </AuthList>
-        </AuthNav>
+        </MeueNav>
       </Header>
     </>
   );

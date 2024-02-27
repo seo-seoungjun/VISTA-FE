@@ -20,23 +20,26 @@ const RightSide = styled.div`
 `;
 
 const DiscriptiopWrapper = styled.div`
-  color: ${(props) => props.theme.sideBarTextColor};
-  background-color: rgba(255, 255, 255, 0.02);
-  padding: 30px 80px;
+  box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px;
+  padding: 50px 80px;
   border-radius: 20px;
 `;
 
 const Title = styled.h1`
+  color: ${(props) => props.theme.mainPage.mostHighlightColor};
   font-size: 50px;
   font-weight: bold;
   margin-bottom: 30px;
 `;
 
-const Discription = styled.p``;
+const Discription = styled.p`
+  color: ${(props) => props.theme.mainPage.textColor};
+  font-size: 18px;
+`;
 
 const MoreBtn = styled.button`
   background-color: #4044ed;
-  color: ${(props) => props.theme.sideBarTextColor};
+  color: ${(props) => props.theme.mainPage.mostHighlightColor};
   padding: 3px 10px;
   cursor: pointer;
   border: none;

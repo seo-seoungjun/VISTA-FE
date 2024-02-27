@@ -27,7 +27,7 @@ const Form = styled.form`
   width: 300px;
 
   h1 {
-    color: ${(props) => props.theme.sideBarTextColor};
+    color: ${(props) => props.theme.mainPage.mostHighlightColor};
     font-size: 50px;
     margin-bottom: 60px;
   }
@@ -39,13 +39,13 @@ const Input = styled.input`
   background-color: inherit;
   border: none;
   outline: none;
-  color: ${(props) => props.theme.sideBarTextColor};
-  border-bottom: 1px solid ${(props) => props.theme.sideBarTextColor};
+  color: ${(props) => props.theme.mainPage.mostHighlightColor};
+  border-bottom: 1px solid ${(props) => props.theme.mainPage.mostHighlightColor};
 `;
 
 const LogInButton = styled.button`
   background-color: #4044ed;
-  color: ${(props) => props.theme.sideBarTextColor};
+  color: ${(props) => props.theme.mainPage.mostHighlightColor};
   padding: 10px;
   cursor: pointer;
   border: none;
@@ -65,12 +65,12 @@ const SocialLoginBtn = styled.div`
   background-color: inherit;
   cursor: pointer;
   padding: 7px;
-  border: 1px solid ${(props) => props.theme.sideBarTextColor};
+  border: 1px solid ${(props) => props.theme.mainPage.mostHighlightColor};
   border-radius: 16px;
-  color: ${(props) => props.theme.sideBarTextColor};
+  color: ${(props) => props.theme.mainPage.mostHighlightColor};
   &:hover {
     color: ${(props) => props.theme.textColor};
-    background-color: ${(props) => props.theme.sideBarTextColor};
+    background-color: ${(props) => props.theme.mainPage.mostHighlightColor};
   }
 `;
 
