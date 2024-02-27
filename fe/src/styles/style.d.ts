@@ -14,5 +14,11 @@ declare module 'styled-components' {
     logInTheme: {
       textColor: string;
     };
+    mainPage: {
+      highlightTextColor: string;
+      TitleColor: string;
+      textColor: string;
+      mostHighlightColor: string;
+    };
   }
 }
