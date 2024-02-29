@@ -15,13 +15,17 @@ import { useMutation } from 'react-query';
 import { submitFormApi } from '../../../APIs/api';
 import { Redirect } from 'react-router-dom';
 
-const Section = styled.section`
+const Main = styled.div`
   width: 100%;
+  background-color: ${(props) => props.theme.bgColor};
+  border-radius: 15px 0px 0px 15px;
+`;
+
+const Section = styled.section`
   display: flex;
   align-items: center;
   flex-direction: column;
-  background-color: ${(props) => props.theme.bgColor};
-  border-radius: 15px;
+  color: ${(props) => props.theme.textColor};
 `;
 
 const DataForm = styled.form`
@@ -41,7 +45,10 @@ const SettingsWrapper = styled.div`
   justify-content: space-between;
   width: 80%;
 `;
-const GrammerList = styled.select``;
+const GrammerList = styled.select`
+  color: ${(props) => props.theme.textColor};
+  background-color: transparent;
+`;
 
 const GrammerSettingsBtn = styled.div`
   display: flex;
@@ -65,7 +72,6 @@ const FileUploadInput = styled.input`
 `;
 
 const FileUploadLabel = styled.label`
-  background-color: ${(props) => props.theme.bgColor};
   margin-top: 15px;
   padding: 15% 30%;
   cursor: pointer;
@@ -86,7 +92,6 @@ const SampleDataWrapper = styled.div`
 
 const SampleData = styled.div`
   cursor: pointer;
-  background-color: ${(props) => props.theme.bgColor};
   border: 1px solid ${(props) => props.theme.borderColor};
   border-radius: 10px;
   padding: 5px 10px;
@@ -152,73 +157,75 @@ function FileUpLoad() {
       ) : isLoading ? (
         'Loading'
       ) : (
-        <Section>
-          <DataForm
-            encType="multipart/form-data"
-            onSubmit={handleSubmit(SubmitOnValid)}
-          >
-            <SettingsWrapper>
-              <GrammerList {...register('grammar')}>
-                {grammarList?.map((grammar) => (
-                  <option value={grammar} key={grammar}>
-                    {grammar}
-                  </option>
-                ))}
-              </GrammerList>
-              <GrammerSettingsBtn onClick={onSettingsClick}>
-                <SettingBtnImg src="http://localhost:3000/Images/settings.svg" />
-              </GrammerSettingsBtn>
-            </SettingsWrapper>
-            <FileUploadInput
-              {...register('file', {
-                required: 'File is Required',
-                validate: (value) => {
-                  const acceptedFormats = ['csv', 'json'];
-                  const fileExtension = value[0]?.name
-                    .split('.')
-                    .pop()
-                    .toLowerCase();
-                  if (!acceptedFormats.includes(fileExtension)) {
-                    return 'Invalid file format. Only csv or files are allowed.';
-                  }
-                },
-              })}
-              type="file"
-              id="file"
-            />
-            <FileUploadLabel htmlFor="file">
-              <FileUploadIcon src="http://localhost:3000/Images/fileUpload.svg" />
-              <p>upload your own file</p>
-            </FileUploadLabel>
-            <SampleDataWrapper>
-              <SampleData onClick={onSampleDataClick}>
-                <p>sample data</p>
-              </SampleData>
-              <SampleData onClick={onSampleDataClick}>
-                <p>sample data</p>
-              </SampleData>
-              <SampleData onClick={onSampleDataClick}>
-                <p>sample data</p>
-              </SampleData>
-              <SampleData onClick={onSampleDataClick}>
-                <p>sample data</p>
-              </SampleData>
-              <SampleData onClick={onSampleDataClick}>
-                <p>sample data</p>
-              </SampleData>
-            </SampleDataWrapper>
-            {showGenerateSettings ? (
-              <GenerateSettings
-                toggle={setShowGenerateSettings}
-                register={register}
+        <Main>
+          <Section>
+            <DataForm
+              encType="multipart/form-data"
+              onSubmit={handleSubmit(SubmitOnValid)}
+            >
+              <SettingsWrapper>
+                <GrammerList {...register('grammar')}>
+                  {grammarList?.map((grammar) => (
+                    <option value={grammar} key={grammar}>
+                      {grammar}
+                    </option>
+                  ))}
+                </GrammerList>
+                <GrammerSettingsBtn onClick={onSettingsClick}>
+                  <SettingBtnImg src="http://localhost:3000/Images/settings.svg" />
+                </GrammerSettingsBtn>
+              </SettingsWrapper>
+              <FileUploadInput
+                {...register('file', {
+                  required: 'File is Required',
+                  validate: (value) => {
+                    const acceptedFormats = ['csv', 'json'];
+                    const fileExtension = value[0]?.name
+                      .split('.')
+                      .pop()
+                      .toLowerCase();
+                    if (!acceptedFormats.includes(fileExtension)) {
+                      return 'Invalid file format. Only csv or files are allowed.';
+                    }
+                  },
+                })}
+                type="file"
+                id="file"
               />
-            ) : null}
-            <PromptTemplete />
-            <Evaluate />
-            <Chat register={register}></Chat>
-            <h1 style={{ color: 'red' }}>{errors?.file?.message as any}</h1>
-          </DataForm>
-        </Section>
+              <FileUploadLabel htmlFor="file">
+                <FileUploadIcon src="http://localhost:3000/Images/fileUpload.svg" />
+                <p>upload your own file</p>
+              </FileUploadLabel>
+              <SampleDataWrapper>
+                <SampleData onClick={onSampleDataClick}>
+                  <p>sample data</p>
+                </SampleData>
+                <SampleData onClick={onSampleDataClick}>
+                  <p>sample data</p>
+                </SampleData>
+                <SampleData onClick={onSampleDataClick}>
+                  <p>sample data</p>
+                </SampleData>
+                <SampleData onClick={onSampleDataClick}>
+                  <p>sample data</p>
+                </SampleData>
+                <SampleData onClick={onSampleDataClick}>
+                  <p>sample data</p>
+                </SampleData>
+              </SampleDataWrapper>
+              {showGenerateSettings ? (
+                <GenerateSettings
+                  toggle={setShowGenerateSettings}
+                  register={register}
+                />
+              ) : null}
+              <PromptTemplete />
+              <Evaluate />
+              <Chat register={register}></Chat>
+              <h1 style={{ color: 'red' }}>{errors?.file?.message as any}</h1>
+            </DataForm>
+          </Section>
+        </Main>
       )}
     </>
   );
