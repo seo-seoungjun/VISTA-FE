@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import Infograpic from '../img/Infograpic';
+import Summary from '../img/Summary';
+import Repair from '../img/Repair';
 
 const Section = styled.section`
   padding: 0 70px;
@@ -56,6 +59,17 @@ const GridContent = styled.div`
   }
 `;
 
+const ImgWrapper = styled.div`
+  display: flex;
+  padding: 25px 0;
+  /* justify-content: center; */
+  svg {
+    width: 60%;
+  }
+`;
+
+const FeatureImg = styled.img``;
+
 const FeatureTitle = styled.div`
   color: ${(props) => props.theme.mainPage.mostHighlightColor};
   font-size: 22px;
@@ -82,6 +96,9 @@ function Features() {
         <FeatuersGridContainer>
           <GridColumn>
             <GridContent>
+              <ImgWrapper>
+                <Summary />
+              </ImgWrapper>
               <FeatureTitle>
                 <span>Data Summarization</span>
               </FeatureTitle>
@@ -114,6 +131,9 @@ function Features() {
           </GridColumn>
           <GridColumn>
             <GridContent>
+              <ImgWrapper>
+                <Infograpic />
+              </ImgWrapper>
               <FeatureTitle>
                 <span>Infographics Generation</span>
               </FeatureTitle>
@@ -146,6 +166,9 @@ function Features() {
           </GridColumn>
           <GridColumn>
             <GridContent>
+              <ImgWrapper>
+                <Repair />
+              </ImgWrapper>
               <FeatureTitle>
                 <span>Visualization Repair</span>
               </FeatureTitle>

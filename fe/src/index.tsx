@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { ThemeProvider } from 'styled-components';
-import { theme } from './styles/theme';
+import { darkTheme, lightTheme } from './styles/theme';
 import { RecoilRoot } from 'recoil';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { GoogleOAuthProvider } from '@react-oauth/google';
@@ -21,7 +21,7 @@ root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <RecoilRoot>
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={darkTheme}>
           {clientId && (
             <GoogleOAuthProvider clientId={clientId}>
               <App />

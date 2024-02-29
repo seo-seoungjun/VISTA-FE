@@ -3,13 +3,7 @@ import styled from 'styled-components';
 import Visualization from '../components/analytics/Visualization';
 import GoalExporation from '../components/analytics/GoalExporation';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import {
-  ILocation,
-  IVisualizationData,
-  fileId,
-  isDataExist,
-  resultDatas,
-} from '../atoms/atom';
+import { ILocation, fileId, isDataExist, resultDatas } from '../atoms/atom';
 import SideBar from '../components/navbar/SideBar';
 import { useLocation, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -23,7 +17,8 @@ const Section = styled.div`
 
 const AnalyticsWrapper = styled.section`
   width: 100%;
-  border-radius: 15px;
+  border-radius: 15px 0px 0px 15px;
+  padding: 20px 30px;
   display: flex;
   flex-direction: column;
   background-color: ${(props) => props.theme.bgColor};
