@@ -3,7 +3,7 @@ import SideBar from '../components/navbar/SideBar';
 import styled from 'styled-components';
 import Intro from '../components/main/Intro';
 import Features from '../components/main/Features';
-import Team from '../components/main/Team';
+import Team from '../components/main/team/Team';
 
 const Section = styled.main`
   display: flex;

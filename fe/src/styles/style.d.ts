@@ -19,6 +19,7 @@ declare module 'styled-components' {
       TitleColor: string;
       textColor: string;
       mostHighlightColor: string;
+      boxShadow: string;
     };
   }
 }
