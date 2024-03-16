@@ -6,7 +6,7 @@ import { motion } from 'framer-motion/dist/framer-motion';
 import Introduce from './Introduce';
 
 const Section = styled.section`
-  padding: 180px 70px;
+  padding: 150px 70px;
   min-height: 90vh;
 `;
 
@@ -39,7 +39,7 @@ const ContentWrapper = styled.div`
   color: ${(props) => props.theme.mainPage.textColor};
   justify-content: space-around;
   .content {
-    width: 22%;
+    width: 28%;
     height: 330px;
     background-color: #11111b;
     display: flex;
