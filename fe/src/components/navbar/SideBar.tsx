@@ -5,7 +5,8 @@ import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { TokenKey, fileId, userInfo } from '../../atoms/atom';
 import { useMutation } from 'react-query';
-import { revokeToken } from '../../APIs/api';
+import { getUserInfo, revokeToken } from '../../APIs/api';
+import { useAccessTokenVaild } from '../../hooks/auth/auth';
 
 const DATA_KEY_List = 'data_list';
 
@@ -163,6 +164,10 @@ const onMouseDemoLeave = (e: React.MouseEvent<HTMLDivElement>) => {
   div?.classList.remove('on-hover');
 };
 
+const DemoLink = styled.a`
+  cursor: pointer;
+`;
+
 function SideBar() {
   const homeMenuMatch = useRouteMatch({ path: '/', exact: true });
   const demoMenuMatch = useRouteMatch({ path: '/demo', exact: true });
@@ -186,7 +191,6 @@ function SideBar() {
     }
   }, [userData]);
 
-  const accessToken = localStorage.getItem(TokenKey.accessToken) as string;
   const history = useHistory();
 
   const { mutate: revokeTokenMutate } = useMutation(revokeToken, {
@@ -204,6 +208,13 @@ function SideBar() {
 
   const googleLogOut = () => {
     revokeTokenMutate(accessToken);
+  };
+
+  const accessToken = localStorage.getItem(TokenKey.accessToken) as string;
+  const mutate = useAccessTokenVaild('/demo');
+
+  const onDemoClick = () => {
+    mutate(accessToken);
   };
 
   return (
@@ -231,7 +242,7 @@ function SideBar() {
                 onMouseOver={onMouseDemoOver}
               >
                 {/* <DemoMenuImg src="http://localhost:3000/Images/demo.svg" /> */}
-                <Link to={'/demo'}>Demo</Link>
+                <DemoLink onClick={onDemoClick}>Demo</DemoLink>
               </MenuWrapper>
             </DemoMenu>
           </MeueList>
