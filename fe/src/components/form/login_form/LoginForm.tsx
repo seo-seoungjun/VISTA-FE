@@ -111,26 +111,6 @@ function LoginForm() {
   const history = useHistory();
   const setTokenData = useSetRecoilState(tokenInfo);
 
-  // const setUserInfo = useSetRecoilState(userInfo);
-
-  // const { mutate: userInfoMutate } = useMutation(getUserInfo, {
-  //   onSuccess: (userData) => {
-  //     if (userData != 0) {
-  //       setUserInfo(userData);
-
-  //       console.log(userData);
-
-  //       history.push({
-  //         pathname: '/demo',
-  //         state: userData,
-  //       });
-  //     }
-  //   },
-  //   onError: (error) => {
-  //     console.log(error);
-  //   },
-  // });
-
   const { mutate: tokenMutate } = useMutation(getToken, {
     onSuccess: (tokenData) => {
       localStorage.setItem(TokenKey.accessToken, tokenData?.access_token);
@@ -139,7 +119,6 @@ function LoginForm() {
 
       console.log(tokenData);
 
-      // userInfoMutate(tokenData.access_token);
       history.push('/demo');
     },
     onError: (error) => {

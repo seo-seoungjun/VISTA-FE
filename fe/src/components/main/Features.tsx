@@ -12,7 +12,7 @@ const Section = styled.section`
 const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
+  align-items: center;
 `;
 
 const DiscriptionWrapper = styled.div`
@@ -35,15 +35,17 @@ const Discription = styled.p`
 `;
 
 const FeatuersGridContainer = styled.div`
+  margin-top: 30px;
+  width: 80%;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-gap: 16px;
+  grid-gap: 20px;
   display: grid;
 `;
 
 const GridColumn = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
 `;
 
 const GridContent = styled.div`

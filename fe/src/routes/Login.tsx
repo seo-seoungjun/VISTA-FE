@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import LoginForm from '../components/form/login_form/LoginForm';
 import { Link } from 'react-router-dom';
 import { useAccessTokenVaild } from '../hooks/auth/auth';
+import { TokenKey } from '../atoms/atom';
 
 const LoginSection = styled.section`
   display: flex;
@@ -51,7 +52,12 @@ const MoreBtn = styled.button`
 `;
 
 function Login() {
-  useAccessTokenVaild('/demo');
+  const accessToken = localStorage.getItem(TokenKey.accessToken) as string;
+  const mutate = useAccessTokenVaild('/demo');
+
+  useEffect(() => {
+    mutate(accessToken);
+  }, []);
   return (
     <>
       <LoginSection>
