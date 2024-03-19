@@ -2,12 +2,13 @@ import axios from 'axios';
 import {
   IResponseData,
   ITokenResponse,
-  IUserInfo,
-  PostFileFormDataBody,
+  IGoogleUserInfo,
+  PostFormDataBody,
 } from './../atoms/atom';
 import { MutateFunction } from 'react-query';
 
 const BASE_URL = 'http://3.39.6.41';
+const DNS = 'http://techvista24.com';
 const SPRING_PORT = 8000;
 // const FLASK_PORT = 5901;
 // const LOCAL_URL = 'http://10.50.75.195';
@@ -15,8 +16,8 @@ const SPRING_PORT = 8000;
 export const submitFormApi: MutateFunction<
   IResponseData,
   void,
-  PostFileFormDataBody
-> = async (data: PostFileFormDataBody) => {
+  PostFormDataBody
+> = async (data: PostFormDataBody) => {
   console.log(data);
   const res = await axios.post(`${BASE_URL}:${SPRING_PORT}/send`, data, {
     headers: {
@@ -50,6 +51,24 @@ export const getVisialization = async () => {
   return res;
 };
 
+export const postSignUp = async (data: PostFormDataBody) => {
+  const res = await axios.post(`${DNS}:${SPRING_PORT}/api/users/signup`, data);
+
+  return res.data;
+};
+
+export const EmailLogIn = async (data: PostFormDataBody) => {
+  const res = await axios.post(`${DNS}:${SPRING_PORT}/api/users/login`, data);
+
+  return res.data;
+};
+
+export const getEmailLoginUserInfo = async () => {
+  const res = await axios.get(`${DNS}:${SPRING_PORT}/api/users/info`);
+
+  return res.data;
+};
+
 export const getToken = async (authorizationCode: string) => {
   // 기본 요청 매개변수
   const data = {
@@ -80,7 +99,7 @@ export const getUserInfo = async (accessToken: string | null) => {
     const userInfoUrl = process.env
       .REACT_APP_GOOGLE_OAUTH_USERINFO_URL as string;
 
-    const res = await axios.get<IUserInfo>(userInfoUrl, {
+    const res = await axios.get<IGoogleUserInfo>(userInfoUrl, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
