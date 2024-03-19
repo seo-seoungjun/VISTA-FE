@@ -1,8 +1,8 @@
 import { useHistory } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { getUserInfo } from '../../APIs/api';
-import { UseMutateFunction, useMutation } from 'react-query';
-import { IUserInfo, TokenKey, userInfo } from '../../atoms/atom';
+import { useMutation } from 'react-query';
+import { userInfo } from '../../atoms/atom';
 
 export const useAccessTokenVaild = (redirectUrl?: string) => {
   const setUserInfo = useSetRecoilState(userInfo);

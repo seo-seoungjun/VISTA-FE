@@ -1,17 +1,24 @@
 import { useGoogleLogin } from '@react-oauth/google';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
+import {
+  Link,
+  Route,
+  Switch,
+  useHistory,
+  useRouteMatch,
+} from 'react-router-dom';
 import styled from 'styled-components';
-import { TokenKey, tokenInfo } from '../../../atoms/atom';
+import { TokenKey, tokenInfo, userInfo } from '../../../atoms/atom';
 import { useSetRecoilState } from 'recoil';
-import { useMutation } from 'react-query';
-import { getToken } from '../../../APIs/api';
+import { useMutation, useQuery } from 'react-query';
+import { getToken, EmailLogIn, getEmailLoginUserInfo } from '../../../APIs/api';
+import SignUpForm from './SignUpForm';
 require('dotenv').config();
 
 interface ILogin {
-  id: string;
-  pw: string;
+  email: string;
+  password: string;
 }
 
 const Container = styled.div`
@@ -50,6 +57,22 @@ const LogInButton = styled.button`
   cursor: pointer;
   border: none;
   margin-bottom: 12px;
+`;
+
+const SignUpToggleLink = styled(Link)`
+  transition: 0.5s all;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  background-color: inherit;
+  padding: 7px 14px;
+  border: 1px solid ${(props) => props.theme.mainPage.mostHighlightColor};
+  border-radius: 16px;
+  color: ${(props) => props.theme.mainPage.mostHighlightColor};
+  &:hover {
+    color: ${(props) => props.theme.textColor};
+    background-color: ${(props) => props.theme.mainPage.mostHighlightColor};
+  }
 `;
 
 const SocialLoginBtnWrapper = styled.div``;
@@ -94,19 +117,39 @@ function LoginForm() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      id: '',
-      pw: '',
+      email: '',
+      password: '',
+    },
+  });
+
+  const setUserInfo = useSetRecoilState(userInfo);
+
+  const { mutate: getEmailUserInfo } = useMutation(getEmailLoginUserInfo, {
+    onSuccess: (data) => {
+      console.log(data);
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
+  const { mutate } = useMutation(EmailLogIn, {
+    onSuccess: (data) => {
+      console.log(data);
+      // getEmailUserInfo();
+      history.push('/demo');
+    },
+    onError: (err) => {
+      console.log(err);
     },
   });
 
   const SubmitOnValid = (data: ILogin) => {
-    const formData = new FormData();
-
-    for (const [key, value] of Object.entries(data)) {
-      formData.append(key, value);
-      console.log(key, value);
-    }
+    mutate(data);
   };
+
+  const loginMatch = useRouteMatch('/login');
+  const signMatuch = useRouteMatch('/login/signup');
 
   const history = useHistory();
   const setTokenData = useSetRecoilState(tokenInfo);
@@ -146,20 +189,42 @@ function LoginForm() {
 
   return (
     <Container>
-      <Form
-        encType="multipart/form-data"
-        onSubmit={handleSubmit(SubmitOnValid)}
-      >
-        <h1>Login</h1>
-        <Input {...register('id')} required type="text" placeholder="Id" />
-        <Input
-          {...register('pw')}
-          required
-          type="password"
-          placeholder="password"
-        />
-        <LogInButton type="submit">login</LogInButton>
-      </Form>
+      <Switch>
+        <Route exact path={'/login/signup'}>
+          <SignUpForm />
+        </Route>
+      </Switch>
+      <Switch>
+        <Route exact path={'/login'}>
+          <Form
+            encType="multipart/form-data"
+            onSubmit={handleSubmit(SubmitOnValid)}
+          >
+            <h1>Login</h1>
+            <Input
+              {...register('email')}
+              required
+              type="email"
+              placeholder="Id"
+            />
+            <Input
+              {...register('password')}
+              required
+              type="password"
+              placeholder="password"
+            />
+            <LogInButton type="submit">login</LogInButton>
+          </Form>
+        </Route>
+      </Switch>
+      {loginMatch?.isExact && (
+        <SignUpToggleLink to={'/login/signup'}>
+          Sign Up With Email
+        </SignUpToggleLink>
+      )}
+      {signMatuch?.isExact && (
+        <SignUpToggleLink to={'/login'}>Log in</SignUpToggleLink>
+      )}
       <SocialLoginBtnWrapper>
         <SocialLoginBtn onClick={() => handleGoogleLogin()}>
           <GoogleIcon src="http://localhost:3000/Images/google.svg" />

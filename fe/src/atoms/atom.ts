@@ -12,7 +12,7 @@ export enum TokenKey {
   'refreshToken' = 'refresh_token',
 }
 
-export interface PostFileFormDataBody {
+export interface PostFormDataBody {
   [key: string]: any;
 }
 
@@ -105,7 +105,9 @@ export interface IDemoLocation {
   verified_email: boolean;
 }
 
-export interface IUserInfo {
+export interface IEmailUserInfo {}
+
+export interface IGoogleUserInfo {
   email: string;
   given_name: string;
   id: string;
@@ -197,7 +199,7 @@ export const tokenInfo = atom<ITokenResponse>({
   key: 'tokenData',
 });
 
-export const userInfo = atom<IUserInfo | null>({
+export const userInfo = atom<IGoogleUserInfo | null | IEmailUserInfo>({
   key: 'userData',
   default: null,
 });
