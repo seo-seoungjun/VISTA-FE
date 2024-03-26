@@ -9,11 +9,17 @@ import {
   useRouteMatch,
 } from 'react-router-dom';
 import styled from 'styled-components';
-import { TokenKey, tokenInfo, userInfo } from '../../../atoms/atom';
 import { useSetRecoilState } from 'recoil';
 import { useMutation, useQuery } from 'react-query';
-import { getToken, EmailLogIn, getEmailLoginUserInfo } from '../../../APIs/api';
+
 import SignUpForm from './SignUpForm';
+import {
+  EmailLogIn,
+  getEmailLoginUserInfo,
+} from '../../../APIs/auth/auth.email';
+import { getGoogleLoginToken } from '../../../APIs/auth/auth.google';
+import { tokenInfo, userInfo } from '../../../atoms/user/atom.user';
+import { TokenKey } from '../../../interface/user/interface.user';
 require('dotenv').config();
 
 interface ILogin {
@@ -126,6 +132,7 @@ function LoginForm() {
 
   const { mutate: getEmailUserInfo } = useMutation(getEmailLoginUserInfo, {
     onSuccess: (data) => {
+      setUserInfo(data);
       console.log(data);
     },
     onError: (err) => {
@@ -136,7 +143,7 @@ function LoginForm() {
   const { mutate } = useMutation(EmailLogIn, {
     onSuccess: (data) => {
       console.log(data);
-      // getEmailUserInfo();
+      getEmailUserInfo(data.access_token);
       history.push('/demo');
     },
     onError: (err) => {
@@ -154,7 +161,7 @@ function LoginForm() {
   const history = useHistory();
   const setTokenData = useSetRecoilState(tokenInfo);
 
-  const { mutate: tokenMutate } = useMutation(getToken, {
+  const { mutate: tokenMutate } = useMutation(getGoogleLoginToken, {
     onSuccess: (tokenData) => {
       localStorage.setItem(TokenKey.accessToken, tokenData?.access_token);
       localStorage.setItem(TokenKey.refreshToken, tokenData?.refresh_token);

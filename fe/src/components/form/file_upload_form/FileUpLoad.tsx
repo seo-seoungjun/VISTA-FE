@@ -1,19 +1,26 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Chat from '../../footer/Chat';
-import Evaluate from '../../footer/evaluate';
-import PromptTemplete from './PromptTemplete';
 import GenerateSettings from './GenerateSettings';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import {
-  ISettings,
-  fileUpLoadSettings,
-  grammarSettings,
-} from '../../../atoms/atom';
+
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
-import { submitFormApi } from '../../../APIs/api';
+import { submitFormApi } from '../../../APIs/analytics/analytjcs';
 import { Redirect } from 'react-router-dom';
+import Loading from '../../loading/Loading';
+import {
+  fileUpLoadSettings,
+  grammarSettings,
+} from '../../../atoms/analytics/atom.analytics';
+import { ISettings } from '../../../interface/analytics/interface.analytics';
+
+const LoadingWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const Main = styled.div`
   width: 100%;
@@ -32,18 +39,24 @@ const DataForm = styled.form`
   width: 60%;
   height: 100vh;
   display: flex;
+  justify-content: center;
   margin-top: 30px;
   align-items: center;
   flex-direction: column;
-  /* justify-content: space-between; */
+  justify-content: space-around;
   p {
     font-weight: 400;
   }
 `;
+
+const FileUploadWrapper = styled.div`
+  height: 50%;
+`;
+
 const SettingsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 80%;
+  width: 100%;
 `;
 const GrammerList = styled.select`
   color: ${(props) => props.theme.textColor};
@@ -62,18 +75,12 @@ const SettingBtnImg = styled.img`
 `;
 
 const FileUploadInput = styled.input`
-  position: absolute;
   display: none;
-  width: 0;
-  height: 0;
-  padding: 0;
-  overflow: hidden;
-  border: 0;
 `;
 
 const FileUploadLabel = styled.label`
   margin-top: 15px;
-  padding: 15% 30%;
+  padding: 25% 30%;
   cursor: pointer;
   border-radius: 10px;
   border: 1px solid ${(props) => props.theme.borderColor};
@@ -155,7 +162,10 @@ function FileUpLoad() {
           }}
         />
       ) : isLoading ? (
-        'Loading'
+        <LoadingWrapper>
+          {' '}
+          <Loading />
+        </LoadingWrapper>
       ) : (
         <Main>
           <Section>
@@ -163,64 +173,64 @@ function FileUpLoad() {
               encType="multipart/form-data"
               onSubmit={handleSubmit(SubmitOnValid)}
             >
-              <SettingsWrapper>
-                <GrammerList {...register('grammar')}>
-                  {grammarList?.map((grammar) => (
-                    <option value={grammar} key={grammar}>
-                      {grammar}
-                    </option>
-                  ))}
-                </GrammerList>
-                <GrammerSettingsBtn onClick={onSettingsClick}>
-                  <SettingBtnImg src="http://localhost:3000/Images/settings.svg" />
-                </GrammerSettingsBtn>
-              </SettingsWrapper>
-              <FileUploadInput
-                {...register('file', {
-                  required: 'File is Required',
-                  validate: (value) => {
-                    const acceptedFormats = ['csv', 'json'];
-                    const fileExtension = value[0]?.name
-                      .split('.')
-                      .pop()
-                      .toLowerCase();
-                    if (!acceptedFormats.includes(fileExtension)) {
-                      return 'Invalid file format. Only csv or files are allowed.';
-                    }
-                  },
-                })}
-                type="file"
-                id="file"
-              />
-              <FileUploadLabel htmlFor="file">
-                <FileUploadIcon src="http://localhost:3000/Images/fileUpload.svg" />
-                <p>upload your own file</p>
-              </FileUploadLabel>
-              <SampleDataWrapper>
-                <SampleData onClick={onSampleDataClick}>
-                  <p>sample data</p>
-                </SampleData>
-                <SampleData onClick={onSampleDataClick}>
-                  <p>sample data</p>
-                </SampleData>
-                <SampleData onClick={onSampleDataClick}>
-                  <p>sample data</p>
-                </SampleData>
-                <SampleData onClick={onSampleDataClick}>
-                  <p>sample data</p>
-                </SampleData>
-                <SampleData onClick={onSampleDataClick}>
-                  <p>sample data</p>
-                </SampleData>
-              </SampleDataWrapper>
-              {showGenerateSettings ? (
-                <GenerateSettings
-                  toggle={setShowGenerateSettings}
-                  register={register}
+              <FileUploadWrapper>
+                <SettingsWrapper>
+                  <GrammerList {...register('grammar')}>
+                    {grammarList?.map((grammar) => (
+                      <option value={grammar} key={grammar}>
+                        {grammar}
+                      </option>
+                    ))}
+                  </GrammerList>
+                  <GrammerSettingsBtn onClick={onSettingsClick}>
+                    <SettingBtnImg src="http://localhost:3000/Images/settings.svg" />
+                  </GrammerSettingsBtn>
+                </SettingsWrapper>
+                <FileUploadInput
+                  {...register('file', {
+                    required: 'File is Required',
+                    validate: (value) => {
+                      const acceptedFormats = ['csv', 'json'];
+                      const fileExtension = value[0]?.name
+                        .split('.')
+                        .pop()
+                        .toLowerCase();
+                      if (!acceptedFormats.includes(fileExtension)) {
+                        return 'Invalid file format. Only csv or files are allowed.';
+                      }
+                    },
+                  })}
+                  type="file"
+                  id="file"
                 />
-              ) : null}
-              <PromptTemplete />
-              <Evaluate />
+                <FileUploadLabel htmlFor="file">
+                  <FileUploadIcon src="http://localhost:3000/Images/fileUpload.svg" />
+                  <p>upload your own file</p>
+                </FileUploadLabel>
+                <SampleDataWrapper>
+                  <SampleData onClick={onSampleDataClick}>
+                    <p>sample data</p>
+                  </SampleData>
+                  <SampleData onClick={onSampleDataClick}>
+                    <p>sample data</p>
+                  </SampleData>
+                  <SampleData onClick={onSampleDataClick}>
+                    <p>sample data</p>
+                  </SampleData>
+                  <SampleData onClick={onSampleDataClick}>
+                    <p>sample data</p>
+                  </SampleData>
+                  <SampleData onClick={onSampleDataClick}>
+                    <p>sample data</p>
+                  </SampleData>
+                </SampleDataWrapper>
+                {showGenerateSettings ? (
+                  <GenerateSettings
+                    toggle={setShowGenerateSettings}
+                    register={register}
+                  />
+                ) : null}
+              </FileUploadWrapper>
               <Chat register={register}></Chat>
               <h1 style={{ color: 'red' }}>{errors?.file?.message as any}</h1>
             </DataForm>

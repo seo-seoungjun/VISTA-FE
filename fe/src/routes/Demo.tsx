@@ -4,19 +4,19 @@ import SideBar from '../components/navbar/SideBar';
 
 import { useAccessTokenVaild } from '../hooks/auth/auth';
 import styled from 'styled-components';
-import { TokenKey } from '../atoms/atom';
+import { useMutation } from 'react-query';
 
 const Section = styled.div`
   display: flex;
 `;
 
 function Demo() {
-  const accessToken = localStorage.getItem(TokenKey.accessToken) as string;
-  const mutate = useAccessTokenVaild();
+  // const accessToken = localStorage.getItem(TokenKey.accessToken) as string;
+  // const mutate = useAccessTokenVaild();
 
-  useEffect(() => {
-    mutate(accessToken);
-  }, []);
+  // useEffect(() => {
+  //   mutate(accessToken);
+  // }, []);
 
   return (
     <>
