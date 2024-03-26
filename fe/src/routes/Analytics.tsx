@@ -1,13 +1,16 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Visualization from '../components/analytics/Visualization';
-import GoalExporation from '../components/analytics/GoalExporation';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { ILocation, fileId, isDataExist, resultDatas } from '../atoms/atom';
 import SideBar from '../components/navbar/SideBar';
 import { useLocation, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import Chat from '../components/footer/Chat';
+import {
+  fileId,
+  isDataExist,
+  resultDatas,
+} from '../atoms/analytics/atom.analytics';
+import { ILocation } from '../interface/analytics/interface.analytics';
 
 const DATA_KEY_LIST = 'data_list';
 
@@ -15,13 +18,51 @@ const Section = styled.div`
   display: flex;
 `;
 
-const AnalyticsWrapper = styled.section`
+const GridWrapper = styled.div`
+  display: grid;
+  grid-template-rows: 14fr 1fr;
+  background-color: #ffffff;
   width: 100%;
-  border-radius: 15px 0px 0px 15px;
-  padding: 20px 30px;
+  height: 100vh;
+`;
+
+const AnalyticsWrapper = styled.div`
+  overflow: auto;
+  border-radius: 15px 15px 0px 0px;
+  padding: 20px 30px 0 30px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   background-color: ${(props) => props.theme.bgColor};
+`;
+
+const ChatFormWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ChatForm = styled.form`
+  width: 60%;
+`;
+
+const ChatWrapper = styled.div`
+  background-color: ${(props) => props.theme.bgColor};
+`;
+const ChatInput = styled.input`
+  transition: all 0.3s;
+  text-align: center;
+  width: 100%;
+  height: 30px;
+  border-radius: 10px;
+  outline: none;
+  border: 0;
+  &:focus {
+    background-color: #8888884e;
+  }
+`;
+const SubmitBtn = styled.button`
+  display: none;
 `;
 
 function Analytics() {
@@ -74,13 +115,101 @@ function Analytics() {
         <>
           <Section>
             <SideBar />
-            <AnalyticsWrapper>
-              <Visualization />
-              <GoalExporation></GoalExporation>
-              <form>
-                <Chat register={register}></Chat>
-              </form>
-            </AnalyticsWrapper>
+            <GridWrapper>
+              <AnalyticsWrapper>
+                <Visualization />
+                {/* 채팅하나씩 추가 */}
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Nesciunt veritatis autem fugiat quisquam. Aliquam ut eum
+                  blanditiis maiores asperiores quas voluptatibus porro aut
+                  quibusdam dolorem suscipit hic maxime, quis saepe.
+                </p>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Nesciunt veritatis autem fugiat quisquam. Aliquam ut eum
+                  blanditiis maiores asperiores quas voluptatibus porro aut
+                  quibusdam dolorem suscipit hic maxime, quis saepe.
+                </p>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Nesciunt veritatis autem fugiat quisquam. Aliquam ut eum
+                  blanditiis maiores asperiores quas voluptatibus porro aut
+                  quibusdam dolorem suscipit hic maxime, quis saepe.
+                </p>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Nesciunt veritatis autem fugiat quisquam. Aliquam ut eum
+                  blanditiis maiores asperiores quas voluptatibus porro aut
+                  quibusdam dolorem suscipit hic maxime, quis saepe.
+                </p>
+                v
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Nesciunt veritatis autem fugiat quisquam. Aliquam ut eum
+                  blanditiis maiores asperiores quas voluptatibus porro aut
+                  quibusdam dolorem suscipit hic maxime, quis saepe.
+                </p>
+                v
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Nesciunt veritatis autem fugiat quisquam. Aliquam ut eum
+                  blanditiis maiores asperiores quas voluptatibus porro aut
+                  quibusdam dolorem suscipit hic maxime, quis saepe.
+                </p>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Nesciunt veritatis autem fugiat quisquam. Aliquam ut eum
+                  blanditiis maiores asperiores quas voluptatibus porro aut
+                  quibusdam dolorem suscipit hic maxime, quis saepe.
+                </p>
+                v
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Nesciunt veritatis autem fugiat quisquam. Aliquam ut eum
+                  blanditiis maiores asperiores quas voluptatibus porro aut
+                  quibusdam dolorem suscipit hic maxime, quis saepe.
+                </p>
+                v
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Nesciunt veritatis autem fugiat quisquam. Aliquam ut eum
+                  blanditiis maiores asperiores quas voluptatibus porro aut
+                  quibusdam dolorem suscipit hic maxime, quis saepe.
+                </p>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Nesciunt veritatis autem fugiat quisquam. Aliquam ut eum
+                  blanditiis maiores asperiores quas voluptatibus porro aut
+                  quibusdam dolorem suscipit hic maxime, quis saepe.
+                </p>
+                v
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Nesciunt veritatis autem fugiat quisquam. Aliquam ut eum
+                  blanditiis maiores asperiores quas voluptatibus porro aut
+                  quibusdam dolorem suscipit hic maxime, quis saepe.
+                </p>
+                v
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Nesciunt veritatis autem fugiat quisquam. Aliquam ut eum
+                  blanditiis maiores asperiores quas voluptatibus porro aut
+                  quibusdam dolorem suscipit hic maxime, quis saepe.
+                </p>
+              </AnalyticsWrapper>
+              <ChatFormWrapper>
+                <ChatForm>
+                  <ChatWrapper>
+                    <ChatInput
+                      {...register('user_message')}
+                      placeholder="change x axis label to meter per second"
+                    />
+                    <SubmitBtn type="submit">제출</SubmitBtn>
+                  </ChatWrapper>
+                </ChatForm>
+              </ChatFormWrapper>
+            </GridWrapper>
           </Section>
         </>
       ) : (

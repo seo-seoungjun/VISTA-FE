@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useAccessTokenVaild } from '../../hooks/auth/auth';
+import { Link } from 'react-router-dom';
+import { TokenKey } from '../../interface/user/interface.user';
 
 const Section = styled.main`
   /* width: 84%; */
@@ -50,10 +53,10 @@ const StartBtnWapper = styled.div`
   }
 `;
 
-const StartBtn = styled.a`
+const StartBtnLink = styled.a`
   background-color: ${(props) => props.theme.mainPage.highlightTextColor};
   transition: all 0.2s ease-in-out;
-
+  cursor: pointer;
   &:hover {
     background-color: #cccccc;
   }
@@ -71,6 +74,13 @@ const GithubBtn = styled.a`
 `;
 
 function Intro() {
+  const accessToken = localStorage.getItem(TokenKey.accessToken) as string;
+  const mutate = useAccessTokenVaild('/demo');
+
+  const onStartBtnClick = () => {
+    mutate(accessToken);
+  };
+
   return (
     <Section>
       <Title>
@@ -88,9 +98,9 @@ function Intro() {
       </DiscriptionWrapper>
       <BtnWrapperGrid>
         <StartBtnWapper>
-          <StartBtn href="/demo">
+          <StartBtnLink onClick={onStartBtnClick}>
             <span>Get Started</span>
-          </StartBtn>
+          </StartBtnLink>
           <GithubBtn href="https://github.com/LlamaVista/LlamaVista">
             <span>Go Github</span>
           </GithubBtn>

@@ -1,22 +1,22 @@
 import { useHistory } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
-import { getUserInfo } from '../../APIs/api';
 import { useMutation } from 'react-query';
-import { userInfo } from '../../atoms/atom';
+import { getGoogleLoginUserInfo } from '../../APIs/auth/auth.google';
+import { userInfo } from '../../atoms/user/atom.user';
 
-export const useAccessTokenVaild = (redirectUrl?: string) => {
+export const useAccessTokenVaild = (onSuccessRedirectUrl?: string) => {
   const setUserInfo = useSetRecoilState(userInfo);
   const history = useHistory();
 
-  const { mutate } = useMutation(getUserInfo, {
+  const { mutate } = useMutation(getGoogleLoginUserInfo, {
     onSuccess: (data) => {
       if (data == null) {
         history.push('/login');
       } else {
         setUserInfo(data);
         console.log(data);
-        if (redirectUrl != undefined) {
-          history.push(redirectUrl);
+        if (onSuccessRedirectUrl != undefined) {
+          history.push(onSuccessRedirectUrl);
         }
       }
     },

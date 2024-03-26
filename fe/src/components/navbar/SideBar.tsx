@@ -3,10 +3,13 @@ import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
 import styled from 'styled-components';
-import { TokenKey, fileId, userInfo } from '../../atoms/atom';
 import { useMutation } from 'react-query';
-import { getUserInfo, revokeToken } from '../../APIs/api';
+
 import { useAccessTokenVaild } from '../../hooks/auth/auth';
+import { revokeGoogleLoginToken } from '../../APIs/auth/auth.google';
+import { fileId } from '../../atoms/analytics/atom.analytics';
+import { userInfo } from '../../atoms/user/atom.user';
+import { TokenKey } from '../../interface/user/interface.user';
 
 const DATA_KEY_List = 'data_list';
 
@@ -193,7 +196,7 @@ function SideBar() {
 
   const history = useHistory();
 
-  const { mutate: revokeTokenMutate } = useMutation(revokeToken, {
+  const { mutate: revokeTokenMutate } = useMutation(revokeGoogleLoginToken, {
     onSuccess: (data) => {
       console.log(data);
       localStorage.removeItem(TokenKey.accessToken);

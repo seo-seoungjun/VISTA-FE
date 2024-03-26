@@ -2,8 +2,8 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import styled from 'styled-components';
-import { postSignUp } from '../../../APIs/api';
 import { useHistory } from 'react-router-dom';
+import { SignUp } from '../../../APIs/auth/auth.email';
 
 const Form = styled.form`
   display: flex;
@@ -59,7 +59,7 @@ function SignUpForm() {
 
   const history = useHistory();
 
-  const { mutate } = useMutation(postSignUp, {
+  const { mutate } = useMutation(SignUp, {
     onSuccess: (data) => {
       alert('회원가입 완료');
       history.push('/login');

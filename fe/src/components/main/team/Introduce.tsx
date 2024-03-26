@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion/dist/framer-motion';
-import { Iintroduce } from '../../../atoms/atom';
 import styled from 'styled-components';
+import { Iintroduce } from '../../../atoms/main/atom.team';
 
 const Profile = styled.div`
   display: 'flex';

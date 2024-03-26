@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import LoginForm from '../components/form/auth_form/LoginForm';
 import { Link } from 'react-router-dom';
 import { useAccessTokenVaild } from '../hooks/auth/auth';
-import { TokenKey } from '../atoms/atom';
+import { TokenKey } from '../interface/user/interface.user';
 
 const LoginSection = styled.section`
   display: flex;

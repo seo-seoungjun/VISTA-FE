@@ -6,17 +6,19 @@ const ChatWrapper = styled.div`
   display: flex;
   border-radius: 10px;
   justify-content: center;
-  position: fixed;
   width: 60%;
-  height: 4%;
-  bottom: 2%;
 `;
 const ChatInput = styled.input`
+  transition: all 0.3s;
+  text-align: center;
   width: 95%;
   margin-right: 15px;
   border-radius: 10px;
   outline: none;
   border: 0;
+  &:focus {
+    background-color: #8888884e;
+  }
 `;
 const SubmitBtn = styled.button`
   display: none;

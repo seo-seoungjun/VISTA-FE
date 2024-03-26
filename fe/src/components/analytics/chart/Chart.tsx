@@ -12,7 +12,7 @@ const Img = styled.img`
 `;
 
 function Chart({ image_file, value }: IImgData) {
-  const IMG_URL = `http://3.39.6.41:8000/static/images/${image_file}.png`;
+  const IMG_URL = `http://techvista24.com:8000/static/images/${image_file}.png`;
   return (
     <>
       <Img src={IMG_URL} />
