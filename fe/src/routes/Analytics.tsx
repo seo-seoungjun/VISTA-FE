@@ -5,12 +5,13 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import SideBar from '../components/navbar/SideBar';
 import { useLocation, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { ILocation } from '../interface/analytics/interface.analytics';
+import ChatMessage from '../components/chat/ChatMessage';
 import {
   fileId,
   isDataExist,
   resultDatas,
 } from '../atoms/analytics/atom.analytics';
-import { ILocation } from '../interface/analytics/interface.analytics';
 
 const DATA_KEY_LIST = 'data_list';
 
@@ -109,6 +110,13 @@ function Analytics() {
 
   console.log(resultData);
 
+  const messages = [
+    { data: '안녕하세요!', isUser: true },
+    { data: '안녕하세요! 반갑습니다.', isUser: false },
+    { data: '어떻게 지내세요?', isUser: true },
+    { data: '잘 지내고 있어요, 당신은요?', isUser: false },
+  ];
+
   return (
     <>
       {isData ? (
@@ -118,85 +126,7 @@ function Analytics() {
             <GridWrapper>
               <AnalyticsWrapper>
                 <Visualization />
-                {/* 채팅하나씩 추가 */}
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Nesciunt veritatis autem fugiat quisquam. Aliquam ut eum
-                  blanditiis maiores asperiores quas voluptatibus porro aut
-                  quibusdam dolorem suscipit hic maxime, quis saepe.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Nesciunt veritatis autem fugiat quisquam. Aliquam ut eum
-                  blanditiis maiores asperiores quas voluptatibus porro aut
-                  quibusdam dolorem suscipit hic maxime, quis saepe.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Nesciunt veritatis autem fugiat quisquam. Aliquam ut eum
-                  blanditiis maiores asperiores quas voluptatibus porro aut
-                  quibusdam dolorem suscipit hic maxime, quis saepe.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Nesciunt veritatis autem fugiat quisquam. Aliquam ut eum
-                  blanditiis maiores asperiores quas voluptatibus porro aut
-                  quibusdam dolorem suscipit hic maxime, quis saepe.
-                </p>
-                v
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Nesciunt veritatis autem fugiat quisquam. Aliquam ut eum
-                  blanditiis maiores asperiores quas voluptatibus porro aut
-                  quibusdam dolorem suscipit hic maxime, quis saepe.
-                </p>
-                v
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Nesciunt veritatis autem fugiat quisquam. Aliquam ut eum
-                  blanditiis maiores asperiores quas voluptatibus porro aut
-                  quibusdam dolorem suscipit hic maxime, quis saepe.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Nesciunt veritatis autem fugiat quisquam. Aliquam ut eum
-                  blanditiis maiores asperiores quas voluptatibus porro aut
-                  quibusdam dolorem suscipit hic maxime, quis saepe.
-                </p>
-                v
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Nesciunt veritatis autem fugiat quisquam. Aliquam ut eum
-                  blanditiis maiores asperiores quas voluptatibus porro aut
-                  quibusdam dolorem suscipit hic maxime, quis saepe.
-                </p>
-                v
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Nesciunt veritatis autem fugiat quisquam. Aliquam ut eum
-                  blanditiis maiores asperiores quas voluptatibus porro aut
-                  quibusdam dolorem suscipit hic maxime, quis saepe.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Nesciunt veritatis autem fugiat quisquam. Aliquam ut eum
-                  blanditiis maiores asperiores quas voluptatibus porro aut
-                  quibusdam dolorem suscipit hic maxime, quis saepe.
-                </p>
-                v
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Nesciunt veritatis autem fugiat quisquam. Aliquam ut eum
-                  blanditiis maiores asperiores quas voluptatibus porro aut
-                  quibusdam dolorem suscipit hic maxime, quis saepe.
-                </p>
-                v
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Nesciunt veritatis autem fugiat quisquam. Aliquam ut eum
-                  blanditiis maiores asperiores quas voluptatibus porro aut
-                  quibusdam dolorem suscipit hic maxime, quis saepe.
-                </p>
+                <ChatMessage messages={messages} />
               </AnalyticsWrapper>
               <ChatFormWrapper>
                 <ChatForm>

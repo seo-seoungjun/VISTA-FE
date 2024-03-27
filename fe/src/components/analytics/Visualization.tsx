@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import Chart from './chart/Chart';
-import { visualizationDatas } from '../../atoms/analytics/atom.analytics';
 import { IVisualizationData } from '../../interface/analytics/interface.analytics';
+import { visualizationDatas } from '../../atoms/analytics/atom.analytics';
 
 const VisualHeader = styled.h1`
   font-weight: bold;

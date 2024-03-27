@@ -1,11 +1,12 @@
 import { atom } from 'recoil';
 import {
+  IEmailLoginTokenData,
   IEmailUserInfo,
-  IGoogleTokenResponse,
+  IGoogleLoginTokenData,
   IGoogleUserInfo,
-} from '../../interface/user/interface.user';
+} from '../../interface/auth/interface.auth';
 
-export const tokenInfo = atom<IGoogleTokenResponse>({
+export const tokenInfo = atom<IGoogleLoginTokenData | IEmailLoginTokenData>({
   key: 'tokenData',
 });
 

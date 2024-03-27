@@ -5,11 +5,12 @@ import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { useMutation } from 'react-query';
 
-import { useAccessTokenVaild } from '../../hooks/auth/auth';
+import { useGoogleAccessTokenVaild } from '../../hooks/useGoogleAccessTokenVaild';
 import { revokeGoogleLoginToken } from '../../APIs/auth/auth.google';
+import { userInfo } from '../../atoms/auth/atom.auth';
+import { TokenKey } from '../../interface/auth/interface.auth';
 import { fileId } from '../../atoms/analytics/atom.analytics';
-import { userInfo } from '../../atoms/user/atom.user';
-import { TokenKey } from '../../interface/user/interface.user';
+import { useAuth } from '../../hooks/auth';
 
 const DATA_KEY_List = 'data_list';
 
@@ -210,14 +211,13 @@ function SideBar() {
   });
 
   const googleLogOut = () => {
-    revokeTokenMutate(accessToken);
+    // revokeTokenMutate(accessToken);
   };
 
-  const accessToken = localStorage.getItem(TokenKey.accessToken) as string;
-  const mutate = useAccessTokenVaild('/demo');
+  const auth = useAuth('/demo');
 
   const onDemoClick = () => {
-    mutate(accessToken);
+    auth();
   };
 
   return (

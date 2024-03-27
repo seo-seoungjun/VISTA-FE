@@ -2,8 +2,10 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import LoginForm from '../components/form/auth_form/LoginForm';
 import { Link } from 'react-router-dom';
-import { useAccessTokenVaild } from '../hooks/auth/auth';
-import { TokenKey } from '../interface/user/interface.user';
+import { useGoogleAccessTokenVaild } from '../hooks/useGoogleAccessTokenVaild';
+import { TokenKey } from '../interface/auth/interface.auth';
+import { useAuth } from '../hooks/auth';
+import { isArgumentsObject } from 'util/types';
 
 const LoginSection = styled.section`
   display: flex;
@@ -52,11 +54,10 @@ const MoreBtn = styled.button`
 `;
 
 function Login() {
-  const accessToken = localStorage.getItem(TokenKey.accessToken) as string;
-  const mutate = useAccessTokenVaild('/demo');
+  const auth = useAuth('/demo');
 
   useEffect(() => {
-    mutate(accessToken);
+    auth();
   }, []);
   return (
     <>

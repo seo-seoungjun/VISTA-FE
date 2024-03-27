@@ -1,31 +1,15 @@
 import { useGoogleLogin } from '@react-oauth/google';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import {
-  Link,
-  Route,
-  Switch,
-  useHistory,
-  useRouteMatch,
-} from 'react-router-dom';
+import { Link, Route, Switch, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
-import { useSetRecoilState } from 'recoil';
-import { useMutation, useQuery } from 'react-query';
 
 import SignUpForm from './SignUpForm';
-import {
-  EmailLogIn,
-  getEmailLoginUserInfo,
-} from '../../../APIs/auth/auth.email';
-import { getGoogleLoginToken } from '../../../APIs/auth/auth.google';
-import { tokenInfo, userInfo } from '../../../atoms/user/atom.user';
-import { TokenKey } from '../../../interface/user/interface.user';
+import { ILogin } from '../../../interface/auth/interface.auth';
+import { useEmailMutate } from '../../../hooks/useEmailMutate';
+import { useGoogleMutate } from '../../../hooks/useGoogleMutate';
+import { useEmailLoginTokenValid } from '../../../hooks/useEmailLoginTokenValid';
 require('dotenv').config();
-
-interface ILogin {
-  email: string;
-  password: string;
-}
 
 const Container = styled.div`
   display: flex;
@@ -117,6 +101,9 @@ const onGithubIconLeave = () => {
 };
 
 function LoginForm() {
+  const loginMatch = useRouteMatch('/login');
+  const signMatuch = useRouteMatch('/login/signup');
+
   const {
     register,
     handleSubmit,
@@ -128,53 +115,13 @@ function LoginForm() {
     },
   });
 
-  const setUserInfo = useSetRecoilState(userInfo);
-
-  const { mutate: getEmailUserInfo } = useMutation(getEmailLoginUserInfo, {
-    onSuccess: (data) => {
-      setUserInfo(data);
-      console.log(data);
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-  });
-
-  const { mutate } = useMutation(EmailLogIn, {
-    onSuccess: (data) => {
-      console.log(data);
-      getEmailUserInfo(data.access_token);
-      history.push('/demo');
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-  });
+  const emailLoginMutate = useEmailMutate();
 
   const SubmitOnValid = (data: ILogin) => {
-    mutate(data);
+    emailLoginMutate(data);
   };
 
-  const loginMatch = useRouteMatch('/login');
-  const signMatuch = useRouteMatch('/login/signup');
-
-  const history = useHistory();
-  const setTokenData = useSetRecoilState(tokenInfo);
-
-  const { mutate: tokenMutate } = useMutation(getGoogleLoginToken, {
-    onSuccess: (tokenData) => {
-      localStorage.setItem(TokenKey.accessToken, tokenData?.access_token);
-      localStorage.setItem(TokenKey.refreshToken, tokenData?.refresh_token);
-      setTokenData(tokenData);
-
-      console.log(tokenData);
-
-      history.push('/demo');
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
+  const googleLoginMutate = useGoogleMutate();
 
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: async ({ code }) => {
@@ -183,7 +130,7 @@ function LoginForm() {
       //   .then(({ data }) => {
       //     console.log(data);
       //   });
-      tokenMutate(code);
+      googleLoginMutate(code);
     },
 
     onError: (res) => console.log(res),

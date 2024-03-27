@@ -1,5 +1,10 @@
 import axios from 'axios';
 import { PostFormDataBody } from '../../interface/analytics/interface.analytics';
+import {
+  IEmailLoginTokenData,
+  IEmailUserInfo,
+  ILogin,
+} from '../../interface/auth/interface.auth';
 
 const DNS = 'http://techvista24.com';
 const SPRING_PORT = 8000;
@@ -10,18 +15,24 @@ export const SignUp = async (data: PostFormDataBody) => {
   return res.data;
 };
 
-export const EmailLogIn = async (data: PostFormDataBody) => {
-  const res = await axios.post(`${DNS}:${SPRING_PORT}/user/login`, data);
+export const getEmailLoginToken = async (data: ILogin) => {
+  const res = await axios.post<IEmailLoginTokenData>(
+    `${DNS}:${SPRING_PORT}/user/login`,
+    data
+  );
 
   return res.data;
 };
 
 export const getEmailLoginUserInfo = async (accessToken: string) => {
-  const res = await axios.get(`${DNS}:${SPRING_PORT}/user/protected`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+  const res = await axios.get<IEmailUserInfo>(
+    `${DNS}:${SPRING_PORT}/user/protected`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
 
   return res.data;
 };

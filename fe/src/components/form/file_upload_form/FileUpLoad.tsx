@@ -12,8 +12,8 @@ import Loading from '../../loading/Loading';
 import {
   fileUpLoadSettings,
   grammarSettings,
-} from '../../../atoms/analytics/atom.analytics';
-import { ISettings } from '../../../interface/analytics/interface.analytics';
+} from '../../../atoms/analytics/atom.settings';
+import { ISettings } from '../../../interface/analytics/interface.settings';
 
 const LoadingWrapper = styled.div`
   width: 100%;

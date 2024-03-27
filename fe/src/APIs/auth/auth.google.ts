@@ -1,8 +1,8 @@
 import axios from 'axios';
 import {
-  IGoogleTokenResponse,
+  IGoogleLoginTokenData,
   IGoogleUserInfo,
-} from '../../interface/user/interface.user';
+} from '../../interface/auth/interface.auth';
 
 export const getGoogleLoginToken = async (authorizationCode: string) => {
   // 기본 요청 매개변수
@@ -17,7 +17,7 @@ export const getGoogleLoginToken = async (authorizationCode: string) => {
   const tokenUrl = process.env.REACT_APP_GOOGLE_OAUTH_TOKEN_URL as string;
 
   // POST 요청 수행
-  const res = await axios.post<IGoogleTokenResponse>(tokenUrl, null, {
+  const res = await axios.post<IGoogleLoginTokenData>(tokenUrl, null, {
     params: data,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -27,21 +27,16 @@ export const getGoogleLoginToken = async (authorizationCode: string) => {
   return res.data;
 };
 
-export const getGoogleLoginUserInfo = async (accessToken: string | null) => {
-  if (accessToken == null) {
-    return null;
-  } else {
-    const userInfoUrl = process.env
-      .REACT_APP_GOOGLE_OAUTH_USERINFO_URL as string;
+export const getGoogleLoginUserInfo = async (accessToken: string) => {
+  const userInfoUrl = process.env.REACT_APP_GOOGLE_OAUTH_USERINFO_URL as string;
 
-    const res = await axios.get<IGoogleUserInfo>(userInfoUrl, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+  const res = await axios.get<IGoogleUserInfo>(userInfoUrl, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 
-    return res.data;
-  }
+  return res.data;
 };
 
 export const revokeGoogleLoginToken = async (accessToken: string) => {
