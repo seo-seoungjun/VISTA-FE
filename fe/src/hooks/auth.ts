@@ -1,5 +1,5 @@
 import { useHistory } from 'react-router-dom';
-import { TokenKey } from '../interface/auth/interface.auth';
+import { TokenKey, isGoogleUser } from '../interface/auth/interface.auth';
 import { useEmailLoginTokenValid } from './useEmailLoginTokenValid';
 import { useGoogleAccessTokenVaild } from './useGoogleAccessTokenVaild';
 
