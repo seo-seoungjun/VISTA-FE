@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory, useRouteMatch } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { Link, useRouteMatch } from 'react-router-dom';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import styled from 'styled-components';
-import { useMutation } from 'react-query';
 
-import { useGoogleAccessTokenVaild } from '../../hooks/useGoogleAccessTokenVaild';
-import { revokeGoogleLoginToken } from '../../APIs/auth/auth.google';
 import { userInfo } from '../../atoms/auth/atom.auth';
-import { TokenKey } from '../../interface/auth/interface.auth';
+
 import { fileId } from '../../atoms/analytics/atom.analytics';
 import { useAuth } from '../../hooks/auth';
+import { useLogOut } from '../../hooks/useLogOut';
 
 const DATA_KEY_List = 'data_list';
 
@@ -176,7 +174,7 @@ function SideBar() {
   const homeMenuMatch = useRouteMatch({ path: '/', exact: true });
   const demoMenuMatch = useRouteMatch({ path: '/demo', exact: true });
   const [dataList, setDataList] = useRecoilState(fileId);
-  const [userData, setUserData] = useRecoilState(userInfo);
+  const userData = useRecoilValue(userInfo);
   const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
@@ -195,23 +193,10 @@ function SideBar() {
     }
   }, [userData]);
 
-  const history = useHistory();
+  const logOut = useLogOut();
 
-  const { mutate: revokeTokenMutate } = useMutation(revokeGoogleLoginToken, {
-    onSuccess: (data) => {
-      console.log(data);
-      localStorage.removeItem(TokenKey.accessToken);
-      localStorage.removeItem(TokenKey.refreshToken);
-      setUserData(null);
-      history.push('/login');
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
-
-  const googleLogOut = () => {
-    // revokeTokenMutate(accessToken);
+  const clickLogoutBtn = () => {
+    logOut();
   };
 
   const auth = useAuth('/demo');
@@ -268,7 +253,7 @@ function SideBar() {
           <AuthList>
             <p>Authentication</p>
             {isLogin ? (
-              <SignOut onClick={googleLogOut}>
+              <SignOut onClick={clickLogoutBtn}>
                 <span>SignOut</span>
               </SignOut>
             ) : (

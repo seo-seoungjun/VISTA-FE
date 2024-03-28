@@ -45,3 +45,8 @@ export interface GetGoogleLoginTokenType {
 export interface GetEmailLoginTokenType {
   (data: ILogin): Promise<IEmailLoginTokenData>;
 }
+
+export function isGoogleUser(userData: any): userData is IGoogleUserInfo {
+  if (userData === null || userData === undefined) return false;
+  return Object.keys(userData).length === 7;
+}
