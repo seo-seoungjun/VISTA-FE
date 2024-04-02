@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { motion } from 'framer-motion/dist/framer-motion';
 import Introduce from './Introduce';
 import { introduce } from '../../../atoms/main/atom.team';
 

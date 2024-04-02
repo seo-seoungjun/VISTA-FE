@@ -8,7 +8,6 @@ import SignUpForm from './SignUpForm';
 import { ILogin } from '../../../interface/auth/interface.auth';
 import { useEmailMutate } from '../../../hooks/useEmailMutate';
 import { useGoogleMutate } from '../../../hooks/useGoogleMutate';
-import { useEmailLoginTokenValid } from '../../../hooks/useEmailLoginTokenValid';
 require('dotenv').config();
 
 const Container = styled.div`

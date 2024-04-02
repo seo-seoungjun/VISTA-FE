@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion/dist/framer-motion';
 import styled from 'styled-components';
 import { Iintroduce } from '../../../atoms/main/atom.team';

@@ -79,8 +79,8 @@ const FileUploadInput = styled.input`
 `;
 
 const FileUploadLabel = styled.label`
+  padding: 25% 20%;
   margin-top: 15px;
-  padding: 25% 30%;
   cursor: pointer;
   border-radius: 10px;
   border: 1px solid ${(props) => props.theme.borderColor};
@@ -88,6 +88,9 @@ const FileUploadLabel = styled.label`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  p {
+    margin-top: 10px;
+  }
 `;
 
 const FileUploadIcon = styled.img``;
@@ -206,6 +209,7 @@ function FileUpLoad() {
                 <FileUploadLabel htmlFor="file">
                   <FileUploadIcon src="http://localhost:3000/Images/fileUpload.svg" />
                   <p>upload your own file</p>
+                  <p>Only .json and .csv files can be accepted</p>
                 </FileUploadLabel>
                 <SampleDataWrapper>
                   <SampleData onClick={onSampleDataClick}>
