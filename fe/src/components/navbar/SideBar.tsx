@@ -9,6 +9,8 @@ import { userInfo } from '../../atoms/auth/atom.auth';
 import { fileId } from '../../atoms/analytics/atom.analytics';
 import { useAuth } from '../../hooks/auth';
 import { useLogOut } from '../../hooks/useLogOut';
+import { useHighLight } from '../../hooks/useHighLight';
+import { darkTheme } from '../../styles/theme';
 
 const DATA_KEY_List = 'data_list';
 
@@ -68,20 +70,9 @@ const MeueList = styled.ul`
   }
 `;
 
-const HomeMenu = styled.li<{ $isActive: boolean }>`
+const HomeMenu = styled.li`
   div a {
     transition: all 0.5s;
-    color: ${(props) =>
-      props.$isActive
-        ? props.theme.highLightTextColor
-        : props.theme.sideBarTextColor};
-  }
-
-  div:hover a {
-    color: ${(props) => props.theme.highLightTextColor};
-  }
-  div.on-hover a {
-    color: ${(props) => props.theme.sideBarTextColor};
   }
 `;
 
@@ -89,20 +80,9 @@ const MenuWrapper = styled.div``;
 
 const HomeMenuImg = styled.img``;
 
-const DemoMenu = styled.li<{ $isActive: boolean }>`
+const DemoMenu = styled.li`
   div a {
     transition: all 0.5s;
-    color: ${(props) =>
-      props.$isActive
-        ? props.theme.highLightTextColor
-        : props.theme.sideBarTextColor};
-  }
-
-  div:hover a {
-    color: ${(props) => props.theme.highLightTextColor};
-  }
-  div.on-hover a {
-    color: ${(props) => props.theme.sideBarTextColor};
   }
 `;
 
@@ -132,47 +112,61 @@ const AuthList = styled.ul`
   }
 `;
 
-const SignIn = styled.li``;
-
-const SignOut = styled.li`
-  cursor: pointer;
+const SignIn = styled.li`
+  a {
+    transition: 0.5s;
+  }
+  a:hover {
+    color: ${(props) => props.theme.highLightTextColor};
+  }
 `;
 
-const onMouseHomeOver = (e: React.MouseEvent<HTMLDivElement>) => {
-  const target = e.target as HTMLAnchorElement;
-  const parentEl = target.parentElement;
-  const div = parentEl?.parentElement?.querySelector('#demo');
-  div?.classList.add('on-hover');
-};
+const SignOut = styled.li`
+  a {
+    transition: 0.5s;
+  }
+  a:hover {
+    color: ${(props) => props.theme.highLightTextColor};
+    cursor: pointer;
+  }
+`;
 
-const onMouseHomeLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-  const target = e.target as HTMLAnchorElement;
-  const parentEl = target.parentElement;
-  const div = parentEl?.parentElement?.querySelector('#demo');
-  div?.classList.remove('on-hover');
-};
+// const onMouseHomeOver = (e: React.MouseEvent<HTMLDivElement>) => {
+//   const target = e.target as HTMLAnchorElement;
+//   const parentEl = target.parentElement;
+//   const div = parentEl?.parentElement?.querySelector('#demo');
+//   div?.classList.add('on-hover');
+// };
 
-const onMouseDemoOver = (e: React.MouseEvent<HTMLDivElement>) => {
-  const target = e.target as HTMLAnchorElement;
-  const parentEl = target.parentElement;
-  const div = parentEl?.parentElement?.querySelector('#home');
-  div?.classList.add('on-hover');
-};
+// const onMouseHomeLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+//   const target = e.target as HTMLAnchorElement;
+//   const parentEl = target.parentElement;
+//   const div = parentEl?.parentElement?.querySelector('#demo');
+//   div?.classList.remove('on-hover');
+// };
 
-const onMouseDemoLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-  const target = e.target as HTMLAnchorElement;
-  const parentEl = target.parentElement;
-  const div = parentEl?.parentElement?.querySelector('#home');
-  div?.classList.remove('on-hover');
-};
+// const onMouseDemoOver = (e: React.MouseEvent<HTMLDivElement>) => {
+//   const target = e.target as HTMLAnchorElement;
+//   const parentEl = target.parentElement;
+//   const div = parentEl?.parentElement?.querySelector('#home');
+//   div?.classList.add('on-hover');
+// };
 
-const DemoLink = styled.a`
+// const onMouseDemoLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+//   const target = e.target as HTMLAnchorElement;
+//   const parentEl = target.parentElement;
+//   const div = parentEl?.parentElement?.querySelector('#home');
+//   div?.classList.remove('on-hover');
+// };
+
+const DemoLink = styled(Link)`
   cursor: pointer;
 `;
 
 function SideBar() {
-  const homeMenuMatch = useRouteMatch({ path: '/', exact: true });
-  const demoMenuMatch = useRouteMatch({ path: '/demo', exact: true });
+  // const homeMenuMatch = useRouteMatch({ path: '/', exact: true });
+  // const demoMenuMatch = useRouteMatch({ path: '/demo', exact: true });
+
   const [dataList, setDataList] = useRecoilState(fileId);
   const userData = useRecoilValue(userInfo);
   const [isLogin, setIsLogin] = useState(false);
@@ -201,9 +195,14 @@ function SideBar() {
 
   const auth = useAuth('/demo');
 
-  const onDemoClick = () => {
+  const onDemoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
     auth();
   };
+  const { linkRef } = useHighLight(
+    darkTheme.highLightTextColor,
+    darkTheme.sideBarTextColor
+  );
 
   return (
     <>
@@ -213,24 +212,27 @@ function SideBar() {
         </LidaIcon>
         <MeueNav>
           <MeueList>
-            <HomeMenu $isActive={homeMenuMatch !== null}>
-              <MenuWrapper
-                id="home"
-                onMouseLeave={onMouseHomeLeave}
-                onMouseOver={onMouseHomeOver}
-              >
+            <HomeMenu>
+              <MenuWrapper id="home">
                 {/* <HomeMenuImg src="http://localhost:3000/Images/home.svg" /> */}
-                <Link to={'/'}>Home</Link>
+                <Link
+                  ref={(element) => (linkRef.current[0] = element)}
+                  to={'/'}
+                >
+                  Home
+                </Link>
               </MenuWrapper>
             </HomeMenu>
-            <DemoMenu $isActive={demoMenuMatch !== null}>
-              <MenuWrapper
-                id="demo"
-                onMouseLeave={onMouseDemoLeave}
-                onMouseOver={onMouseDemoOver}
-              >
+            <DemoMenu>
+              <MenuWrapper id="demo">
                 {/* <DemoMenuImg src="http://localhost:3000/Images/demo.svg" /> */}
-                <DemoLink onClick={onDemoClick}>Demo</DemoLink>
+                <DemoLink
+                  ref={(element) => (linkRef.current[1] = element)}
+                  onClick={(e) => onDemoClick(e)}
+                  to={'/demo'}
+                >
+                  Demo
+                </DemoLink>
               </MenuWrapper>
             </DemoMenu>
           </MeueList>
@@ -240,13 +242,7 @@ function SideBar() {
             </DataList>
             {dataList?.map((fileId) => (
               <Data key={fileId}>
-                <Link
-                  to={{
-                    pathname: `/analytics/${fileId}`,
-                  }}
-                >
-                  Data
-                </Link>
+                <Link to={`/analytics/${fileId}`}>Data</Link>
               </Data>
             ))}
           </DataRecordList>

@@ -1,7 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useGoogleAccessTokenVaild } from '../../hooks/useGoogleAccessTokenVaild';
-import { TokenKey } from '../../interface/auth/interface.auth';
 import { useAuth } from '../../hooks/auth';
 
 const Section = styled.main`

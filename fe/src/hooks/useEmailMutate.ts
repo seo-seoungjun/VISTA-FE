@@ -1,4 +1,3 @@
-import { useHistory } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { tokenInfo } from '../atoms/auth/atom.auth';
 import { useMutation } from 'react-query';
