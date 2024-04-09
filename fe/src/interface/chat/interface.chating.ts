@@ -4,7 +4,7 @@ export interface IInitialMessage {
 
 export interface MessageProps {
   data: any;
-  isUser: boolean;
+  role: boolean;
 }
 
 export interface ChatProps {

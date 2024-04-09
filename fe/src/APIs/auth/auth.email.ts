@@ -1,13 +1,16 @@
+import { IEmailUserInfo } from './../../interface/auth/interface.auth';
 import axios from 'axios';
 import { PostFormDataBody } from '../../interface/analytics/interface.analytics';
 import {
   IEmailLoginTokenData,
-  IEmailUserInfo,
+  ILocalTokenData,
   ILogin,
 } from '../../interface/auth/interface.auth';
 
-const DNS = 'http://techvista24.com';
-const SPRING_PORT = 8000;
+require('dotenv').config();
+
+const DNS = process.env.REACT_APP_DNS;
+const SPRING_PORT = process.env.REACT_APP_PORT;
 
 export const SignUp = async (data: PostFormDataBody) => {
   const res = await axios.post(`${DNS}:${SPRING_PORT}/user/register`, data);
@@ -18,18 +21,24 @@ export const SignUp = async (data: PostFormDataBody) => {
 export const getEmailLoginToken = async (data: ILogin) => {
   const res = await axios.post<IEmailLoginTokenData>(
     `${DNS}:${SPRING_PORT}/user/login`,
-    data
+    data,
+    {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    }
   );
 
   return res.data;
 };
 
-export const getEmailLoginUserInfo = async (accessToken: string) => {
+export const getEmailLoginUserInfo = async (tokenData: ILocalTokenData) => {
   const res = await axios.get<IEmailUserInfo>(
     `${DNS}:${SPRING_PORT}/user/protected`,
     {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${tokenData.access_token}`,
+        token_type: tokenData.domain,
       },
     }
   );

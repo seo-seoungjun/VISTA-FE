@@ -1,5 +1,5 @@
 export interface ILogin {
-  email: string;
+  username: string;
   password: string;
 }
 
@@ -15,17 +15,25 @@ export interface IGoogleLoginTokenData {
   refresh_token: string;
   scope: string;
   token_type: string;
-  domain?: 'google';
+  domain?: 'Google';
 }
 
 export interface IEmailLoginTokenData {
   access_token: string;
-  domain?: 'email';
+  token_type: string;
+  domain?: 'Standard';
+}
+
+export interface ILocalTokenData {
+  access_token: string;
+  domain: 'Standard' | 'Google';
 }
 
 export interface IEmailUserInfo {
   email: string;
   name: string;
+  hashed_password: string;
+  threads: any[];
 }
 
 export interface IGoogleUserInfo {
