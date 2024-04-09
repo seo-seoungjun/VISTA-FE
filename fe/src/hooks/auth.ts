@@ -1,15 +1,12 @@
 import { useHistory } from 'react-router-dom';
-import { TokenKey } from '../interface/auth/interface.auth';
+import { ILocalTokenData, TokenKey } from '../interface/auth/interface.auth';
 import { useEmailLoginTokenValid } from './useEmailLoginTokenValid';
 import { useGoogleAccessTokenVaild } from './useGoogleAccessTokenVaild';
 
 export const useAuth = (onSuccessRedirectUrl?: string) => {
   const data: string | null = localStorage.getItem(TokenKey.accessToken);
 
-  let accessTokenData: null | {
-    access_token: string;
-    domain: 'email' | 'google';
-  };
+  let accessTokenData: null | ILocalTokenData;
 
   if (data === null) {
     accessTokenData = null;
@@ -26,10 +23,13 @@ export const useAuth = (onSuccessRedirectUrl?: string) => {
     if (accessTokenData === null) {
       history.push('/login');
     } else {
-      if (accessTokenData?.domain === 'google') {
+      if (accessTokenData?.domain === 'Google') {
         googleAuth(accessTokenData.access_token);
       } else {
-        emailAuth(accessTokenData.access_token);
+        emailAuth({
+          access_token: accessTokenData.access_token,
+          domain: accessTokenData.domain,
+        });
       }
     }
   };

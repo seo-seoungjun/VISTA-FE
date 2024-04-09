@@ -16,13 +16,13 @@ const MessageContainer = styled.div`
   flex-direction: column;
 `;
 
-const Message = styled.div<{ isUser: boolean }>`
-  background-color: ${({ isUser }) => (isUser ? '#e6f7ff' : '#ffffff')};
-  color: ${({ isUser }) => (isUser ? '#1890ff' : '#000000')};
+const Message = styled.div<{ $role: boolean }>`
+  background-color: ${({ $role }) => ($role ? '#e6f7ff' : '#ffffff')};
+  color: ${({ $role }) => ($role ? '#1890ff' : '#000000')};
   padding: 8px;
   border-radius: 5px;
   margin-bottom: 5px;
-  align-self: ${({ isUser }) => (isUser ? 'flex-end' : 'flex-start')};
+  align-self: ${({ $role }) => ($role ? 'flex-end' : 'flex-start')};
 `;
 
 // 대화 UI를 나타내는 Chat 컴포넌트를 정의합니다.
@@ -32,7 +32,7 @@ const ChatMessage: React.FC<ChatProps> = ({ messages }) => {
     <ChatContainer>
       <MessageContainer>
         {messages.map((message, index) => (
-          <Message key={index} isUser={message.isUser}>
+          <Message key={index} $role={message.role}>
             {message.data}
           </Message>
         ))}

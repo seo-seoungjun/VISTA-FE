@@ -20,7 +20,7 @@ export const useHighLight = (highLightColor: string, initialColor: string) => {
       highLightElement.style.color = highLightColor;
     };
 
-    linkRef.current.forEach((element) => {
+    linkRef?.current.forEach((element) => {
       element = element as HTMLAnchorElement;
 
       const fullUrl = element.href;
@@ -37,11 +37,11 @@ export const useHighLight = (highLightColor: string, initialColor: string) => {
       }
     });
     return () => {
-      linkRef.current.forEach((element) => {
+      linkRef?.current.forEach((element) => {
         element = element as HTMLAnchorElement;
 
-        element.removeEventListener('mouseenter', handleMouseEnter);
-        element.removeEventListener('mouseleave', handleMouseLeave);
+        element?.removeEventListener('mouseenter', handleMouseEnter);
+        element?.removeEventListener('mouseleave', handleMouseLeave);
       });
     };
   }, []);

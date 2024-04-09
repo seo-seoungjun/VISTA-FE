@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import styled from 'styled-components';
@@ -100,6 +100,9 @@ const Data = styled.li`
   display: flex;
   justify-content: center;
   margin-top: 10px;
+  a {
+    transition: 0.5s;
+  }
 `;
 
 const AuthList = styled.ul`
@@ -122,51 +125,22 @@ const SignIn = styled.li`
 `;
 
 const SignOut = styled.li`
-  a {
+  a,
+  span {
     transition: 0.5s;
   }
-  a:hover {
+  a,
+  span:hover {
     color: ${(props) => props.theme.highLightTextColor};
     cursor: pointer;
   }
 `;
-
-// const onMouseHomeOver = (e: React.MouseEvent<HTMLDivElement>) => {
-//   const target = e.target as HTMLAnchorElement;
-//   const parentEl = target.parentElement;
-//   const div = parentEl?.parentElement?.querySelector('#demo');
-//   div?.classList.add('on-hover');
-// };
-
-// const onMouseHomeLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-//   const target = e.target as HTMLAnchorElement;
-//   const parentEl = target.parentElement;
-//   const div = parentEl?.parentElement?.querySelector('#demo');
-//   div?.classList.remove('on-hover');
-// };
-
-// const onMouseDemoOver = (e: React.MouseEvent<HTMLDivElement>) => {
-//   const target = e.target as HTMLAnchorElement;
-//   const parentEl = target.parentElement;
-//   const div = parentEl?.parentElement?.querySelector('#home');
-//   div?.classList.add('on-hover');
-// };
-
-// const onMouseDemoLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-//   const target = e.target as HTMLAnchorElement;
-//   const parentEl = target.parentElement;
-//   const div = parentEl?.parentElement?.querySelector('#home');
-//   div?.classList.remove('on-hover');
-// };
 
 const DemoLink = styled(Link)`
   cursor: pointer;
 `;
 
 function SideBar() {
-  // const homeMenuMatch = useRouteMatch({ path: '/', exact: true });
-  // const demoMenuMatch = useRouteMatch({ path: '/demo', exact: true });
-
   const [dataList, setDataList] = useRecoilState(fileId);
   const userData = useRecoilValue(userInfo);
   const [isLogin, setIsLogin] = useState(false);
@@ -240,9 +214,14 @@ function SideBar() {
             <DataList>
               <p>DataList</p>
             </DataList>
-            {dataList?.map((fileId) => (
+            {dataList?.map((fileId, index) => (
               <Data key={fileId}>
-                <Link to={`/analytics/${fileId}`}>Data</Link>
+                <Link
+                  ref={(element) => (linkRef.current[index + 2] = element)}
+                  to={`/analytics/${fileId}`}
+                >
+                  Data
+                </Link>
               </Data>
             ))}
           </DataRecordList>

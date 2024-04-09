@@ -13,7 +13,7 @@ export const useEmailMutate = () => {
   const { mutate } = useMutation(getEmailLoginToken, {
     onSuccess: (tokenData) => {
       console.log(tokenData);
-      tokenData.domain = 'email';
+      tokenData.domain = 'Standard';
 
       const { access_token, domain } = tokenData;
 
@@ -27,7 +27,7 @@ export const useEmailMutate = () => {
 
       setTokenData(tokenData);
 
-      emailLoginUserInfo(tokenData.access_token);
+      emailLoginUserInfo({ access_token, domain });
     },
     onError: (error) => {
       console.log(error);

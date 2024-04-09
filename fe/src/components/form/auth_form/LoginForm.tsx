@@ -109,7 +109,7 @@ function LoginForm() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: '',
+      username: '',
       password: '',
     },
   });
@@ -155,7 +155,7 @@ function LoginForm() {
           >
             <h1>Login</h1>
             <Input
-              {...register('email')}
+              {...register('username')}
               required
               type="email"
               placeholder="Id"

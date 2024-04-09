@@ -1,7 +1,11 @@
 import { useMutation } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import { revokeGoogleLoginToken } from '../APIs/auth/auth.google';
-import { TokenKey, isGoogleUser } from '../interface/auth/interface.auth';
+import {
+  ILocalTokenData,
+  TokenKey,
+  isGoogleUser,
+} from '../interface/auth/interface.auth';
 import { useRecoilState } from 'recoil';
 import { userInfo } from '../atoms/auth/atom.auth';
 
@@ -10,10 +14,8 @@ export const useLogOut = () => {
   const [userData, setUserData] = useRecoilState(userInfo);
 
   const data = localStorage.getItem(TokenKey.accessToken) as string;
-  const accessTokenData: {
-    access_token: string;
-    domain: 'email' | 'google';
-  } = JSON.parse(data);
+
+  const accessTokenData: ILocalTokenData = JSON.parse(data);
 
   const { mutate: revokeTokenMutate } = useMutation(revokeGoogleLoginToken, {
     onSuccess: (data) => {
@@ -33,6 +35,7 @@ export const useLogOut = () => {
       revokeTokenMutate(accessTokenData.access_token);
     } else {
       localStorage.removeItem(TokenKey.accessToken);
+      setUserData(null);
       history.push('/login');
     }
   };
