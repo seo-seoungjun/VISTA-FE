@@ -3,6 +3,8 @@
 # dependencies
 /fe/node_modules
 /fe/.pnp
+/fe/.env
+run.txt
 .pnp.js
 
 # testing
