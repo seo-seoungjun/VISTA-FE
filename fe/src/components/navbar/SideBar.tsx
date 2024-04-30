@@ -11,6 +11,9 @@ import { useAuth } from '../../hooks/auth';
 import { useLogOut } from '../../hooks/useLogOut';
 import { useHighLight } from '../../hooks/useHighLight';
 import { darkTheme } from '../../styles/theme';
+import { chatList } from '../../atoms/chat/atom.chat';
+import { useMutation } from 'react-query';
+import { getChatList } from '../../APIs/chat/api.chat';
 
 const DATA_KEY_List = 'data_list';
 
@@ -141,25 +144,45 @@ const DemoLink = styled(Link)`
 `;
 
 function SideBar() {
-  const [dataList, setDataList] = useRecoilState(fileId);
+  // const [dataList, setDataList] = useRecoilState(fileId);
+
+  const [chatListData, setChatListData] = useRecoilState(chatList);
+
   const userData = useRecoilValue(userInfo);
   const [isLogin, setIsLogin] = useState(false);
+  const [isComponentDidMount, setIsComponentDidMount] = useState(false);
+
+  const { mutate: getChatMutate, data } = useMutation(getChatList, {
+    onError: (e) => {
+      console.log(e);
+    },
+    onSuccess: (chatList) => {
+      setChatListData(chatList);
+      setIsComponentDidMount(true);
+    },
+  });
 
   useEffect(() => {
     if (userData != null) {
       setIsLogin(true);
     }
-    if (localStorage.getItem(DATA_KEY_List) !== null) {
-      const getDataList: string[] = [
-        ...JSON.parse(localStorage.getItem(DATA_KEY_List) || ''),
-      ];
-      setDataList([...new Set(getDataList)]);
-      localStorage.setItem(
-        DATA_KEY_List,
-        JSON.stringify([...new Set(getDataList)])
-      );
-    }
+    // if (localStorage.getItem(DATA_KEY_List) !== null) {
+    //   const getDataList: string[] = [
+    //     ...JSON.parse(localStorage.getItem(DATA_KEY_List) || ''),
+    //   ];
+    //   setDataList([...new Set(getDataList)]);
+    //   localStorage.setItem(
+    //     DATA_KEY_List,
+    //     JSON.stringify([...new Set(getDataList)])
+    //   );
+    // }
   }, [userData]);
+
+  useEffect(() => {
+    if (isLogin) {
+      getChatMutate();
+    }
+  }, [isLogin]);
 
   const logOut = useLogOut();
 
@@ -173,9 +196,11 @@ function SideBar() {
     e.preventDefault();
     auth();
   };
+
   const { linkRef } = useHighLight(
     darkTheme.highLightTextColor,
-    darkTheme.sideBarTextColor
+    darkTheme.sideBarTextColor,
+    isComponentDidMount
   );
 
   return (
@@ -214,7 +239,18 @@ function SideBar() {
             <DataList>
               <p>DataList</p>
             </DataList>
-            {dataList?.map((fileId, index) => (
+            {isLogin &&
+              chatListData?.map((chatList, index) => (
+                <Data key={chatList.thread_id}>
+                  <Link
+                    ref={(element) => (linkRef.current[index + 2] = element)}
+                    to={`/chat/${chatList.thread_id}`}
+                  >
+                    {chatList.name}
+                  </Link>
+                </Data>
+              ))}
+            {/* {dataList?.map((fileId, index) => (
               <Data key={fileId}>
                 <Link
                   ref={(element) => (linkRef.current[index + 2] = element)}
@@ -223,7 +259,7 @@ function SideBar() {
                   Data
                 </Link>
               </Data>
-            ))}
+            ))} */}
           </DataRecordList>
           <AuthList>
             <p>Authentication</p>
