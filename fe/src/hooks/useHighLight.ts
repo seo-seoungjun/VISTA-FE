@@ -1,7 +1,13 @@
 import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
+import { chatList } from '../atoms/chat/atom.chat';
+import { useRecoilState } from 'recoil';
 
-export const useHighLight = (highLightColor: string, initialColor: string) => {
+export const useHighLight = (
+  highLightColor: string,
+  initialColor: string,
+  isMount?: boolean
+) => {
   const linkRef = useRef<HTMLAnchorElement[] | null[]>([]);
   const { pathname: currentUrl } = useLocation();
 
@@ -20,22 +26,25 @@ export const useHighLight = (highLightColor: string, initialColor: string) => {
       highLightElement.style.color = highLightColor;
     };
 
-    linkRef?.current.forEach((element) => {
-      element = element as HTMLAnchorElement;
+    if (isMount) {
+      linkRef?.current.forEach((element) => {
+        element = element as HTMLAnchorElement;
 
-      const fullUrl = element.href;
-      const linkElementPathName = fullUrl.substring(
-        fullUrl.lastIndexOf('3000') + 4
-      );
+        const fullUrl = element.href;
+        const linkElementPathName = fullUrl.substring(
+          fullUrl.lastIndexOf('3000') + 4
+        );
 
-      if (linkElementPathName === currentUrl) {
-        highLightElement = element;
-        element.style.color = highLightColor;
-      } else {
-        element.addEventListener('mouseenter', (e) => handleMouseEnter(e));
-        element.addEventListener('mouseleave', (e) => handleMouseLeave(e));
-      }
-    });
+        if (linkElementPathName === currentUrl) {
+          highLightElement = element;
+          element.style.color = highLightColor;
+        } else {
+          element?.addEventListener('mouseenter', (e) => handleMouseEnter(e));
+          element?.addEventListener('mouseleave', (e) => handleMouseLeave(e));
+        }
+      });
+    }
+
     return () => {
       linkRef?.current.forEach((element) => {
         element = element as HTMLAnchorElement;
@@ -44,7 +53,7 @@ export const useHighLight = (highLightColor: string, initialColor: string) => {
         element?.removeEventListener('mouseleave', handleMouseLeave);
       });
     };
-  }, []);
+  }, [isMount]);
 
   return { linkRef };
 };
