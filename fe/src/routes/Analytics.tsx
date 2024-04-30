@@ -110,13 +110,6 @@ function Analytics() {
 
   console.log(resultData);
 
-  const messages = [
-    { data: '안녕하세요!', role: true },
-    { data: '안녕하세요! 반갑습니다.', role: false },
-    { data: '어떻게 지내세요?', role: true },
-    { data: '잘 지내고 있어요, 당신은요?', role: false },
-  ];
-
   return (
     <>
       {isData ? (
@@ -126,7 +119,6 @@ function Analytics() {
             <GridWrapper>
               <AnalyticsWrapper>
                 <Visualization />
-                <ChatMessage messages={messages} />
               </AnalyticsWrapper>
               <ChatFormWrapper>
                 <ChatForm>

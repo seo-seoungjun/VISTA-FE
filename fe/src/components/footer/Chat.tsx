@@ -29,8 +29,9 @@ function Chat({ register }: any) {
     <>
       <ChatWrapper>
         <ChatInput
-          {...register('user_message')}
-          placeholder="change x axis label to meter per second"
+          {...register('name')}
+          required
+          placeholder="write the chating room name"
         />
         <SubmitBtn type="submit">제출</SubmitBtn>
       </ChatWrapper>
