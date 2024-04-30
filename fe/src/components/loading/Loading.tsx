@@ -10,18 +10,18 @@ const spinAnimation = keyframes`
   }
 `;
 
-const Spinner = styled.div`
+const Spinner = styled.div<{ size: string }>`
   border: 6px solid rgba(0, 0, 0, 0.1);
   border-left-color: #4044ed;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: ${(props) => props.size};
+  height: ${(props) => props.size};
   animation: ${spinAnimation} 1.5s linear infinite;
 `;
 
 // 로딩 컴포넌트 함수 작성
-const Loading = () => {
-  return <Spinner />;
+const Loading = ({ size = '50px' }) => {
+  return <Spinner size={size} />;
 };
 
 export default Loading;
