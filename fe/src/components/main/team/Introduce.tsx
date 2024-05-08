@@ -62,14 +62,14 @@ function Introduce({ name, roll, say, url }: Iintroduce) {
   const onContentHoverStart = (e: MouseEvent) => {
     const target = e.target as HTMLDivElement;
     const el = target.lastChild as HTMLDivElement;
-    console.log(el);
+    // console.log(el);
     el?.classList.add('on-hover');
   };
 
   const onContentHoverEnd = (e: MouseEvent) => {
     const target = e.target as HTMLDivElement;
     const el = target.lastChild as HTMLDivElement;
-    console.log(el);
+    // console.log(el);
     el?.classList.remove('on-hover');
   };
 

@@ -103,11 +103,7 @@ function LoginForm() {
   const loginMatch = useRouteMatch('/login');
   const signMatuch = useRouteMatch('/login/signup');
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { register, handleSubmit } = useForm({
     defaultValues: {
       username: '',
       password: '',
@@ -132,7 +128,7 @@ function LoginForm() {
       googleLoginMutate(code);
     },
 
-    onError: (res) => console.log(res),
+    // onError: (res) => console.log(res),
     flow: 'auth-code',
   });
 

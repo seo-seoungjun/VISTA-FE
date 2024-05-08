@@ -6,7 +6,6 @@ import SideBar from '../components/navbar/SideBar';
 import { useLocation, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { ILocation } from '../interface/analytics/interface.analytics';
-import ChatMessage from '../components/chat/ChatMessage';
 import {
   fileId,
   isDataExist,
@@ -108,7 +107,7 @@ function Analytics() {
     }
   }, [DATA_KEY]);
 
-  console.log(resultData);
+  // console.log(resultData);
 
   return (
     <>

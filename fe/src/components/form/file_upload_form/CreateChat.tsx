@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Chat from '../../footer/Chat';
-import { useRecoilValue } from 'recoil';
 
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { Redirect } from 'react-router-dom';
 import Loading from '../../loading/Loading';
 
-import { userInfo } from '../../../atoms/auth/atom.auth';
 import { createChat } from '../../../APIs/chat/api.chat';
 
 const LoadingWrapper = styled.div`
@@ -106,7 +104,7 @@ const SampleData = styled.div`
 
 function CreateChat() {
   const [isSubmitSuccess, setIsSubmitsuccess] = useState(false);
-  const userData = useRecoilValue(userInfo);
+  const [fileName, setFileName] = useState();
 
   const {
     register,
@@ -121,11 +119,11 @@ function CreateChat() {
 
   const { data, mutate, isLoading } = useMutation(createChat, {
     onSuccess: (res) => {
-      console.log(res);
+      // console.log(res);
       setIsSubmitsuccess(true);
     },
     onError: (err) => {
-      console.log(err);
+      // console.log(err);
     },
   });
 
@@ -178,14 +176,23 @@ function CreateChat() {
                         }
                       }
                     },
+                    onChange: (e: any) => {
+                      setFileName(e?.target?.files[0]?.name);
+                    },
                   })}
                   type="file"
                   id="file"
                 />
                 <FileUploadLabel htmlFor="file">
                   <FileUploadIcon src="http://localhost:3000/Images/fileUpload.svg" />
-                  <p>upload your own file</p>
-                  <p>Only .json and .csv files can be accepted</p>
+                  {fileName ? (
+                    <p>{fileName}</p>
+                  ) : (
+                    <>
+                      <p>upload your own file</p>
+                      <p>Only .json and .csv files can be accepted</p>
+                    </>
+                  )}
                 </FileUploadLabel>
                 <SampleDataWrapper>
                   <SampleData onClick={onSampleDataClick}>

@@ -1,7 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { chatList } from '../atoms/chat/atom.chat';
-import { useRecoilState } from 'recoil';
 
 export const useHighLight = (
   highLightColor: string,

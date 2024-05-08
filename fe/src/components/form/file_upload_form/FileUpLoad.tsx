@@ -127,11 +127,11 @@ function FileUpLoad() {
 
   const { data, mutate, isLoading } = useMutation(submitFormApi, {
     onSuccess: (res) => {
-      console.log(res);
+      // console.log(res);
       setIsSubmitsuccess(true);
     },
     onError: (err) => {
-      console.log(err);
+      // console.log(err);
     },
   });
 
@@ -142,7 +142,7 @@ function FileUpLoad() {
 
     for (const [key, value] of Object.entries(data)) {
       formData.append(key, value);
-      console.log(key, value);
+      // console.log(key, value);
     }
 
     setDefaultSettings(data);

@@ -10,7 +10,7 @@ import { getChatContenet, sendChat } from '../APIs/chat/api.chat';
 import { userMessages } from '../atoms/chat/atom.chat';
 import {
   IChatFormData,
-  IChatMessageData,
+  MessageProps,
 } from '../interface/chat/interface.chating';
 import ChatMessage from '../components/chat/ChatMessage';
 import Loading from '../components/loading/Loading';
@@ -90,7 +90,6 @@ const SubmitBtn = styled.button`
 function ChatRoom() {
   const params = useParams<{ thread_id: string }>();
 
-  const [streamingResponse, setResponse] = useState('');
   const [createStreamingLoading, setCreateStreamingLoading] = useState(false);
 
   const [fileName, setFileName] = useState();
@@ -112,16 +111,11 @@ function ChatRoom() {
 
   const { mutate: getChatContentMutate, isLoading: isChatContentLoading } =
     useMutation(getChatContenet, {
-      onError: (e) => console.log(e),
-      onSuccess: (res: IChatMessageData[]) => {
-        console.log(res);
-
-        //0번째는 제출한 파일만 보기로 수정
-
-        const currentData = res?.filter((data) => data.thread_id === THREAD_ID);
-        currentData[0].messages.reverse().shift();
-
-        setUserMessage(currentData);
+      // onError: (e) => console.log(e),
+      onSuccess: (chatContent) => {
+        chatContent.reverse();
+        chatContent[0].text = null;
+        setUserMessage(chatContent);
       },
     });
 
@@ -131,15 +125,17 @@ function ChatRoom() {
   }, [THREAD_ID]);
 
   const { mutate, isLoading: chatMutateLoading } = useMutation(sendChat, {
-    onSuccess: (res) => {},
+    onSuccess: (res) => {
+      // console.log(res);
+    },
     onError: (e) => {
-      console.log(e);
+      // console.log(e);
     },
   });
 
   useEffect(() => {
     const chatInput = document.querySelector('#chatInput') as HTMLInputElement;
-    if (chatInput != null) {
+    if (chatInput !== null) {
       if (chatMutateLoading) {
         chatInput.disabled = true;
       } else {
@@ -149,32 +145,38 @@ function ChatRoom() {
   }, [chatMutateLoading]);
 
   const onHadleSubmit = (data: IChatFormData) => {
-    let newData: IChatMessageData;
+    let newData: MessageProps[];
 
-    if (userMessage[0] != undefined) {
-      newData = {
-        thread_id: THREAD_ID,
-        messages: [
-          ...userMessage[0]?.messages,
+    if (userMessage[0] !== undefined) {
+      if (data.file[0] !== undefined) {
+        newData = [
+          ...userMessage,
+          { text: data.file[0].name, role: 'user' },
           { text: data.message, role: 'user' },
-        ],
-      };
-      setUserMessage([newData]);
+        ];
+      } else {
+        newData = [...userMessage, { text: data.message, role: 'user' }];
+      }
+
+      setUserMessage(newData);
     } else {
-      newData = {
-        thread_id: THREAD_ID,
-        messages: [{ text: data.message, role: 'user' }],
-      };
-      setUserMessage([newData]);
+      if (data.file[0] !== undefined) {
+        newData = [
+          { text: data.file[0].name, role: 'user' },
+          { text: data.message, role: 'user' },
+        ];
+      } else {
+        newData = [{ text: data.message, role: 'user' }];
+      }
+      setUserMessage(newData);
     }
 
     mutate({
       message: data.message,
       thread_id: THREAD_ID,
-      setResponse: setResponse,
       setStreamingLoading: setCreateStreamingLoading,
-      file: data.file,
-      currentChatContent: [newData],
+      file: data.file[0],
+      currentChatContent: newData,
       setChatContent: setUserMessage,
     });
   };
@@ -185,11 +187,11 @@ function ChatRoom() {
         <SideBar />
         <GridWrapper>
           <AnalyticsWrapper>
-            {/* <Visualization /> */}
             {isChatContentLoading ? (
               <Loading />
             ) : (
               <ChatMessage
+                thread_id={THREAD_ID}
                 isStreamingLoading={createStreamingLoading}
                 data={userMessage}
               />

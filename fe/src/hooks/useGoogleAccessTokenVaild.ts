@@ -11,8 +11,8 @@ export const useGoogleAccessTokenVaild = (onSuccessRedirectUrl?: string) => {
   const { mutate } = useMutation(getGoogleLoginUserInfo, {
     onSuccess: (data) => {
       setUserInfo(data);
-      console.log(data);
-      if (onSuccessRedirectUrl != undefined) {
+      // console.log(data);
+      if (onSuccessRedirectUrl !== undefined) {
         history.push(onSuccessRedirectUrl);
       }
     },
