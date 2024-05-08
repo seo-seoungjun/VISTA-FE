@@ -1,11 +1,10 @@
-import { atom, selector } from 'recoil';
+import { atom } from 'recoil';
 import {
-  IChatMessageData,
   IThreadId,
   MessageProps,
 } from '../../interface/chat/interface.chating';
 
-export const userMessages = atom<IChatMessageData[]>({
+export const userMessages = atom<MessageProps[]>({
   key: 'userMessages',
   default: [],
 });

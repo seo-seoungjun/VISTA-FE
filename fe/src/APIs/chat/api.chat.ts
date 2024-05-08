@@ -2,8 +2,10 @@ import axios from 'axios';
 import { PostFormDataBody } from '../../interface/analytics/interface.analytics';
 import { TokenKey } from '../../interface/auth/interface.auth';
 import {
-  IChatMessageData,
+  IFileList,
   ISendApiProps,
+  IThreadId,
+  MessageProps,
 } from '../../interface/chat/interface.chating';
 
 require('dotenv').config();
@@ -39,7 +41,7 @@ export const sendChat = async (data: ISendApiProps) => {
 
   formData.append('message', data.message);
   formData.append('thread_id', data.thread_id);
-  if (data.file != undefined) {
+  if (data.file !== undefined) {
     formData.append('file', data.file);
   }
 
@@ -69,30 +71,39 @@ export const sendChat = async (data: ISendApiProps) => {
       }
       const decodedChunk = decoder.decode(value, { stream: true });
       accumulatedResponse += decodedChunk;
-      data.setResponse(accumulatedResponse);
 
-      const newData: IChatMessageData = {
-        thread_id: data.thread_id,
-        messages: [
-          ...data.currentChatContent[0]?.messages,
-          { text: accumulatedResponse, role: 'assistant' },
-        ],
-      };
+      const newData: MessageProps[] = [
+        ...data.currentChatContent,
+        { text: accumulatedResponse, role: 'assistant' },
+      ];
 
-      data.setChatContent([newData]);
+      data.setChatContent(newData);
     }
+
+    const assistantFileList = await getAssistantFileList(data.thread_id);
+
+    const newData: MessageProps[] = [
+      ...data.currentChatContent,
+      {
+        text: accumulatedResponse,
+        role: 'assistant',
+        file_id: assistantFileList,
+      },
+    ];
+
+    data.setChatContent(newData);
+
+    return assistantFileList;
   } catch (error) {
     // 다른 에러 처리
   } finally {
-    //파일 얻는 api 호출
-    //thread_id로 api 호출하면 해당 스레드의 맨 마지막 어시스턴트 메시지의 파일 아이디 전달
   }
 };
 
 export const getChatList = async () => {
   const tokenData = getTokenData();
 
-  const res = await axios.get(`${DNS}:${SPRING_PORT}/chat_list`, {
+  const res = await axios.get<IThreadId[]>(`${DNS}:${SPRING_PORT}/chat_list`, {
     headers: {
       Authorization: `Bearer ${tokenData.access_token}`,
       token_type: tokenData.domain,
@@ -105,7 +116,39 @@ export const getChatList = async () => {
 export const getChatContenet = async (threadId: string) => {
   const tokenData = getTokenData();
 
-  const res = await axios.get(`${DNS}:${SPRING_PORT}/store`, {
+  const res = await axios.get<MessageProps[]>(`${DNS}:${SPRING_PORT}/store`, {
+    headers: {
+      Authorization: `Bearer ${tokenData.access_token}`,
+      token_type: tokenData.domain,
+    },
+    params: {
+      thread_id: threadId,
+    },
+  });
+
+  return res.data;
+};
+
+export const getUserSubmitFileList = async (threadId: string) => {
+  const tokenData = getTokenData();
+
+  const res = await axios.get<IFileList[]>(`${DNS}:${SPRING_PORT}/user_file`, {
+    headers: {
+      Authorization: `Bearer ${tokenData.access_token}`,
+      token_type: tokenData.domain,
+    },
+    params: {
+      thread_id: threadId,
+    },
+  });
+
+  return res.data;
+};
+
+export const getAssistantFileList = async (threadId: string) => {
+  const tokenData = getTokenData();
+
+  const res = await axios.get<string[]>(`${DNS}:${SPRING_PORT}/file_list`, {
     headers: {
       Authorization: `Bearer ${tokenData.access_token}`,
       token_type: tokenData.domain,

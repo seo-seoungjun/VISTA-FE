@@ -11,8 +11,8 @@ export const useEmailLoginTokenValid = (onSuccessRedirectUrl?: string) => {
   const { mutate } = useMutation(getEmailLoginUserInfo, {
     onSuccess: (data) => {
       setUserInfo(data);
-      console.log(data);
-      if (onSuccessRedirectUrl != undefined) {
+      // console.log(data);
+      if (onSuccessRedirectUrl !== undefined) {
         history.push(onSuccessRedirectUrl);
       }
     },

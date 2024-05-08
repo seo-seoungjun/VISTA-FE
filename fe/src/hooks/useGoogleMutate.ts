@@ -12,7 +12,7 @@ export const useGoogleMutate = () => {
 
   const { mutate } = useMutation(getGoogleLoginToken, {
     onSuccess: (tokenData) => {
-      console.log(tokenData);
+      // console.log(tokenData);
       tokenData.domain = 'Google';
 
       const { access_token, domain } = tokenData;
@@ -30,7 +30,7 @@ export const useGoogleMutate = () => {
       googleLoginUserInfo(tokenData.access_token);
     },
     onError: (error) => {
-      console.log(error);
+      // console.log(error);
     },
   });
 

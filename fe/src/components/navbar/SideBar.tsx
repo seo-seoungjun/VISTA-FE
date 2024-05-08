@@ -154,7 +154,7 @@ function SideBar() {
 
   const { mutate: getChatMutate, data } = useMutation(getChatList, {
     onError: (e) => {
-      console.log(e);
+      // console.log(e);
     },
     onSuccess: (chatList) => {
       setChatListData(chatList);

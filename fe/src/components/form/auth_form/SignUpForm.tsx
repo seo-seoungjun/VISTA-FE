@@ -37,11 +37,7 @@ const SignUpBtn = styled.button`
 `;
 
 function SignUpForm() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { register, handleSubmit } = useForm({
     defaultValues: {
       email: '',
       name: '',
@@ -65,7 +61,7 @@ function SignUpForm() {
       history.push('/login');
     },
     onError: (err) => {
-      console.log(err);
+      // console.log(err);
     },
   });
 

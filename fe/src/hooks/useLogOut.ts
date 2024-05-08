@@ -19,14 +19,14 @@ export const useLogOut = () => {
 
   const { mutate: revokeTokenMutate } = useMutation(revokeGoogleLoginToken, {
     onSuccess: (data) => {
-      console.log(data);
+      // console.log(data);
       localStorage.removeItem(TokenKey.accessToken);
       localStorage.removeItem(TokenKey.refreshToken);
       setUserData(null);
       history.push('/login');
     },
     onError: (error) => {
-      console.log(error);
+      // console.log(error);
     },
   });
 
