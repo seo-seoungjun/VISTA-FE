@@ -145,6 +145,28 @@ export const getUserSubmitFileList = async (threadId: string) => {
   return res.data;
 };
 
+export const sendSampleData = async (fileName: string) => {
+  const tokenData = getTokenData();
+
+  const formData = new FormData();
+
+  formData.append('name', fileName);
+  formData.append('file_name', fileName);
+
+  const res = await axios.post(
+    `${DNS}:${SPRING_PORT}/create_example`,
+    formData,
+    {
+      headers: {
+        Authorization: `Bearer ${tokenData.access_token}`,
+        token_type: tokenData.domain,
+      },
+    }
+  );
+
+  return res.data;
+};
+
 export const getAssistantFileList = async (threadId: string) => {
   const tokenData = getTokenData();
 

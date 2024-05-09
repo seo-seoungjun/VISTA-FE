@@ -7,7 +7,7 @@ import { useMutation } from 'react-query';
 import { Redirect } from 'react-router-dom';
 import Loading from '../../loading/Loading';
 
-import { createChat } from '../../../APIs/chat/api.chat';
+import { createChat, sendSampleData } from '../../../APIs/chat/api.chat';
 
 const LoadingWrapper = styled.div`
   width: 100%;
@@ -45,27 +45,7 @@ const DataForm = styled.form`
 
 const FileUploadWrapper = styled.div`
   height: 50%;
-`;
-
-const SettingsWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-`;
-const GrammerList = styled.select`
-  color: ${(props) => props.theme.textColor};
-  background-color: transparent;
-`;
-
-const GrammerSettingsBtn = styled.div`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-`;
-
-const SettingBtnImg = styled.img`
-  border-radius: 4px;
-  border: 1px solid ${(props) => props.theme.borderColor};
+  width: 70%;
 `;
 
 const FileUploadInput = styled.input`
@@ -92,6 +72,7 @@ const FileUploadIcon = styled.img``;
 const SampleDataWrapper = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-around;
 `;
 
 const SampleData = styled.div`
@@ -105,6 +86,7 @@ const SampleData = styled.div`
 function CreateChat() {
   const [isSubmitSuccess, setIsSubmitsuccess] = useState(false);
   const [fileName, setFileName] = useState();
+  const [threadId, setThreadId] = useState();
 
   const {
     register,
@@ -119,7 +101,7 @@ function CreateChat() {
 
   const { data, mutate, isLoading } = useMutation(createChat, {
     onSuccess: (res) => {
-      // console.log(res);
+      setThreadId(res.thread_id);
       setIsSubmitsuccess(true);
     },
     onError: (err) => {
@@ -138,14 +120,26 @@ function CreateChat() {
     mutate(formData);
   };
 
-  const onSampleDataClick = () => {};
+  const { mutate: sendSampleDataMutate } = useMutation(sendSampleData, {
+    onSuccess: (res) => {
+      setThreadId(res.thread_id);
+      setIsSubmitsuccess(true);
+    },
+    onError: (err) => {
+      // console.log(err);
+    },
+  });
+
+  const onSampleDataClick = (fileName: string) => {
+    sendSampleDataMutate(fileName);
+  };
 
   return (
     <>
       {isSubmitSuccess ? (
         <Redirect
           to={{
-            pathname: `/chat/${data.thread_id}`,
+            pathname: `/chat/${threadId}`,
           }}
         />
       ) : isLoading ? (
@@ -195,20 +189,14 @@ function CreateChat() {
                   )}
                 </FileUploadLabel>
                 <SampleDataWrapper>
-                  <SampleData onClick={onSampleDataClick}>
-                    <p>sample data</p>
+                  <SampleData onClick={() => onSampleDataClick('cars.csv')}>
+                    <p>cars.csv</p>
                   </SampleData>
-                  <SampleData onClick={onSampleDataClick}>
-                    <p>sample data</p>
+                  <SampleData onClick={() => onSampleDataClick('housing.csv')}>
+                    <p>housing.csv</p>
                   </SampleData>
-                  <SampleData onClick={onSampleDataClick}>
-                    <p>sample data</p>
-                  </SampleData>
-                  <SampleData onClick={onSampleDataClick}>
-                    <p>sample data</p>
-                  </SampleData>
-                  <SampleData onClick={onSampleDataClick}>
-                    <p>sample data</p>
+                  <SampleData onClick={() => onSampleDataClick('Iris.csv')}>
+                    <p>Iris.csv</p>
                   </SampleData>
                 </SampleDataWrapper>
               </FileUploadWrapper>
