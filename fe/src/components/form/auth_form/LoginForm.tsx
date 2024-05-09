@@ -91,12 +91,12 @@ const GithubIcon = styled.img``;
 
 const onGithubIconEnter = () => {
   const icon = document.querySelector<HTMLImageElement>('#githubIcon');
-  icon!.src = 'http://localhost:3000/Images/githubBlack.svg';
+  icon!.src = 'http://techvista24.com:3000/Images/githubBlack.svg';
 };
 
 const onGithubIconLeave = () => {
   const icon = document.querySelector<HTMLImageElement>('#githubIcon');
-  icon!.src = 'http://localhost:3000/Images/github.svg';
+  icon!.src = 'http://techvista24.com:3000/Images/github.svg';
 };
 
 function LoginForm() {
@@ -176,7 +176,7 @@ function LoginForm() {
       )}
       <SocialLoginBtnWrapper>
         <SocialLoginBtn onClick={() => handleGoogleLogin()}>
-          <GoogleIcon src="http://localhost:3000/Images/google.svg" />
+          <GoogleIcon src="http://techvista24.com:3000/Images/google.svg" />
           <p>sign in with google</p>
         </SocialLoginBtn>
         <SocialLoginBtn
@@ -186,7 +186,7 @@ function LoginForm() {
         >
           <GithubIcon
             id="githubIcon"
-            src="http://localhost:3000/Images/github.svg"
+            src="http://techvista24.com:3000/Images/github.svg"
           />
           <p>sign in with github</p>
         </SocialLoginBtn>

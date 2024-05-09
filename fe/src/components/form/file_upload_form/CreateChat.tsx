@@ -178,7 +178,7 @@ function CreateChat() {
                   id="file"
                 />
                 <FileUploadLabel htmlFor="file">
-                  <FileUploadIcon src="http://localhost:3000/Images/fileUpload.svg" />
+                  <FileUploadIcon src="http://techvista24.com:3000/Images/fileUpload.svg" />
                   {fileName ? (
                     <p>{fileName}</p>
                   ) : (
