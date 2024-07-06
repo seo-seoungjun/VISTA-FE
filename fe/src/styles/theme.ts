@@ -22,7 +22,17 @@ import { DefaultTheme } from 'styled-components';
 //   },
 // };
 
+const deviceSizes = {
+  tablet: 910,
+  laptop: 1200,
+};
+
 export const darkTheme: DefaultTheme = {
+  device: {
+    mobile: `(max-width: ${deviceSizes.tablet}px)`,
+    tablet: `(min-width: ${deviceSizes.tablet}px) and (max-width: ${deviceSizes.laptop}px)`,
+    laptop: `screen and (min-width: ${deviceSizes.laptop}px)`,
+  },
   bodyColor: 'black',
   sideBarBgColor: 'black',
   sideBarTextColor: '#888888',

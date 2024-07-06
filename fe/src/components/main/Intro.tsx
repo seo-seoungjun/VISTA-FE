@@ -1,8 +1,40 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useAuth } from '../../hooks/auth';
 
+const ToggleBtnWapper = styled.div`
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: flex-start;
+`;
+
+const ToggleSpanWapper = styled.span`
+  position: relative;
+  display: none;
+
+  span {
+    padding: 5px;
+    background-color: #ffffff;
+    color: black;
+    position: fixed;
+    display: none;
+  }
+  &[data-state='displayed-open'] {
+    span {
+      display: block;
+    }
+  }
+`;
+
+const ToggleBtn = styled.button`
+  cursor: pointer;
+`;
+
 const Section = styled.main`
+  @media (max-width: 1447px) {
+    padding: 50px 130px;
+  }
   /* width: 84%; */
   display: flex;
   flex-direction: column;
@@ -78,32 +110,96 @@ function Intro() {
     auth();
   };
 
+  const sideBarPopUpRef = useRef<HTMLSpanElement | null>(null);
+
+  useEffect(() => {
+    const handleMouseEnter = (e: MouseEvent) => {
+      const element = e.target as HTMLSpanElement;
+      element.dataset.state = 'displayed-open';
+    };
+
+    const handleMouseLeave = (e: MouseEvent) => {
+      const element = e.target as HTMLSpanElement;
+      element.dataset.state = 'close';
+    };
+
+    const toggleBtnClick = (e: MouseEvent) => {
+      const element = document.querySelector('.header') as HTMLDivElement;
+      element.style.visibility = 'visible';
+      const btn = sideBarPopUpRef?.current as HTMLSpanElement;
+      btn.style.display = 'none';
+
+      const mql = window.matchMedia('(max-width: 730px)');
+
+      if (mql.matches) {
+        element.style.width = '100vw';
+      } else {
+        element.style.width = '180px';
+      }
+    };
+
+    sideBarPopUpRef?.current?.addEventListener('mouseenter', (e) =>
+      handleMouseEnter(e)
+    );
+    sideBarPopUpRef?.current?.addEventListener('mouseleave', (e) =>
+      handleMouseLeave(e)
+    );
+    sideBarPopUpRef?.current?.addEventListener('click', (e) =>
+      toggleBtnClick(e)
+    );
+
+    return () => {
+      sideBarPopUpRef?.current?.removeEventListener('mouseenter', (e) =>
+        handleMouseEnter(e)
+      );
+      sideBarPopUpRef?.current?.removeEventListener('mouseleave', (e) =>
+        handleMouseLeave(e)
+      );
+      sideBarPopUpRef?.current?.removeEventListener('click', (e) =>
+        toggleBtnClick(e)
+      );
+    };
+  }, []);
+
   return (
-    <Section>
-      <Title>
-        Automatic Generation of Visualizations and Infographics <br /> with LLMs
-      </Title>
-      <DiscriptionWrapper>
-        <Discription>
-          <strong>Vista is a visualization generation tool</strong> based on
-          large language and image generation models, consisting of data
-          summarization, visualization goal derivation, visualization code
-          generation, and graphic generation modules. It provides a hybrid user
-          interface through natural language and direct manipulation to support
-          interactive charts, infographics, and data story generation.
-        </Discription>
-      </DiscriptionWrapper>
-      <BtnWrapperGrid>
-        <StartBtnWapper>
-          <StartBtnLink onClick={onStartBtnClick}>
-            <span>Get Started</span>
-          </StartBtnLink>
-          <GithubBtn href="https://github.com/LlamaVista/LlamaVista">
-            <span>Go Github</span>
-          </GithubBtn>
-        </StartBtnWapper>
-      </BtnWrapperGrid>
-    </Section>
+    <>
+      <ToggleBtnWapper>
+        <ToggleSpanWapper
+          className="toggleBtn"
+          data-state="closed"
+          ref={sideBarPopUpRef}
+        >
+          <ToggleBtn>X</ToggleBtn>
+          <span>사이드바 열기</span>
+        </ToggleSpanWapper>
+      </ToggleBtnWapper>
+      <Section>
+        <Title>
+          Automatic Generation of Visualizations and Infographics <br /> with
+          LLMs
+        </Title>
+        <DiscriptionWrapper>
+          <Discription>
+            <strong>Vista is a visualization generation tool</strong> based on
+            large language and image generation models, consisting of data
+            summarization, visualization goal derivation, visualization code
+            generation, and graphic generation modules. It provides a hybrid
+            user interface through natural language and direct manipulation to
+            support interactive charts, infographics, and data story generation.
+          </Discription>
+        </DiscriptionWrapper>
+        <BtnWrapperGrid>
+          <StartBtnWapper>
+            <StartBtnLink onClick={onStartBtnClick}>
+              <span>Get Started</span>
+            </StartBtnLink>
+            <GithubBtn href="https://github.com/LlamaVista/LlamaVista">
+              <span>Go Github</span>
+            </GithubBtn>
+          </StartBtnWapper>
+        </BtnWrapperGrid>
+      </Section>
+    </>
   );
 }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
@@ -15,16 +15,8 @@ import { chatList } from '../../atoms/chat/atom.chat';
 import { useMutation } from 'react-query';
 import { getChatList } from '../../APIs/chat/api.chat';
 
-const DATA_KEY_List = 'data_list';
-
 const Header = styled.header`
-  position: sticky;
-  top: 0;
-  flex: 0 0 13%;
-  height: 100vh;
   box-shadow: rgba(255, 255, 255, 0.18) 1px 0px 0px 0px;
-  display: flex;
-  flex-direction: column;
   text-align: center;
   p {
     color: #d6d6d6;
@@ -35,6 +27,51 @@ const Header = styled.header`
     font-weight: 400;
   }
   background-color: ${(props) => props.theme.sideBarBgColor};
+`;
+
+const HeaderContent = styled.div`
+  @media (max-width: 730px) {
+    transition: width 2s;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    width: 100vw !important;
+  }
+  background-color: ${(props) => props.theme.sideBarBgColor};
+  position: sticky;
+  top: 0;
+  transition: width 1s;
+  width: 180px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+`;
+
+const ToggleBtnWapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const ToggleSpanWapper = styled.span`
+  position: relative;
+
+  span {
+    padding: 5px;
+    background-color: #ffffff;
+    color: black;
+    position: fixed;
+    display: none;
+  }
+  &[data-state='displayed-open'] {
+    span {
+      display: block;
+    }
+  }
+`;
+
+const ToggleBtn = styled.button`
+  cursor: pointer;
 `;
 
 const LidaIcon = styled.div`
@@ -75,7 +112,7 @@ const MeueList = styled.ul`
 
 const HomeMenu = styled.li`
   div a {
-    transition: all 0.5s;
+    transition: color 0.5s;
   }
 `;
 
@@ -85,7 +122,7 @@ const HomeMenuImg = styled.img``;
 
 const DemoMenu = styled.li`
   div a {
-    transition: all 0.5s;
+    transition: color 0.5s;
   }
 `;
 
@@ -104,7 +141,7 @@ const Data = styled.li`
   justify-content: center;
   margin-top: 10px;
   a {
-    transition: 0.5s;
+    transition: color 0.5s;
   }
 `;
 
@@ -120,7 +157,7 @@ const AuthList = styled.ul`
 
 const SignIn = styled.li`
   a {
-    transition: 0.5s;
+    transition: color 0.5s;
   }
   a:hover {
     color: ${(props) => props.theme.highLightTextColor};
@@ -130,7 +167,7 @@ const SignIn = styled.li`
 const SignOut = styled.li`
   a,
   span {
-    transition: 0.5s;
+    transition: color 0.5s;
   }
   a,
   span:hover {
@@ -145,6 +182,9 @@ const DemoLink = styled(Link)`
 
 function SideBar() {
   // const [dataList, setDataList] = useRecoilState(fileId);
+
+  const sideBarPopUpRef = useRef<HTMLSpanElement | null>(null);
+  const sideBarRef = useRef<HTMLDivElement | null>(null);
 
   const [chatListData, setChatListData] = useRecoilState(chatList);
 
@@ -161,6 +201,68 @@ function SideBar() {
       setIsComponentDidMount(true);
     },
   });
+
+  useEffect(() => {
+    const handleMouseEnter = (e: MouseEvent) => {
+      const element = e.target as HTMLSpanElement;
+      element.dataset.state = 'displayed-open';
+    };
+
+    const handleMouseLeave = (e: MouseEvent) => {
+      const element = e.target as HTMLSpanElement;
+      element.dataset.state = 'close';
+    };
+
+    const toggleBtnClick = (e: MouseEvent) => {
+      const element = sideBarRef?.current as HTMLDivElement;
+      element.style.visibility = 'hidden';
+      element.style.width = '0';
+      const btn = document.querySelector('.toggleBtn') as HTMLSpanElement;
+      btn.style.display = 'block';
+    };
+
+    const mql = window.matchMedia('(max-width: 1160px)');
+
+    sideBarPopUpRef?.current?.addEventListener('mouseenter', (e) =>
+      handleMouseEnter(e)
+    );
+    sideBarPopUpRef?.current?.addEventListener('mouseleave', (e) =>
+      handleMouseLeave(e)
+    );
+    sideBarPopUpRef?.current?.addEventListener('click', (e) =>
+      toggleBtnClick(e)
+    );
+
+    if (mql.matches) {
+      const btn = sideBarPopUpRef?.current as HTMLSpanElement;
+      btn.click();
+    } else {
+      const btn = document.querySelector('.toggleBtn') as HTMLSpanElement;
+      btn.click();
+    }
+
+    mql.addListener((e) => {
+      if (e.matches) {
+        const btn = sideBarPopUpRef?.current as HTMLSpanElement;
+        btn.click();
+      } else {
+        const btn = document.querySelector('.toggleBtn') as HTMLSpanElement;
+        btn.click();
+      }
+    });
+
+    return () => {
+      sideBarPopUpRef?.current?.removeEventListener('mouseenter', (e) =>
+        handleMouseEnter(e)
+      );
+      sideBarPopUpRef?.current?.removeEventListener('mouseleave', (e) =>
+        handleMouseLeave(e)
+      );
+      sideBarPopUpRef?.current?.removeEventListener('click', (e) =>
+        toggleBtnClick(e)
+      );
+    };
+  }, []);
 
   useEffect(() => {
     if (userData != null) {
@@ -206,74 +308,82 @@ function SideBar() {
   return (
     <>
       <Header>
-        <LidaIcon>
-          <LidaText>vista</LidaText>
-        </LidaIcon>
-        <MeueNav>
-          <MeueList>
-            <HomeMenu>
-              <MenuWrapper id="home">
-                {/* <HomeMenuImg src="http://localhost:3000/Images/home.svg" /> */}
-                <Link
-                  ref={(element) => (linkRef.current[0] = element)}
-                  to={'/'}
-                >
-                  Home
-                </Link>
-              </MenuWrapper>
-            </HomeMenu>
-            <DemoMenu>
-              <MenuWrapper id="demo">
-                {/* <DemoMenuImg src="http://localhost:3000/Images/demo.svg" /> */}
-                <DemoLink
-                  ref={(element) => (linkRef.current[1] = element)}
-                  onClick={(e) => onDemoClick(e)}
-                  to={'/demo'}
-                >
-                  Demo
-                </DemoLink>
-              </MenuWrapper>
-            </DemoMenu>
-          </MeueList>
-          <DataRecordList>
-            <DataList>
-              <p>DataList</p>
-            </DataList>
-            {isLogin &&
-              chatListData?.map((chatList, index) => (
-                <Data key={chatList.thread_id}>
+        <HeaderContent className="header" ref={sideBarRef}>
+          <ToggleBtnWapper>
+            <ToggleSpanWapper data-state="closed" ref={sideBarPopUpRef}>
+              <ToggleBtn>X</ToggleBtn>
+              <span>사이드바 닫기</span>
+            </ToggleSpanWapper>
+          </ToggleBtnWapper>
+          <LidaIcon>
+            <LidaText>vista</LidaText>
+          </LidaIcon>
+          <MeueNav>
+            <MeueList>
+              <HomeMenu>
+                <MenuWrapper id="home">
+                  {/* <HomeMenuImg src="http://localhost:3000/Images/home.svg" /> */}
+                  <Link
+                    ref={(element) => (linkRef.current[0] = element)}
+                    to={'/'}
+                  >
+                    Home
+                  </Link>
+                </MenuWrapper>
+              </HomeMenu>
+              <DemoMenu>
+                <MenuWrapper id="demo">
+                  {/* <DemoMenuImg src="http://localhost:3000/Images/demo.svg" /> */}
+                  <DemoLink
+                    ref={(element) => (linkRef.current[1] = element)}
+                    onClick={(e) => onDemoClick(e)}
+                    to={'/demo'}
+                  >
+                    Demo
+                  </DemoLink>
+                </MenuWrapper>
+              </DemoMenu>
+            </MeueList>
+            <DataRecordList>
+              <DataList>
+                <p>DataList</p>
+              </DataList>
+              {isLogin &&
+                chatListData?.map((chatList, index) => (
+                  <Data key={chatList.thread_id}>
+                    <Link
+                      ref={(element) => (linkRef.current[index + 2] = element)}
+                      to={`/chat/${chatList.thread_id}`}
+                    >
+                      {chatList.name}
+                    </Link>
+                  </Data>
+                ))}
+              {/* {dataList?.map((fileId, index) => (
+                <Data key={fileId}>
                   <Link
                     ref={(element) => (linkRef.current[index + 2] = element)}
-                    to={`/chat/${chatList.thread_id}`}
+                    to={`/analytics/${fileId}`}
                   >
-                    {chatList.name}
+                    Data
                   </Link>
                 </Data>
-              ))}
-            {/* {dataList?.map((fileId, index) => (
-              <Data key={fileId}>
-                <Link
-                  ref={(element) => (linkRef.current[index + 2] = element)}
-                  to={`/analytics/${fileId}`}
-                >
-                  Data
-                </Link>
-              </Data>
-            ))} */}
-          </DataRecordList>
-          <AuthList>
-            <p>Authentication</p>
-            {isLogin ? (
-              <SignOut onClick={clickLogoutBtn}>
-                <span>SignOut</span>
-              </SignOut>
-            ) : (
-              <SignIn>
-                <Link to={'/login'}>SignIn</Link>
-              </SignIn>
-            )}
-          </AuthList>
-        </MeueNav>
+              ))} */}
+            </DataRecordList>
+            <AuthList>
+              <p>Authentication</p>
+              {isLogin ? (
+                <SignOut onClick={clickLogoutBtn}>
+                  <span>SignOut</span>
+                </SignOut>
+              ) : (
+                <SignIn>
+                  <Link to={'/login'}>SignIn</Link>
+                </SignIn>
+              )}
+            </AuthList>
+          </MeueNav>
+        </HeaderContent>
       </Header>
     </>
   );

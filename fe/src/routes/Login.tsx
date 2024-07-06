@@ -10,13 +10,33 @@ const LoginSection = styled.section`
   height: 100vh;
 `;
 const LeftSide = styled.div`
+  @media (min-width: 1200px) {
+    display: flex;
+  }
   width: 40%;
-  display: flex;
+  display: none;
   align-items: center;
 `;
 const RightSide = styled.div`
   display: flex;
   align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+`;
+
+const RightSideTitleWrapper = styled.div`
+  @media (max-width: 1200px) {
+    &.mobile {
+      display: flex;
+    }
+  }
+  display: none;
+  flex-direction: column;
+  border-radius: 20px;
+  width: 60%;
+  padding: 30px;
+  box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px;
+  gap: 20px;
 `;
 
 const DiscriptiopWrapper = styled.div`
@@ -26,6 +46,9 @@ const DiscriptiopWrapper = styled.div`
 `;
 
 const Title = styled.h1`
+  @media (max-width: 1200px) {
+    margin: 0;
+  }
   color: ${(props) => props.theme.mainPage.mostHighlightColor};
   font-size: 50px;
   font-weight: bold;
@@ -38,6 +61,12 @@ const Discription = styled.p`
 `;
 
 const MoreBtn = styled.button`
+  @media (max-width: 1200px) {
+    padding: 0;
+    margin: 0;
+    width: 20%;
+  }
+
   background-color: #4044ed;
   color: ${(props) => props.theme.mainPage.mostHighlightColor};
   padding: 3px 10px;
@@ -88,6 +117,24 @@ function Login() {
           </DiscriptiopWrapper>
         </LeftSide>
         <RightSide>
+          <RightSideTitleWrapper className="mobile">
+            <Title>VISTA</Title>
+            <Discription>
+              VISTA is a convenient command prompt-based tool for data analysis
+              receiving JSON and Excel files as inputs and providing users with
+              a variety of analysis results.
+              <br /> <br />
+              This data analysis service operates on a command prompt basis and
+              is a tool that provides immediate analysis results when users
+              enter various data formats such as JSON and Excel files through
+              commands.
+            </Discription>
+            <MoreBtn>
+              <p>
+                <Link to={'/'}>Learn More</Link>
+              </p>
+            </MoreBtn>
+          </RightSideTitleWrapper>
           <LoginForm />
         </RightSide>
       </LoginSection>
