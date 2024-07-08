@@ -14,6 +14,7 @@ import {
 } from '../interface/chat/interface.chating';
 import ChatMessage from '../components/chat/ChatMessage';
 import Loading from '../components/loading/Loading';
+import SideBarToggleBtn from '../components/navbar/SideBarToggleBtn';
 
 const Section = styled.div`
   display: flex;
@@ -185,6 +186,7 @@ function ChatRoom() {
     <>
       <Section>
         <SideBar />
+        <SideBarToggleBtn />
         <GridWrapper>
           <AnalyticsWrapper>
             {isChatContentLoading ? (

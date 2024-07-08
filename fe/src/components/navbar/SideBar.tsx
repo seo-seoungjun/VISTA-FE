@@ -235,19 +235,19 @@ function SideBar() {
 
     if (mql.matches) {
       const btn = sideBarPopUpRef?.current as HTMLSpanElement;
-      btn.click();
+      btn?.click();
     } else {
       const btn = document.querySelector('.toggleBtn') as HTMLSpanElement;
-      btn.click();
+      btn?.click();
     }
 
     mql.addListener((e) => {
       if (e.matches) {
         const btn = sideBarPopUpRef?.current as HTMLSpanElement;
-        btn.click();
+        btn?.click();
       } else {
         const btn = document.querySelector('.toggleBtn') as HTMLSpanElement;
-        btn.click();
+        btn?.click();
       }
     });
 
@@ -389,4 +389,4 @@ function SideBar() {
   );
 }
 
-export default SideBar;
+export default React.memo(SideBar);
