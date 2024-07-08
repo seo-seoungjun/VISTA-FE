@@ -28,6 +28,8 @@ const Message = styled.div<{ $role: 'user' | 'assistant' }>`
 `;
 
 const ChatMessage = ({ data, isStreamingLoading, thread_id }: ChatProps) => {
+  채ㅜ;
+
   return (
     <ChatContainer>
       <MessageContainer>

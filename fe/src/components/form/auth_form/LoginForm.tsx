@@ -176,7 +176,7 @@ function LoginForm() {
       )}
       <SocialLoginBtnWrapper>
         <SocialLoginBtn onClick={() => handleGoogleLogin()}>
-          <GoogleIcon src="http://techvista24.com:3000/Images/google.svg" />
+          <GoogleIcon src="http://localhost:3000/Images/google.svg" />
           <p>sign in with google</p>
         </SocialLoginBtn>
         <SocialLoginBtn
@@ -186,7 +186,7 @@ function LoginForm() {
         >
           <GithubIcon
             id="githubIcon"
-            src="http://techvista24.com:3000/Images/github.svg"
+            src="http://localhost:3000/Images/github.svg"
           />
           <p>sign in with github</p>
         </SocialLoginBtn>

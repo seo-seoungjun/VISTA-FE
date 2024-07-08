@@ -8,6 +8,7 @@ import { Redirect } from 'react-router-dom';
 import Loading from '../../loading/Loading';
 
 import { createChat, sendSampleData } from '../../../APIs/chat/api.chat';
+import SideBarToggleBtn from '../../navbar/SideBarToggleBtn';
 
 const LoadingWrapper = styled.div`
   width: 100%;
@@ -149,6 +150,7 @@ function CreateChat() {
         </LoadingWrapper>
       ) : (
         <Main>
+          <SideBarToggleBtn />
           <Section>
             <DataForm
               encType="multipart/form-data"
@@ -178,7 +180,7 @@ function CreateChat() {
                   id="file"
                 />
                 <FileUploadLabel htmlFor="file">
-                  <FileUploadIcon src="http://techvista24.com:3000/Images/fileUpload.svg" />
+                  <FileUploadIcon src="http://localhost:3000/Images/fileUpload.svg" />
                   {fileName ? (
                     <p>{fileName}</p>
                   ) : (

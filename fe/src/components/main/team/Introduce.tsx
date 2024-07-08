@@ -89,7 +89,7 @@ function Introduce({ name, roll, say, url }: Iintroduce) {
       >
         <Profile className="ctx">
           <ImgWrapper>
-            <ProfileImg src={`http://techvista24.com:3000/Images/${url}`} />
+            <ProfileImg src={`http://localhost:3000/Images/${url}`} />
           </ImgWrapper>
           <NameAndRoll>
             <Name>{name}</Name>
