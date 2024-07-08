@@ -15,6 +15,7 @@ import {
 import ChatMessage from '../components/chat/ChatMessage';
 import Loading from '../components/loading/Loading';
 import SideBarToggleBtn from '../components/navbar/SideBarToggleBtn';
+import StrimingMessage from '../components/chat/StrimingMessage';
 
 const Section = styled.div`
   display: flex;
@@ -88,10 +89,25 @@ const SubmitBtn = styled.button`
   display: none;
 `;
 
+const ChatContainer = styled.div`
+  width: 85%;
+  border-radius: 10px;
+  padding: 10px;
+`;
+
+const MessageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 function ChatRoom() {
   const params = useParams<{ thread_id: string }>();
 
   const [createStreamingLoading, setCreateStreamingLoading] = useState(false);
+  const [streamingDone, setStreamingDone] = useState(false);
+  const [strimingMessage, setStrimingMessage] = useState<MessageProps[] | null>(
+    null
+  );
 
   const [fileName, setFileName] = useState();
   const [userMessage, setUserMessage] = useRecoilState(userMessages);
@@ -176,9 +192,11 @@ function ChatRoom() {
       message: data.message,
       thread_id: THREAD_ID,
       setStreamingLoading: setCreateStreamingLoading,
+      setStreamingDone: setStreamingDone,
       file: data.file[0],
       currentChatContent: newData,
       setChatContent: setUserMessage,
+      setStrimingContent: setStrimingMessage,
     });
   };
 
@@ -192,11 +210,21 @@ function ChatRoom() {
             {isChatContentLoading ? (
               <Loading />
             ) : (
-              <ChatMessage
-                thread_id={THREAD_ID}
-                isStreamingLoading={createStreamingLoading}
-                data={userMessage}
-              />
+              <>
+                <ChatMessage
+                  thread_id={THREAD_ID}
+                  isStreamingLoading={createStreamingLoading}
+                  data={userMessage}
+                />
+                <ChatContainer>
+                  <MessageContainer>
+                    <StrimingMessage
+                      isStreamingDone={streamingDone}
+                      data={strimingMessage}
+                    />
+                  </MessageContainer>
+                </ChatContainer>
+              </>
             )}
           </AnalyticsWrapper>
           <ChatFormWrapper>

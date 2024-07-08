@@ -15,8 +15,14 @@ export interface MessageProps {
 
 export interface ChatProps {
   thread_id: string;
-  data: MessageProps[];
+  data: MessageProps[] | null;
   isStreamingLoading: boolean;
+}
+
+export interface IMessageProps {
+  thread_id?: string;
+  data: MessageProps[] | null;
+  isStreamingDone?: boolean;
 }
 
 export interface IThreadId {
@@ -30,7 +36,11 @@ export interface ISendApiProps {
   file: any;
   currentChatContent: MessageProps[];
   setChatContent: SetterOrUpdater<MessageProps[]>;
+  setStrimingContent: React.Dispatch<
+    React.SetStateAction<null | MessageProps[]>
+  >;
   setStreamingLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setStreamingDone: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface IChatFormData {
