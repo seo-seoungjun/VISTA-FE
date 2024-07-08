@@ -62,6 +62,7 @@ export const sendChat = async (data: ISendApiProps) => {
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
     let accumulatedResponse = '';
+    let newMessageData: MessageProps[] = [];
 
     while (true) {
       const { value, done } = await reader.read();
@@ -72,13 +73,18 @@ export const sendChat = async (data: ISendApiProps) => {
       const decodedChunk = decoder.decode(value, { stream: true });
       accumulatedResponse += decodedChunk;
 
-      const newData: MessageProps[] = [
+      newMessageData = [
         ...data.currentChatContent,
         { text: accumulatedResponse, role: 'assistant' },
       ];
 
-      data.setChatContent(newData);
+      data.setStrimingContent([
+        { text: accumulatedResponse, role: 'assistant' },
+      ]);
     }
+
+    data.setStreamingDone(true);
+    data.setChatContent(newMessageData);
 
     const assistantFileList = await getAssistantFileList(data.thread_id);
 
