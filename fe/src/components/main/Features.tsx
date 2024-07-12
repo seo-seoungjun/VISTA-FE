@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import FeatureGrid from './FeatureGrid';
+// import FeatureGrid from './FeatureGrid';
 
 const Section = styled.section`
   padding: 0 70px;
@@ -36,6 +36,19 @@ const Discription = styled.p`
 `;
 
 function Features() {
+  const [importedComponent, setImportedComponent] =
+    useState<React.JSX.Element>();
+
+  useEffect(() => {
+    const importComponent = async () => {
+      const module = await import('./FeatureGrid');
+      const FeatureGrid = module.default;
+      setImportedComponent(<FeatureGrid />);
+    };
+
+    importComponent();
+  }, []);
+
   return (
     <Section>
       <ContentWrapper>
@@ -45,7 +58,8 @@ function Features() {
             Everything you need to build great project based in data analytic
           </Discription>
         </DiscriptionWrapper>
-        <FeatureGrid />
+        {/* <FeatureGrid /> */}
+        {importedComponent}
       </ContentWrapper>
     </Section>
   );

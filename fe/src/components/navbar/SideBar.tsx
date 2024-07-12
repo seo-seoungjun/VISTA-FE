@@ -181,8 +181,6 @@ const DemoLink = styled(Link)`
 `;
 
 function SideBar() {
-  // const [dataList, setDataList] = useRecoilState(fileId);
-
   const sideBarPopUpRef = useRef<HTMLSpanElement | null>(null);
   const sideBarRef = useRef<HTMLDivElement | null>(null);
 
@@ -299,7 +297,7 @@ function SideBar() {
     auth();
   };
 
-  const { linkRef } = useHighLight(
+  const linkRef = useHighLight(
     darkTheme.highLightTextColor,
     darkTheme.sideBarTextColor,
     isComponentDidMount

@@ -33,9 +33,11 @@ export const useHighLight = (
           fullUrl.lastIndexOf('3000') + 4
         );
 
+        console.log(`current: ${currentUrl}, ${linkElementPathName}`);
+
         if (linkElementPathName === currentUrl) {
           highLightElement = element;
-          element.style.color = highLightColor;
+          highLightElement.style.color = highLightColor;
         } else {
           element?.addEventListener('mouseenter', (e) => handleMouseEnter(e));
           element?.addEventListener('mouseleave', (e) => handleMouseLeave(e));
@@ -51,7 +53,7 @@ export const useHighLight = (
         element?.removeEventListener('mouseleave', handleMouseLeave);
       });
     };
-  }, [isMount]);
+  }, [isMount, currentUrl]);
 
-  return { linkRef };
+  return linkRef;
 };

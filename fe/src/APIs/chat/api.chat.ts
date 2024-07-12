@@ -7,6 +7,7 @@ import {
   IThreadId,
   MessageProps,
 } from '../../interface/chat/interface.chating';
+import { QueryFunctionContext } from 'react-query';
 
 require('dotenv').config();
 

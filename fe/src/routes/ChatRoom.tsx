@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import styled from 'styled-components';
 import SideBar from '../components/navbar/SideBar';
 import { useAuth } from '../hooks/auth';
