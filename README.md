@@ -52,6 +52,40 @@ car, house, iris 와 관련된 샘플 데이터로 분석을 진행해 볼 수 �
 
 <img width="1510" alt="분석예시" src="https://github.com/user-attachments/assets/37e34bb3-3941-409a-8111-e8cbd593d5c4">
 
+## 🔧 Stack
+
+### FE
+- **Language**: TypeScript
+- **Library & Framework** : React, React-rocoil, React-Query, styled-components
+- **Deploy**: AWS EC2
+
+### BE
+- **Language**: Python
+- **Library & Framework** : Fastapi, Pymongo
+
+### ML
+- **Hardware & OS env**: DGX-Station(A100*8), Ubuntu 20.04, CUDA 11.8
+- **Language**: Python
+- **Library & Framework** : torch, transformers, accelerate, sentencepiece, langchain
 
 
+
+## 👨‍💻 Role & Contribution
+
+**Frontend**
+
+- 사용자 페이지 디자인(Figma) 및 개발(React.js)
+- 데이터베이스 스키마 설계
+- API 설계
+- 전체 개발 일정 및 이슈 관리
+
+**BackEnd**
+
+- REST Api 개발
+
+**ML**
+
+- 인공지능 설계 및 개발
+- MLOps
+- RESTApi 개발
 
