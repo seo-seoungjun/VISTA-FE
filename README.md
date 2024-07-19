@@ -1,6 +1,8 @@
 # LlamaVista
 
 데이터 분석 자동화 서비스! 👉
+
+해당 페이지는 프로젝트의 Front-end 소스코드 페이지 입니다. 모든 소스코드는 아래의 링크를 참고해주세요!
 > project source code: https://github.com/LlamaVista/LlamaVista/tree/main
 
 <img width="1512" alt="산점도" src="https://github.com/user-attachments/assets/af91ad90-ecb9-407f-aaa2-b331247a72ea">
@@ -52,38 +54,39 @@ car, house, iris 와 관련된 샘플 데이터로 분석을 진행해 볼 수 �
 
 <img width="1510" alt="분석예시" src="https://github.com/user-attachments/assets/37e34bb3-3941-409a-8111-e8cbd593d5c4">
 
+
 ## 🔧 Stack
 
-### FE
+### FE 
 - **Language**: TypeScript
 - **Library & Framework** : React, React-rocoil, React-Query, styled-components
-- **Deploy**: AWS EC2
 
-### BE
+### BE 
 - **Language**: Python
 - **Library & Framework** : Fastapi, Pymongo
+- **Deploy**: AWS EC2
 
-### ML
+### ML 
 - **Hardware & OS env**: DGX-Station(A100*8), Ubuntu 20.04, CUDA 11.8
 - **Language**: Python
 - **Library & Framework** : torch, transformers, accelerate, sentencepiece, langchain
 
 
-
 ## 👨‍💻 Role & Contribution
 
-**Frontend**
+**Frontend** (👨🏻‍💻 [seoungJun](https://github.com/seo-seoungjun))
 
 - 사용자 페이지 디자인(Figma) 및 개발(React.js)
 - 데이터베이스 스키마 설계
 - API 설계
-- 전체 개발 일정 및 이슈 관리
+- Project Management 및 이슈 관리
 
-**BackEnd**
+**BackEnd** (👨🏻‍💻 [cshoon](https://github.com/cshooon))
 
 - REST Api 개발
+- 서버 배포 및 관리
 
-**ML**
+**ML** (👨🏻‍💻 [sabin](https://github.com/sabin5105))
 
 - 인공지능 설계 및 개발
 - MLOps
