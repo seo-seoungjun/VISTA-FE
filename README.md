@@ -25,7 +25,7 @@ VISTA는 대규모 언어 모델(LLM)을 기반으로 한 데이터 분석 자�
 
 ### 회원가입 및 로그인 
 - token 기반 로그인
-- google 로그인 *현재 지원 중단*
+- google 로그인 (*현재 지원 중단*)
 
 ### 기타 기능
 - 채팅 기록 저장
@@ -53,6 +53,8 @@ car, house, iris 와 관련된 샘플 데이터로 분석을 진행해 볼 수 �
 - 시각화 된 자료가 필요한 경우 생성할 수 있습니다
 
 <img width="1510" alt="분석예시" src="https://github.com/user-attachments/assets/37e34bb3-3941-409a-8111-e8cbd593d5c4">
+<br/>
+<img width="1512" alt="산점도" src="https://github.com/user-attachments/assets/e8599279-2feb-4de3-a27d-1008a3ffe6c1">
 
 
 ## 🔧 Stack
