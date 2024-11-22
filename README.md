@@ -1,6 +1,6 @@
 # LlamaVista
 
-데이터 분석 자동화 서비스! 👉
+데이터 분석 자동화 서비스!
 
 해당 페이지는 프로젝트의 Front-end 소스코드 페이지 입니다. 모든 소스코드는 아래의 링크를 참고해주세요!
 > project source code: https://github.com/LlamaVista/LlamaVista/tree/main
@@ -24,7 +24,7 @@ VISTA는 대규모 언어 모델(LLM)을 기반으로 한 데이터 분석 자�
 
 ### 회원가입 및 로그인 
 - token 기반 로그인
-- google 로그인 (**API 이슈로 현재 지원 중단**)
+- google 로그인 (**DNS 사용 기간이 종료되어 현재 이용 불가능합니다**)
 
 ### 기타 기능
 - 채팅 기록 저장
