@@ -17,8 +17,9 @@ VISTA는 대규모 언어 모델(LLM)을 기반으로 한 데이터 분석 자�
 
 ## ⭐ Main Feature
 ### 데이터 분석 기능
-- csv, json, txt 파일 분석 지원
+- csv, json, txt 파일의 데이터 분석 지원
 - 분석 방향 제시
+- 대화 전송시, 추가적인 자료 제출 가능
 - 데이터 시각화 이미지 제공(그래프, 산점도 등)
 - 스트리밍을 통한 실시간 응답 지원
 
@@ -38,14 +39,14 @@ VISTA는 대규모 언어 모델(LLM)을 기반으로 한 데이터 분석 자�
 배포된 링크 🔗 로 접속!
 
 ### 회원가입 후 로그인 진행
-- 구글 로그인은 현재 API 문제로 지원하지 않습니다
+- 구글 로그인은 DNS 서비스가 만료되어 현재 이용 불가능합니다
 - 회원가입 시 중복체크 후 회원가입이 완료됩니다
 <img width="800" alt="로그인" src="https://github.com/user-attachments/assets/c7668091-c8cf-4f8d-977d-7f10ceafca27">
 
 ### 분석할 파일 제출
 - 분석을 원하시는 파일을 제출하여 채팅방을 생성하는 곳입니다
 - 분석 파일은 json, csv, txt 파일만 가능합니다
-- car, house, iris 와 관련된 샘플 데이터로 분석을 진행해 볼 수 있습니다
+- london_house, shopping_trends, iris 와 관련된 샘플 데이터로 분석을 진행해 볼 수 있습니다
 <img width="800" alt="파일업로드" src="https://github.com/user-attachments/assets/367a528f-4891-4dd7-8002-4c4d425bb7cd">
 
 ### 데이터 분석 진행
@@ -86,7 +87,9 @@ VISTA는 대규모 언어 모델(LLM)을 기반으로 한 데이터 분석 자�
 
 **BackEnd** (👨🏻‍💻 [cshoon](https://github.com/cshooon))
 
-- REST Api 개발
+- 데이터베이스 스키마 설계
+- API 설계
+- REST API 개발
 - 서버 배포 및 관리
 
 **ML** (👨🏻‍💻 [sabin](https://github.com/sabin5105))
