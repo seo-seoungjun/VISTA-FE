@@ -5,7 +5,8 @@
 해당 페이지는 프로젝트의 Front-end 소스코드 페이지 입니다. 모든 소스코드는 아래의 링크를 참고해주세요!
 > project source code: https://github.com/LlamaVista/LlamaVista/tree/main
 
-<img width="1512" alt="산점도" src="https://github.com/user-attachments/assets/af91ad90-ecb9-407f-aaa2-b331247a72ea">
+<img width="800" alt="스크린샷 2025-01-03 오전 12 50 42" src="https://github.com/user-attachments/assets/cc8d23a2-07aa-46d6-92fb-7f520e2866b5" />
+
 
 ## 📖 Description
 
@@ -46,17 +47,16 @@ VISTA는 대규모 언어 모델(LLM)을 기반으로 한 데이터 분석 자�
 ### 분석할 파일 제출
 - 분석을 원하시는 파일을 제출하여 채팅방을 생성하는 곳입니다
 - 분석 파일은 json, csv, txt 파일만 가능합니다
-- london_house, shopping_trends, iris 와 관련된 샘플 데이터로 분석을 진행해 볼 수 있습니다
-<img width="800" alt="파일업로드" src="https://github.com/user-attachments/assets/367a528f-4891-4dd7-8002-4c4d425bb7cd">
+- london_house, shopping_trends, iris 와 관련된 샘플 데이터로 분석을 진행해 볼 수 있습니다
+<img width="800" alt="스크린샷 2025-01-03 오전 12 53 07" src="https://github.com/user-attachments/assets/a846a69f-8cee-418e-a808-1460db7829d7" />
+
 
 ### 데이터 분석 진행
 - 대화 입력창을 통해 인공지능과 대화하며 다양한 형식으로 데이터 분석을 진행할 수 있습니다
 - 데이터 분석을 통해 알게된 인사이트로 추가적인 파일을 채팅방에 제출하며 분석을 고도화해 나갈 수 있습니다
 - 시각화 된 자료가 필요한 경우 생성할 수 있습니다
-
-<img width="1510" alt="분석예시" src="https://github.com/user-attachments/assets/37e34bb3-3941-409a-8111-e8cbd593d5c4">
-<br/>
-<img width="1512" alt="산점도" src="https://github.com/user-attachments/assets/e8599279-2feb-4de3-a27d-1008a3ffe6c1">
+  
+<img width="1510" alt="스크린샷 2025-01-03 오전 12 56 05" src="https://github.com/user-attachments/assets/922db4f4-0532-47b6-ad97-76b695236b08" />
 
 
 ## 🔧 Stack
