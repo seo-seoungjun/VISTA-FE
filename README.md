@@ -80,10 +80,9 @@ VISTA는 대규모 언어 모델(LLM)을 기반으로 한 데이터 분석 자�
 
 **Frontend** (👨🏻‍💻 [seoungJun](https://github.com/seo-seoungjun))
 
-- 사용자 페이지 디자인(Figma) 및 개발(React.js)
+- 사용자 페이지 디자인(Figma) 및 프론트개발(React.js)
 - 데이터베이스 스키마 설계
 - API 설계
-- Project Management 및 이슈 관리
 
 **BackEnd** (👨🏻‍💻 [cshoon](https://github.com/cshooon))
 
